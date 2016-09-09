@@ -46,7 +46,7 @@ class SeriesTable extends React.Component {
                                                        {team.matches}
                                                      </TableRowColumn>
                                                      <TableRowColumn style={{whiteSpace: 'normal'}}>
-                                                       {team.matchp}
+                                                       {`${team.matchp.won}-${team.matchp.lost}`}
                                                      </TableRowColumn>
                                                      <TableRowColumn style={{whiteSpace: 'normal'}}>
                                                        {team.teamp}

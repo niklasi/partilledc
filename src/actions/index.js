@@ -58,7 +58,7 @@ export function loadSeriesTableSuccess (seriesTable) {
 
 export function loadSeriesTable (seriesId) {
   return (dispatch) => {
-    seriesTableList.path = '/tableSeries'
+    seriesTableList.path = '/matches'
     seriesTableList.subscribe(dispatch, {child: 'series', equalTo: seriesId})
   }
 }

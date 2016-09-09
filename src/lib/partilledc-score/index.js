@@ -1,4 +1,4 @@
-const matchPlayed = (sets) => {
+export function matchPlayed (sets) {
   return sets.reduce((p, c) => p + c.home + c.away, 0) > 0
 }
 
@@ -30,6 +30,7 @@ export function matchPoints (results) {
 }
 
 export function teamPoints ({home, away}) {
+  if (home === 0 && away === 0) return {home: 0, away: 0}
   if (home > away) return {home: 2, away: 0}
   if (home < away) return {home: 0, away: 2}
 
