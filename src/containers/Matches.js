@@ -2,7 +2,7 @@ import React from 'react'
 import Match from './Match'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import { connect } from 'react-redux'
-import { loadTodaysMatches, loadMatches, unloadMatches } from '../actions'
+import { saveMatch, loadTodaysMatches, loadMatches, unloadMatches } from '../actions'
 
 const GridLayout = WidthProvider(Responsive)
 const defaultProps = {className: 'layout',
@@ -53,7 +53,7 @@ class Matches extends React.Component {
   render () {
     return <GridLayout key='layout' {...defaultProps}>
              {this.props.matches.map((match, index) => <div key={'match-' + index} data-grid={{x: (index % 3) * 4, y: index + 1, w: 4, h: 1, isDraggable: false}}>
-                                                         <Match match={match} />
+                                                         <Match saveMatch={this.props.saveMatch} match={match} />
                                                        </div>)}
            </GridLayout>
   }
@@ -64,7 +64,8 @@ Matches.propTypes = {
   matches: React.PropTypes.array.isRequired,
   loadMatches: React.PropTypes.func.isRequired,
   loadTodaysMatches: React.PropTypes.func.isRequired,
-  unloadMatches: React.PropTypes.func.isRequired
+  unloadMatches: React.PropTypes.func.isRequired,
+  saveMatch: React.PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -72,4 +73,4 @@ const mapStateToProps = (state, ownProps) => {
   return {matches, ownProps}
 }
 
-export default connect(mapStateToProps, {loadTodaysMatches, loadMatches, unloadMatches})(Matches)
+export default connect(mapStateToProps, {saveMatch, loadTodaysMatches, loadMatches, unloadMatches})(Matches)

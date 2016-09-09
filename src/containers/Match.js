@@ -6,84 +6,91 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RegisterResult from './RegisterResult'
+import { matchPoints } from '../lib/partilledc-score'
 
-const colMapper = ({ match, result = [] }) => <TableRowColumn key={match} style={{whiteSpace: 'normal'}}>
-                                                {result.join(', ')}
-                                              </TableRowColumn>
+const colMapper = ({ text, result = [] }) => <TableRowColumn key={text} style={{whiteSpace: 'normal'}}>
+                                               {result.filter(r => r.home !== 0 || r.away !== 0).map(r => r.home + '-' + r.away).join(', ')}
+                                             </TableRowColumn>
 
 class Match extends Component {
 
   constructor (props) {
     super(props)
     this.handleOpen = this.handleOpen.bind(this)
-    this.handleCancel = this.handleCancel.bind(this)
-    this.handleSave = this.handleSave.bind(this)
-    this.state = {open: false, result: {}}
+    this.handleClose = this.handleClose.bind(this)
+    this.changeResult = this.changeResult.bind(this)
+    this.state = {open: false, match: {text: '', result: [{home: 0, away: 0}]}}
   }
 
-  handleOpen (result) {
-    this.setState({open: true, result})
+  handleOpen (match) {
+    this.setState({open: true, match})
   }
 
-  handleCancel () {
+  handleClose () {
     this.setState({open: false})
   }
 
-  handleSave () {
-    this.setState({open: false})
+  changeResult (matchResult) {
+    let match = this.props.match
+    match.matches = match.matches.map(m => {
+      if (m.text === this.state.match.text) return matchResult
+      return m
+    })
+    this.props.saveMatch(match)
   }
 
   render () {
     const match = this.props.match
 
     const actions = [
-      <FlatButton label='Avbryt' secondary onTouchTap={this.handleCancel} />,
-      <FlatButton label='Spara' primary onTouchTap={this.handleSave} />
+      <FlatButton label='Stäng' primary onTouchTap={this.handleClose} />
     ]
 
     const {palette} = getMuiTheme()
 
-    const header = (result) => {
-      const open = () => this.handleOpen(result)
-      return <TableHeaderColumn key={match} style={{paddingLeft: '5px'}}>
+    const header = (item) => {
+      const open = () => this.handleOpen(item)
+      return <TableHeaderColumn key={item.text} style={{paddingLeft: '5px'}}>
                <FlatButton
-                 label={result.match}
+                 label={item.text}
                  primary
                  labelStyle={{textTransform: 'none'}}
                  onTouchTap={open} />
              </TableHeaderColumn>
     }
 
+    const formatMatchPoints = (score) => `${score.home}-${score.away}`
     return <Card>
              <CardHeader avatar={<Avatar size={35} backgroundColor={palette.accent1Color}>
-                                   {`${match.homeTeam.matchp}-${match.awayTeam.matchp}`}
+                                   {formatMatchPoints(matchPoints(match.matches.map(m => m.result)))}
                                  </Avatar>} title={`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`} subtitle={'Bana ' + match.lane + ' ' + match.date + ' kl ' + match.time} />
              <Table selectable={false} multiselectable={false}>
                <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
                  <TableRow>
-                   {match.result.map(header)}
+                   {match.matches.map(header)}
                  </TableRow>
                </TableHeader>
                <TableBody displayRowCheckbox={false}>
                  <TableRow>
-                   {match.result.map(colMapper)}
+                   {match.matches.map(colMapper)}
                  </TableRow>
                </TableBody>
              </Table>
              <Dialog
-               title={`Resultat - ${this.state.result.match}`}
+               title={`Resultat - ${this.state.match.text}`}
                actions={actions}
                contentStyle={{width: '100%', maxWidth: 'none'}}
                modal
                open={this.state.open}>
-               <RegisterResult result={this.state.result} />
+               <RegisterResult onChangeResult={this.changeResult} match={this.state.match} />
              </Dialog>
            </Card>
   }
 }
 
 Match.propTypes = {
-  match: React.PropTypes.object.isRequired
+  match: React.PropTypes.object.isRequired,
+  saveMatch: React.PropTypes.func.isRequired
 }
 
 export default Match

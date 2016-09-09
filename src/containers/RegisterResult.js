@@ -2,68 +2,58 @@ import React from 'react'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
+const styles = {
+  customWidth: {
+    width: 35,
+    marginRight: 15
+  }
+}
+
 class RegisterResult extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {result: [{home: 0, away: 0}]}
+    this.state = {match: props.match}
   }
 
   render () {
-    const styles = {
-      customWidth: {
-        width: 35,
-        marginRight: 15
-      }
-    }
+    const resultFactory = (result, set) => {
+      const teamFieldFactory = (team) => {
+        const changeScore = (e, value) => {
+          let match = this.state.match
 
-    const selectFieldFactory = (result, set) => {
-      const changeScore = (team, value) => {
-        let state = this.state.result
-
-        state[set][team] = value
-        if (value === 4 && state.length - 1 === set) {
-          state.push({home: 0, away: 0})
+          match.result[set][team] = value
+          if (value === 4 && match.result.length - 1 === set) {
+            match.result.push({home: 0, away: 0})
+          }
+          this.props.onChangeResult(match)
+          this.setState({match})
         }
-        this.setState({result: state})
+
+        return <SelectField
+                 key={team + '-' + set}
+                 value={result[team] || 0}
+                 style={styles.customWidth}
+                 onChange={changeScore}>
+                 <MenuItem value={0} primaryText='0' />
+                 <MenuItem value={1} primaryText='1' />
+                 <MenuItem value={2} primaryText='2' />
+                 <MenuItem value={3} primaryText='3' />
+                 <MenuItem value={4} primaryText='4' />
+               </SelectField>
       }
 
-      const handleChangeHome = (e, value) => changeScore('home', value)
-      const handleChangeAway = (e, value) => changeScore('away', value)
-
-      return <div key={'result-' + set}>
-               <SelectField
-                 key={'team-' + set + '-home'}
-                 value={result.home}
-                 style={styles.customWidth}
-                 onChange={handleChangeHome}>
-                 <MenuItem value={0} primaryText='0' />
-                 <MenuItem value={1} primaryText='1' />
-                 <MenuItem value={2} primaryText='2' />
-                 <MenuItem value={3} primaryText='3' />
-                 <MenuItem value={4} primaryText='4' />
-               </SelectField>
-               <SelectField
-                 key={'team-' + set + '-away'}
-                 value={result.away}
-                 style={styles.customWidth}
-                 onChange={handleChangeAway}>
-                 <MenuItem value={0} primaryText='0' />
-                 <MenuItem value={1} primaryText='1' />
-                 <MenuItem value={2} primaryText='2' />
-                 <MenuItem value={3} primaryText='3' />
-                 <MenuItem value={4} primaryText='4' />
-               </SelectField>
-             </div>
+      return ['home', 'away'].map(teamFieldFactory)
     }
 
     return <div>
-             {this.state.result.map(selectFieldFactory)}
+             {this.state.match.result.map(resultFactory)}
            </div>
   }
 }
 
-// RegisterResult.propTypes = {
-//   result: React.PropTypes.object.isRequired
-// }
+RegisterResult.propTypes = {
+  match: React.PropTypes.object.isRequired,
+  onChangeResult: React.PropTypes.func.isRequired
+}
 
 export default RegisterResult

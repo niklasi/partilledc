@@ -71,12 +71,19 @@ export function unloadSeriesTable () {
   }
 }
 
-const matchList = new FirebaseList({onLoad: loadMatchesSuccess}, (attr) => Object.assign({}, attr))
+const matchList = new FirebaseList({onLoad: loadMatchesSuccess, onChange: matchChanged}, (attr) => Object.assign({}, attr))
 
 export function loadMatchesSuccess (matches) {
   return {
     type: 'LOAD_MATCHES_SUCCESS',
     payload: matches
+  }
+}
+
+export function matchChanged (match) {
+  return {
+    type: 'MATCH_CHANGED',
+    payload: match
   }
 }
 
@@ -91,6 +98,13 @@ export function loadTodaysMatches (today) {
   return (dispatch) => {
     matchList.path = '/matches'
     matchList.subscribe(dispatch, {child: 'date', equalTo: today})
+  }
+}
+
+export function saveMatch (match) {
+  return (dispatch) => {
+    matchList.path = '/matches'
+    matchList.set(match.id, match)
   }
 }
 

@@ -27,9 +27,9 @@ db.ref('/series').on('child_added', (series) => {
 
       const {lanes, time, date} = match
 
-      const result = [{match: 'Dubbel', result: []}, {match: '1:a singel', result: []}, {match: '2:a singel', result: []}]
+      const matches = [{text: 'Dubbel', result: [{home: 0, away: 0}]}, {text: '1:a singel', result: [{home: 0, away: 0}]}, {text: '2:a singel', result: [{home: 0, away: 0}]}]
 
-      const migratedMatch = {homeTeam, awayTeam, date, time, lane: lanes, result, series: series.key}
+      const migratedMatch = {homeTeam, awayTeam, date, time, lane: lanes, matches, series: series.key}
 
       db.ref('/matches').push(migratedMatch)
     })

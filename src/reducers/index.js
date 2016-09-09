@@ -44,6 +44,9 @@ const matches = (state, action) => {
         if (a.date === b.date) return +a.time - +b.time
         return a.date > b.date ? 1 : -1
       })
+    case 'MATCH_CHANGED':
+      console.log('match changed', action.payload)
+      return state
     case 'UNLOAD_MATCHES':
       return action.payload
     default:
