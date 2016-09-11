@@ -11,6 +11,7 @@ import series from '../series.json'
 class App extends React.Component {
   constructor (props) {
     super(props)
+    console.log(props.routes)
     this.state = {open: false}
     this.handleToggle = this.handleToggle.bind(this)
   }
@@ -23,7 +24,7 @@ class App extends React.Component {
     const listItemFactory = (serie) => <ListItem key={serie.id} primaryText={serie.text} nestedItems={[ <ListItem key={'team-' + serie.id}> <Link to={'/series/' + serie.id + '/teams'} onClick={this.handleToggle}> Lag </Link> </ListItem>, <ListItem key={'matches-' + serie.id}> <Link to={'/series/' + serie.id + '/matches'} onClick={this.handleToggle}> Matcher </Link> </ListItem>, <ListItem key={'table-' + serie.id}> <Link to={'/series/' + serie.id + '/table'} onClick={this.handleToggle}> Tabell </Link> </ListItem> ]} />
 
     return <div>
-             <AppBar key='AppBar' onLeftIconButtonTouchTap={this.handleToggle} />
+             <AppBar key='AppBar' title={this.props.routes[1].component.title} onLeftIconButtonTouchTap={this.handleToggle} />
              {this.props.children}
              <Drawer open={this.state.open}>
                <List>
@@ -47,9 +48,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  // series: React.PropTypes.array.isRequired,
-  // loadSeries: React.PropTypes.func.isRequired,
-  // unloadSeries: React.PropTypes.func.isRequired,
+  routes: React.PropTypes.array,
   children: React.PropTypes.element
 }
 

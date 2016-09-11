@@ -65,7 +65,7 @@ class Teams
 			team_name = cells[1].content.strip.gsub("&nbsp;","")
 			contact = cells[2].content.strip
 			phone = cells[3].content.strip
-            next if team_name == phone
+      next if team_name == phone
 			email = ''
 			email_cell = cellContainers[4].css('p img')
 			if email_cell[0] == nil
@@ -80,6 +80,7 @@ class Teams
 			@teams[team_ranking] = {:team_name => team_name, :contact => contact, :phone => phone, :email => email}
 		end
 	end
+
 
 	def decode_email(value)
 		c = '!#$()*,-./0123456789:;?ABCDEFGHIJKLMNOPQRSTUVWXYZ[ ]^_abcdefghijklmnopqrstuvwxyz{|}~'

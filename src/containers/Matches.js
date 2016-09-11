@@ -6,7 +6,7 @@ import { saveMatch, loadTodaysMatches, loadMatches, unloadMatches } from '../act
 
 const GridLayout = WidthProvider(Responsive)
 const defaultProps = {className: 'layout',
-  cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
+  cols: {lg: 12, md: 12, sm: 6, xs: 6, xxs: 6},
   rowHeight: 180
 }
 
@@ -52,7 +52,7 @@ class Matches extends React.Component {
 
   render () {
     return <GridLayout key='layout' {...defaultProps}>
-             {this.props.matches.map((match, index) => <div key={'match-' + index} data-grid={{x: (index % 3) * 4, y: index + 1, w: 4, h: 1, isDraggable: false}}>
+             {this.props.matches.map((match, index) => <div key={'match-' + index} data-grid={{x: (index % 2) * 6, y: index + 1, w: 6, h: 1, isDraggable: false}}>
                                                          <Match saveMatch={this.props.saveMatch} match={match} />
                                                        </div>)}
            </GridLayout>

@@ -1,7 +1,16 @@
 import React from 'react'
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import { connect } from 'react-redux'
+import Team from './Team'
+import { Responsive, WidthProvider } from 'react-grid-layout'
 import { loadTeams, unloadTeams } from '../actions'
+
+const GridLayout = WidthProvider(Responsive)
+const defaultProps = {className: 'layout',
+  breakpoints: {lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0},
+  cols: {lg: 12, md: 12, sm: 6, xs: 6, xxs: 6},
+  isDraggable: false,
+  rowHeight: 100
+}
 
 class Teams extends React.Component {
 
@@ -20,40 +29,11 @@ class Teams extends React.Component {
   }
 
   render () {
-    return <Table selectable={false}>
-             <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
-               <TableRow>
-                 <TableHeaderColumn>
-                   Lag
-                 </TableHeaderColumn>
-                 <TableHeaderColumn>
-                   Kontakt
-                 </TableHeaderColumn>
-                 <TableHeaderColumn>
-                   Telefon
-                 </TableHeaderColumn>
-                 <TableHeaderColumn>
-                   E-post
-                 </TableHeaderColumn>
-               </TableRow>
-             </TableHeader>
-             <TableBody displayRowCheckbox={false}>
-               {this.props.teams.map(team => <TableRow key={team.id}>
-                                               <TableRowColumn style={{whiteSpace: 'normal'}}>
-                                                 {team.teamName}
-                                               </TableRowColumn>
-                                               <TableRowColumn style={{whiteSpace: 'normal'}}>
-                                                 {team.contact}
-                                               </TableRowColumn>
-                                               <TableRowColumn style={{whiteSpace: 'normal'}}>
-                                                 {team.phone}
-                                               </TableRowColumn>
-                                               <TableRowColumn style={{whiteSpace: 'normal'}}>
-                                                 {team.email}
-                                               </TableRowColumn>
-                                             </TableRow>)}
-             </TableBody>
-           </Table>
+    return <GridLayout key='layout' {...defaultProps}>
+             {this.props.teams.map((team, index) => <div key={'team-' + index} data-grid={{x: (index % 2) * 6, y: index + 1, w: 6, h: 1}}>
+                                                         <Team team={team} />
+                                                       </div>)}
+           </GridLayout>
   }
 }
 
@@ -69,4 +49,5 @@ const mapStateToProps = (state, ownProps) => {
   return {teams, ownProps}
 }
 
+// Teams.title = 'Lag'
 export default connect(mapStateToProps, {loadTeams, unloadTeams})(Teams)
