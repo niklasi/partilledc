@@ -25,8 +25,8 @@ const teams = (state, action) => {
   }
 }
 
-const mapTeamToTableSeries = (team) => {
-  return {teamId: team.id, teamName: team.teamName, teamRanking: team.teamRanking}
+const mapTeamToTableSeries = ({id, teamName, teamRanking}) => {
+  return {id, teamName, teamRanking}
 }
 
 const seriesTable = (state, action) => {
@@ -64,7 +64,7 @@ const seriesTable = (state, action) => {
         })
         .reduce(flatten)
         .reduce((map, team) => {
-          let existingTeam = map.get(team.teamId)
+          let existingTeam = map.get(team.id)
           if (existingTeam) {
             existingTeam.matchp.won += team.matchp.won
             existingTeam.matchp.lost += team.matchp.lost
@@ -73,7 +73,7 @@ const seriesTable = (state, action) => {
 
           let updatedTeam = existingTeam || team
           if (team.matchp.won > 0 || team.matchp.lost > 0) updatedTeam.matches += 1
-          map.set(team.teamId, updatedTeam)
+          map.set(team.id, updatedTeam)
           return map
         }, map)
         .valuesToArray()

@@ -1,0 +1,210 @@
+[
+  {
+    "team_name": "Kerstin Lundin",
+    "division": "Damsingel",
+    "team_ranking": "1",
+    "contact": "",
+    "phone": "  070-4378839",
+    "email": "kerstinblundin@gmail.com"
+  },
+  {
+    "team_name": "Yulia Yurgens",
+    "division": "Damsingel",
+    "team_ranking": "2",
+    "contact": "",
+    "phone": "  070-3980632",
+    "email": "yyurgens@yahoo.se"
+  },
+  {
+    "team_name": "Eva Bazarnicka",
+    "division": "Damsingel",
+    "team_ranking": "3",
+    "contact": "",
+    "phone": "  076-8796962",
+    "email": "wabazar@yahoo.com"
+  },
+  {
+    "team_name": "Jennica Glans",
+    "division": "Damsingel",
+    "team_ranking": "4",
+    "contact": "",
+    "phone": "  070-7268383",
+    "email": "jennica.glans@brandstromska.se"
+  },
+  {
+    "team_name": "Marie Hvidberg",
+    "division": "Damsingel",
+    "team_ranking": "5",
+    "contact": "",
+    "phone": "  0735-618830",
+    "email": "marie.hvidberg@live.se"
+  },
+  {
+    "team_name": "Ingela Eliasson",
+    "division": "Damsingel",
+    "team_ranking": "6",
+    "contact": "",
+    "phone": "  0708-832550",
+    "email": "Ingela.eliasson@kungsbacka.se"
+  },
+  {
+    "team_name": "Henrik Djurwall",
+    "division": "HerrsingelDiv1",
+    "team_ranking": "1",
+    "contact": "",
+    "phone": "0767-660532",
+    "email": "henrikdjurvall@gmail.com"
+  },
+  {
+    "team_name": "Håkan Davidsson",
+    "division": "HerrsingelDiv1",
+    "team_ranking": "2",
+    "contact": "",
+    "phone": "0303-798830",
+    "email": "hakan@harasbyggvaror.se"
+  },
+  {
+    "team_name": "Lars Österberg",
+    "division": "HerrsingelDiv1",
+    "team_ranking": "3",
+    "contact": "",
+    "phone": "0735-311113",
+    "email": "larsosterberg64@gmail.com"
+  },
+  {
+    "team_name": "Henrik Lundh",
+    "division": "HerrsingelDiv1",
+    "team_ranking": "4",
+    "contact": "",
+    "phone": "0708-797940",
+    "email": "henric@bokedjan.se"
+  },
+  {
+    "team_name": "Anders Klars",
+    "division": "HerrsingelDiv1",
+    "team_ranking": "5",
+    "contact": "",
+    "phone": "0706-958714",
+    "email": "anders@klars.se"
+  },
+  {
+    "team_name": "Mikael Rehn",
+    "division": "HerrsingelDiv1",
+    "team_ranking": "6",
+    "contact": "",
+    "phone": "0729-684985",
+    "email": "rehnteknik@gmail.com"
+  },
+  {
+    "team_name": "Peter Lundin",
+    "division": "HerrsingelDiv1",
+    "team_ranking": "7",
+    "contact": "",
+    "phone": "0707-535726",
+    "email": "peter.lundin@chalmers.se"
+  },
+  {
+    "team_name": "Hans Schmidt",
+    "division": "HerrsingelDiv2",
+    "team_ranking": "1",
+    "contact": "",
+    "phone": "0733-615050",
+    "email": "hans.schmidt@sp.se"
+  },
+  {
+    "team_name": "Johan Lewholt",
+    "division": "HerrsingelDiv2",
+    "team_ranking": "2",
+    "contact": "",
+    "phone": "0727-213774",
+    "email": "johan.lewholt@angered.goteborg.se"
+  },
+  {
+    "team_name": "Peter Sjögren",
+    "division": "HerrsingelDiv2",
+    "team_ranking": "3",
+    "contact": "",
+    "phone": "0734-228489",
+    "email": "pssjo732@gmail.com"
+  },
+  {
+    "team_name": "Mattias Eek",
+    "division": "HerrsingelDiv2",
+    "team_ranking": "4",
+    "contact": "",
+    "phone": "0701-689602",
+    "email": "mattias.eek@vwfs.se"
+  },
+  {
+    "team_name": "Peter Ryderus",
+    "division": "HerrsingelDiv2",
+    "team_ranking": "5",
+    "contact": "",
+    "phone": "0707-152629",
+    "email": "peter.ryderus@safeteam.se"
+  },
+  {
+    "team_name": "Johan Hellström",
+    "division": "HerrsingelDiv2",
+    "team_ranking": "6",
+    "contact": "",
+    "phone": "0721-843748",
+    "email": "johan.hellstrom@cevt.se"
+  },
+  {
+    "team_name": "Attila Peterffy",
+    "division": "HerrsingelDiv3",
+    "team_ranking": "1",
+    "contact": "",
+    "phone": "0733-826280",
+    "email": "attila.peterffy@gmail.com"
+  },
+  {
+    "team_name": "Tadeusz Gruszecki",
+    "division": "HerrsingelDiv3",
+    "team_ranking": "2",
+    "contact": "",
+    "phone": "0707-806288",
+    "email": "grusz@algonet.se"
+  },
+  {
+    "team_name": "Henrik Fredriksen",
+    "division": "HerrsingelDiv3",
+    "team_ranking": "3",
+    "contact": "",
+    "phone": "0703-088864",
+    "email": "hefr@chalmers.se"
+  },
+  {
+    "team_name": "Marko Marjanovic",
+    "division": "HerrsingelDiv3",
+    "team_ranking": "4",
+    "contact": "",
+    "phone": "0720-256064",
+    "email": "gusmarjma@student.gu.se"
+  },
+  {
+    "team_name": "Tobias Vikström",
+    "division": "HerrsingelDiv3",
+    "team_ranking": "5",
+    "contact": "",
+    "phone": "0728-554537",
+    "email": "tobias.vikstrom@fastighet.goteborg.se"
+  },
+  {
+    "team_name": "Henrik Johansson",
+    "division": "HerrsingelDiv3",
+    "team_ranking": "6",
+    "contact": "",
+    "phone": "0704-613793",
+    "email": "johansson.henrik@gmail.com"
+  },
+  {
+    "team_name": "Lars Molén",
+    "division": "HerrsingelDiv3",
+    "team_ranking": "7",
+    "contact": "",
+    "phone": "0707-656297",
+    "email": "lars.molen@volvocars.se"
+  }
+]

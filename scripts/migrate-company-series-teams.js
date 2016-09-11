@@ -1,5 +1,5 @@
 const firebase = require('firebase')
-// const request = require('request')
+const teams = require('./motion-teams.json')
 
 const config = {
   serviceAccount: require('../credentials/partilletennis.json'),
@@ -16,19 +16,20 @@ const db = app.database()
 //   })
 //   .on('end', () => {
 //     const teams = JSON.parse(teamData.toString())
-//     db.ref('/series').on('value', (snapshot) => {
-//       snapshot.forEach((series) => {
-//         console.log(series.val().text)
-//         teams
-//           .filter((team) => series.val().order === team.division)
-//           .map((team) => {
-//             return { teamName: team.team_name, series: series.key, teamRanking: team.team_ranking, contact: team.contact, phone: team.phone, email: team.email }
-//           })
-//           .forEach((team) => {
-//             db.ref('/teams').push(team)
-//           })
-//       })
-//     })
+db.ref('/series').on('value', (snapshot) => {
+  snapshot.forEach((series) => {
+    console.log(series.val().text)
+    teams
+      .filter((team) => series.val().text.split(' ').join('') === team.division)
+      .map((team) => {
+        return { teamName: team.team_name, series: series.key, teamRanking: team.team_ranking, contact: team.contact, phone: team.phone, email: team.email }
+      })
+      .forEach((team) => {
+        // console.log(team)
+        db.ref('/teams').push(team)
+      })
+  })
+})
 //   })
 
 //

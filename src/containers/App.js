@@ -1,13 +1,12 @@
 import React from 'react'
 import AppBar from 'material-ui/AppBar'
-import DatePicker from 'material-ui/DatePicker'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
 import Divider from 'material-ui/Divider'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { loadSeries, unloadSeries } from '../actions'
+import series from '../series.json'
 
 class App extends React.Component {
   constructor (props) {
@@ -20,32 +19,22 @@ class App extends React.Component {
     this.setState({open: !this.state.open})
   }
 
-  componentDidMount () {
-    this.props.loadSeries()
-  }
-
-  componentWillUnmount () {
-    this.props.unloadSeries()
-  }
-
   render () {
     const listItemFactory = (serie) => <ListItem key={serie.id} primaryText={serie.text} nestedItems={[ <ListItem key={'team-' + serie.id}> <Link to={'/series/' + serie.id + '/teams'} onClick={this.handleToggle}> Lag </Link> </ListItem>, <ListItem key={'matches-' + serie.id}> <Link to={'/series/' + serie.id + '/matches'} onClick={this.handleToggle}> Matcher </Link> </ListItem>, <ListItem key={'table-' + serie.id}> <Link to={'/series/' + serie.id + '/table'} onClick={this.handleToggle}> Tabell </Link> </ListItem> ]} />
 
     return <div>
-             <AppBar key='AppBar' onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={<DatePicker id='datepicker' />} />
+             <AppBar key='AppBar' onLeftIconButtonTouchTap={this.handleToggle} />
              {this.props.children}
              <Drawer open={this.state.open}>
                <List>
                  <Subheader>
                    Företagsserier
                  </Subheader>
-                 {this.props.series.map(listItemFactory)}
+                 {series.companySeries.map(listItemFactory)}
                  <Subheader>
                    Motionsserier
                  </Subheader>
-                 <ListItem primaryText='Herrsingel div 1' />
-                 <ListItem primaryText='Herrsingel div 2' />
-                 <ListItem primaryText='Herrsingel div 3' />
+                 {series.exerciseSeries.map(listItemFactory)}
                  <Divider />
                  <ListItem>
                    <Link to={'/todays-matches'} onClick={this.handleToggle}> Dagens matcher
@@ -58,15 +47,17 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  series: React.PropTypes.array.isRequired,
-  loadSeries: React.PropTypes.func.isRequired,
-  unloadSeries: React.PropTypes.func.isRequired,
+  // series: React.PropTypes.array.isRequired,
+  // loadSeries: React.PropTypes.func.isRequired,
+  // unloadSeries: React.PropTypes.func.isRequired,
   children: React.PropTypes.element
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {series} = state
-  return {series, ownProps}
+  // const {series} = state
+  return {ownProps}
+// return {series, ownProps}
 }
 
-export default connect(mapStateToProps, {loadSeries, unloadSeries})(App)
+export default connect(mapStateToProps)(App)
+// export default connect(mapStateToProps, {loadSeries, unloadSeries})(App)
