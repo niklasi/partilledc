@@ -1,4 +1,4 @@
-import { FirebaseList } from '../firebase'
+import { FirebaseList, firebaseAuth } from '../firebase'
 
 const seriesList = new FirebaseList({onLoad: loadSeriesSuccess}, (attr) => Object.assign({}, attr))
 
@@ -104,7 +104,9 @@ export function loadTodaysMatches (today) {
 export function saveMatch (match) {
   return (dispatch) => {
     matchList.path = '/matches'
-    matchList.set(match.id, match)
+    matchList.set(match.id, match).catch((err) => {
+      console.error(err)
+    })
   }
 }
 
@@ -113,5 +115,28 @@ export function unloadMatches () {
   return {
     type: 'UNLOAD_MATCHES',
     payload: []
+  }
+}
+
+export function signIn (email, password) {
+  return (dispatch) => {
+    firebaseAuth.signInWithEmailAndPassword(email, password).catch(function (error) {
+      console.log('Error signing in: ' + error.message)
+    })
+  }
+}
+
+export function currentUser (user) {
+  return {
+    type: 'AUTH_STATE_CHANGE',
+    payload: user
+  }
+}
+
+export function signOut () {
+  return (dispatch) => {
+    firebaseAuth.signOut().catch(function (error) {
+      console.log('Error signing out: ' + error.message)
+    })
   }
 }

@@ -105,6 +105,7 @@ const matches = (state, action) => {
         if (a.date === b.date) return +a.time - +b.time
         return a.date > b.date ? 1 : -1
       })
+
     case 'MATCH_CHANGED':
       return state
     case 'UNLOAD_MATCHES':
@@ -114,4 +115,15 @@ const matches = (state, action) => {
   }
 }
 
-export default combineReducers({series, teams, seriesTable, matches})
+const user = (state, action) => {
+  state = state || {isAnonymous: true}
+  switch (action.type) {
+    case 'AUTH_STATE_CHANGE':
+      if (!action.payload) return {isAnonymous: true}
+      return Object.assign({}, state, action.payload)
+    default:
+      return state
+  }
+}
+
+export default combineReducers({series, teams, seriesTable, matches, user})

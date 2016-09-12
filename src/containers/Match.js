@@ -49,7 +49,11 @@ class Match extends Component {
     const {palette} = getMuiTheme()
 
     const header = (item) => {
-      const open = () => this.handleOpen(item)
+      const open = () => {
+        if (!this.props.user.isAnonymous) {
+          this.handleOpen(item)
+        }
+      }
       return <TableHeaderColumn key={item.text} style={{paddingLeft: '5px'}}>
                <FlatButton
                  label={item.text}
@@ -77,7 +81,7 @@ class Match extends Component {
                </TableBody>
              </Table>
              <Dialog
-               title={`Resultat - ${this.state.match.text}`}
+               title='Resultat'
                actions={actions}
                contentStyle={{width: '100%', maxWidth: 'none'}}
                modal
@@ -90,7 +94,8 @@ class Match extends Component {
 
 Match.propTypes = {
   match: React.PropTypes.object.isRequired,
-  saveMatch: React.PropTypes.func.isRequired
+  saveMatch: React.PropTypes.func.isRequired,
+  user: React.PropTypes.object
 }
 
 export default Match
