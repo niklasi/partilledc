@@ -7,7 +7,7 @@ import { signIn } from '../actions'
 const SignIn = ({auth, signIn}) => {
   let username = ''
   let password = ''
-  console.log('sign in', auth)
+
   const handleUsername = (e, value) => {
     username = value
   }
@@ -20,15 +20,13 @@ const SignIn = ({auth, signIn}) => {
     signIn(username, password)
   }
 
-  return <div><TextField
-      floatingLabelText='Epost'
-      onChange={handleUsername}
-    /><br />
-    <TextField
-      floatingLabelText='Lösenord'
-      type='password'
-      onChange={handlePassword}
-    /><br /><FlatButton label='Logga in' primary onTouchTap={handleSignIn}/></div>
+  return <div style={{marginLeft: '20px'}}>
+           <TextField floatingLabelText='Epost' onChange={handleUsername} />
+           <br />
+           <TextField floatingLabelText='Lösenord' type='password' onChange={handlePassword} />
+           <br />
+           <FlatButton label='Logga in' primary onTouchTap={handleSignIn} />
+         </div>
 }
 
 SignIn.propTypes = {
