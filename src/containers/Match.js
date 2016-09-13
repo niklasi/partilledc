@@ -51,6 +51,7 @@ class Match extends Component {
     const header = (item) => {
       const open = () => {
         if (!this.props.user.isAnonymous) {
+          console.log(this.props.user)
           this.handleOpen(item)
         }
       }
