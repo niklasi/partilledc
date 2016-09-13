@@ -126,6 +126,14 @@ export function signIn (email, password) {
   }
 }
 
+export function registerUser (email, password) {
+  return (dispatch) => {
+    firebaseAuth.createUserWithEmailAndPassword(email, password).catch(function (error) {
+      console.log('Error signing in: ' + error.message)
+    })
+  }
+}
+
 export function resetPassword (email) {
   return (dispatch) => {
     firebaseAuth.sendPasswordResetEmail(email).then(() => {

@@ -8,6 +8,7 @@ import SeriesTable from './containers/SeriesTable'
 import Matches from './containers/Matches'
 import ResetPassword from './containers/ResetPassword'
 import ConfirmPasswordReset from './containers/ConfirmPasswordReset'
+import RegisterUser from './containers/RegisterUser'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import { Router, Route, hashHistory } from 'react-router'
 import { Provider } from 'react-redux'
@@ -30,6 +31,7 @@ const start = () => {
                  <Route path='series/:series/table' component={SeriesTable} />
                  <Route path='/todays-matches' component={Matches} />
                  <Route path='/sign-in' component={SignIn} />
+                 <Route path='/register-user' component={RegisterUser} />
                  <Route path='/reset-password' component={ResetPassword} />
                  <Route path='/confirm-password-reset' component={ConfirmPasswordReset} />
                </Route>

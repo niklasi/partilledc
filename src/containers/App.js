@@ -27,23 +27,26 @@ class App extends React.Component {
   render () {
     const listItemFactory = (serie) => <ListItem key={serie.id} primaryText={serie.text} nestedItems={[ <ListItem key={'team-' + serie.id}> <Link to={'/series/' + serie.id + '/teams'} onClick={this.handleToggle}> Lag </Link> </ListItem>, <ListItem key={'matches-' + serie.id}> <Link to={'/series/' + serie.id + '/matches'} onClick={this.handleToggle}> Matcher </Link> </ListItem>, <ListItem key={'table-' + serie.id}> <Link to={'/series/' + serie.id + '/table'} onClick={this.handleToggle}> Tabell </Link> </ListItem> ]} />
     const menu = () => {
-      console.log('menu', this.props.user)
-      if (this.props.user.isAnonymous) return <MenuItem><Link to={'/sign-in'}>Logga in</Link></MenuItem>
+      if (this.props.user.isAnonymous) {
+        const menuItems = [{to: '/register-user', text: 'Ny användare'}, {to: '/sign-in', text: 'Logga in'}]
+        return menuItems.map(item => <MenuItem key={item.text}>
+                                     <Link to={item.to}>
+                                     {item.text}
+                                     </Link>
+                                     </MenuItem>)
+      }
       return <MenuItem primaryText='Logga ut' onTouchTap={this.props.signOut} />
     }
     return <div>
-             <AppBar key='AppBar' title={this.props.user.email} onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={
-      <IconMenu
-        iconButtonElement={
-          <IconButton><MoreVertIcon /></IconButton>
-        }
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-      >
-                 {menu()}
-      </IconMenu>
-    }
-  />
+             <AppBar
+               key='AppBar'
+               title={this.props.user.email}
+               onLeftIconButtonTouchTap={this.handleToggle}
+               iconElementRight={<IconMenu iconButtonElement={<IconButton>
+                                                                <MoreVertIcon />
+                                                              </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
+                                   {menu()}
+                                 </IconMenu>} />
              {this.props.children}
              <Drawer open={this.state.open}>
                <List>
