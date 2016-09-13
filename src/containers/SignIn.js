@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
+import { Link } from 'react-router'
 import { signIn } from '../actions'
 
 const SignIn = ({auth, signIn}) => {
@@ -26,6 +27,9 @@ const SignIn = ({auth, signIn}) => {
            <TextField floatingLabelText='Lösenord' type='password' onChange={handlePassword} />
            <br />
            <FlatButton label='Logga in' primary onTouchTap={handleSignIn} />
+           <br />
+           <Link to='/reset-password'> Problem att logga in?
+           </Link>
          </div>
 }
 

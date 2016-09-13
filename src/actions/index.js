@@ -126,6 +126,26 @@ export function signIn (email, password) {
   }
 }
 
+export function resetPassword (email) {
+  return (dispatch) => {
+    firebaseAuth.sendPasswordResetEmail(email).then(() => {
+      console.log('reset', email)
+    }).catch(function (error) {
+      console.log('Error resetting password: ' + error.message)
+    })
+  }
+}
+
+export function confirmPasswordReset (code, newPassword) {
+  return (dispatch) => {
+    firebaseAuth.confirmPasswordReset(code, newPassword).then(() => {
+      console.log('confirm')
+    }).catch(function (error) {
+      console.log('Error confirming password reset: ' + error.message)
+    })
+  }
+}
+
 export function currentUser (user) {
   return {
     type: 'AUTH_STATE_CHANGE',
