@@ -13,6 +13,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import series from '../series.json'
 import { signOut } from '../actions'
 
+/* eslint-disable react/jsx-indent */
 class App extends React.Component {
   constructor (props) {
     super(props)
@@ -48,7 +49,7 @@ class App extends React.Component {
                                    {menu()}
                                  </IconMenu>} />
              {this.props.children}
-             <Drawer open={this.state.open}>
+             <Drawer docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
                <List>
                  <Subheader>
                    Företagsserier
@@ -82,4 +83,4 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(mapStateToProps, {signOut})(App)
-// export default connect(mapStateToProps, {loadSeries, unloadSeries})(App)
+/* eslint-enable react/jsx-indent */
