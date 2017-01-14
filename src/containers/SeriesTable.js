@@ -30,10 +30,16 @@ class SeriesTable extends React.Component {
                    Matcher
                  </TableHeaderColumn>
                  <TableHeaderColumn>
+                   Poäng
+                 </TableHeaderColumn>
+                 <TableHeaderColumn>
                    Matchp
                  </TableHeaderColumn>
                  <TableHeaderColumn>
-                   Lagp
+                   Set
+                 </TableHeaderColumn>
+                 <TableHeaderColumn>
+                   Gem
                  </TableHeaderColumn>
                </TableRow>
              </TableHeader>
@@ -46,10 +52,16 @@ class SeriesTable extends React.Component {
                                                        {team.matches}
                                                      </TableRowColumn>
                                                      <TableRowColumn style={{whiteSpace: 'normal'}}>
-                                                       {`${team.matchp.won}-${team.matchp.lost}`}
+                                                       {team.teamp}
                                                      </TableRowColumn>
                                                      <TableRowColumn style={{whiteSpace: 'normal'}}>
-                                                       {team.teamp}
+                                                       {`${team.matchp.won.points}-${team.matchp.lost.points}`}
+                                                     </TableRowColumn>
+                                                     <TableRowColumn style={{whiteSpace: 'normal'}}>
+                                                       {`${team.matchp.won.sets}-${team.matchp.lost.sets}`}
+                                                     </TableRowColumn>
+                                                     <TableRowColumn style={{whiteSpace: 'normal'}}>
+                                                       {`${team.matchp.won.games}-${team.matchp.lost.games}`}
                                                      </TableRowColumn>
                                                    </TableRow>)}
              </TableBody>

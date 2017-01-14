@@ -64,7 +64,7 @@ class Match extends Component {
              </TableHeaderColumn>
     }
 
-    const formatMatchPoints = (score) => `${score.home}-${score.away}`
+    const formatMatchPoints = (score) => `${score.home.points}-${score.away.points}`
     return <Card>
              <CardHeader avatar={<Avatar size={35} backgroundColor={palette.accent1Color}>
                                    {formatMatchPoints(matchPoints(match.matches.map(m => m.result)))}
