@@ -2,6 +2,7 @@ import React from 'react'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import { connect } from 'react-redux'
 import { loadSeriesTable, unloadSeriesTable } from '../actions'
+import allSeries from '../series.json'
 
 class SeriesTable extends React.Component {
 
@@ -20,6 +21,11 @@ class SeriesTable extends React.Component {
   }
 
   render () {
+    const companySeries = allSeries.companySeries.filter(s => s.id === this.props.params.series).length > 0
+
+    const displayMatchp = companySeries ? undefined : 'none'
+    const displaySetAndGame = companySeries ? 'none' : undefined
+
     return <Table selectable={false}>
              <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
                <TableRow>
@@ -32,13 +38,13 @@ class SeriesTable extends React.Component {
                  <TableHeaderColumn>
                    Poäng
                  </TableHeaderColumn>
-                 <TableHeaderColumn>
+                 <TableHeaderColumn style={{display: displayMatchp}}>
                    Matchp
                  </TableHeaderColumn>
-                 <TableHeaderColumn>
+                 <TableHeaderColumn style={{display: displaySetAndGame}}>
                    Set
                  </TableHeaderColumn>
-                 <TableHeaderColumn>
+                 <TableHeaderColumn style={{display: displaySetAndGame}}>
                    Gem
                  </TableHeaderColumn>
                </TableRow>
@@ -54,13 +60,13 @@ class SeriesTable extends React.Component {
                                                      <TableRowColumn style={{whiteSpace: 'normal'}}>
                                                        {team.teamp}
                                                      </TableRowColumn>
-                                                     <TableRowColumn style={{whiteSpace: 'normal'}}>
+                                                     <TableRowColumn style={{whiteSpace: 'normal', display: displayMatchp}}>
                                                        {`${team.matchp.won.points}-${team.matchp.lost.points}`}
                                                      </TableRowColumn>
-                                                     <TableRowColumn style={{whiteSpace: 'normal'}}>
+                                                     <TableRowColumn style={{whiteSpace: 'normal', display: displaySetAndGame}}>
                                                        {`${team.matchp.won.sets}-${team.matchp.lost.sets}`}
                                                      </TableRowColumn>
-                                                     <TableRowColumn style={{whiteSpace: 'normal'}}>
+                                                     <TableRowColumn style={{whiteSpace: 'normal', display: displaySetAndGame}}>
                                                        {`${team.matchp.won.games}-${team.matchp.lost.games}`}
                                                      </TableRowColumn>
                                                    </TableRow>)}
