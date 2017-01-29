@@ -11,9 +11,9 @@ class Matches
 	def all
     matches = Array.new
 		for division in 1..3 do
-      schemaDiv = "SchemaDiv.#{division}"
-      schemaDiv = "schemadiv#{division}" if division == 2
-			@doc = Nokogiri::HTML(open("http://idrottonline.se/ForeningenPartilleTennis-Tennis/Foretagsserier/#{schemaDiv}/"))
+      schemaDiv = "Schemadiv.#{division}"
+      # schemaDiv = "schemadiv#{division}" if division == 2
+			@doc = Nokogiri::HTML(open("http://idrottonline.se/ForeningenPartilleTennis-Tennis/foretagsserier/#{schemaDiv}/"))
         rows = @doc.css('.PageBodyDiv table:last tbody tr')
         rows.each do |row|
           cells = row.css('td')

@@ -60,6 +60,7 @@ class Teams
 			cells = cellContainers
       next if cells.length < 3
 			next if cells[1].content.strip.gsub("\r\n","") == 'Lag'
+			next if cells[1].content.strip.gsub("\r\n","") == 'Namn'
 			team_ranking = cells[0].content.strip
       # puts team_ranking
 			team_name = cells[1].content.strip.gsub("&nbsp;", "").gsub(/(\s|\u00A0)+/, ' ')

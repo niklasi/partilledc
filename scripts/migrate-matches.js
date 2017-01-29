@@ -1,5 +1,6 @@
 const firebase = require('firebase')
 const matches = require('./matches.json')
+const allSeries = require('../src/series.json')
 
 const config = {
   serviceAccount: require('../credentials/partilletennis.json'),
@@ -9,9 +10,9 @@ const config = {
 const app = firebase.initializeApp(config)
 const db = app.database()
 
-db.ref('/series').on('child_added', (series) => {
-  const division = series.val().order
-  db.ref('/teams').orderByChild('series').equalTo(series.key).on('value', (snapshot) => {
+allSeries.companySeries.forEach(series => {
+  const division = series.order
+  db.ref('/teams').orderByChild('series').equalTo(series.id).on('value', (snapshot) => {
     let teams = []
     snapshot.forEach(team => {
       const {teamRanking, teamName} = team.val()
@@ -29,7 +30,7 @@ db.ref('/series').on('child_added', (series) => {
 
       const matches = [{text: 'Dubbel', result: [{home: 0, away: 0}]}, {text: '1:a singel', result: [{home: 0, away: 0}]}, {text: '2:a singel', result: [{home: 0, away: 0}]}]
 
-      const migratedMatch = {homeTeam, awayTeam, date, time, lane: lanes, matches, series: series.key}
+      const migratedMatch = {homeTeam, awayTeam, date, time, lane: lanes, matches, series: series.id}
 
       db.ref('/matches').push(migratedMatch)
     })

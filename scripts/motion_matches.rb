@@ -18,11 +18,19 @@ class Matches
           next if cells.length < 3
           date = cells[0].content.gsub("\r\n", "").strip
           time = cells[1].content.gsub("\r\n", "").strip
-          home_team = cells[2].content.gsub("\r\n", "").strip
-          away_team = cells[3].content.gsub("\r\n", "").strip
+          home_team_index = 3
+          away_team_index = 4
+          lanes_index = 2
+          if (division == 'Damsingel') then
+            home_team_index = 2
+            away_team_index = 3
+            lanes_index = 4
+          end
+          home_team = cells[home_team_index].content.gsub("\r\n", "").strip
+          away_team = cells[away_team_index].content.gsub("\r\n", "").strip
           next if (time == 'Tid')
           next if date == time
-          lanes = cells[4].content.gsub("\r\n", "").strip.gsub(/(\s|\u00A0)+/, ' ')
+          lanes = cells[lanes_index].content.gsub("\r\n", "").strip.gsub(/(\s|\u00A0)+/, ' ')
           matches << {home_team: home_team, away_team: away_team, date: date, time: time, lanes: lanes, division: division}
           
         end

@@ -10,9 +10,9 @@ class Teams
   def all
     teams = Array.new
 		for division in 1..3 do
-      schemaDiv = "SchemaDiv.#{division}"
-      schemaDiv = "schemadiv#{division}" if division == 2
-			@doc = Nokogiri::HTML(open("http://idrottonline.se/ForeningenPartilleTennis-Tennis/Foretagsserier/#{schemaDiv}/"))
+      schemaDiv = "Schemadiv.#{division}"
+      # schemaDiv = "schemadiv#{division}" if division == 2
+			@doc = Nokogiri::HTML(open("http://idrottonline.se/ForeningenPartilleTennis-Tennis/foretagsserier/#{schemaDiv}/"))
 			load_team_info schemaDiv
 			@teams.each do |key, value|
 			  teams << ({:team_name => scrub(value[:team_name]), :division => division, :team_ranking => scrub(key), :contact => scrub(value[:contact]), :phone => scrub(value[:phone]), :email => scrub(value[:email])})
@@ -66,6 +66,7 @@ class Teams
 			contact = cells[2].content.strip
 			phone = cells[3].content.strip
       next if team_name == phone
+			email_cell = cellContainers[4].css('p img')
 			email = ''
 			email_cell = cellContainers[4].css('p img')
 			if email_cell[0] == nil
@@ -73,7 +74,7 @@ class Teams
 			end
 
 			if email_cell[0] != nil
-				email = email_cell[0].attributes["src"].value.gsub("/IdrottOnlineKlubb/Partille/foreningenpartilletennis-tennis/Foretagsserier/#{schemaDiv}/EmailEncoderEmbed.aspx?it=", "")	
+				email = email_cell[0].attributes["src"].value.gsub("/IdrottOnlineKlubb/Partille/foreningenpartilletennis-tennis/foretagsserier/#{schemaDiv}/EmailEncoderEmbed.aspx?it=", "")	
 				email = decode_email(CGI.unescape(email)).sub('mailto:', '').strip
 			end
 
