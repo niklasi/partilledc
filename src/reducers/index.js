@@ -65,13 +65,13 @@ const seriesTable = (state, action) => {
     case 'LOAD_SERIES_TABLE_SUCCESS':
       // teamName, teamId, series, matches, teamp, matchp, teamRanking
       const flatten = (list, item) => [].concat.apply(list, item)
-      let map = new Map()
-      const proto = Object.assign(Object.getPrototypeOf(map), {
+      const map = Object.create({
         valuesToArray: function () {
-          return Array.from(this.values())
+          const tmp = []
+          Object.keys(this).forEach(k => tmp.push(this[k]))
+          return tmp
         }
       })
-      Object.setPrototypeOf(map, proto)
 
       const ranking = allSeries.companySeries
         .filter(s => s.id === action.payload.series) > 0
@@ -97,7 +97,7 @@ const seriesTable = (state, action) => {
         })
         .reduce(flatten)
         .reduce((map, team) => {
-          let existingTeam = map.get(team.id)
+          let existingTeam = map[team.id]
           if (existingTeam) {
             existingTeam.matchp.won.points += team.matchp.won.points
             existingTeam.matchp.won.sets += team.matchp.won.sets
@@ -110,7 +110,7 @@ const seriesTable = (state, action) => {
 
           let updatedTeam = existingTeam || team
           if (team.matchp.won.points > 0 || team.matchp.lost.points > 0) updatedTeam.matches += 1
-          map.set(team.id, updatedTeam)
+          map[team.id] = updatedTeam
           return map
         }, map)
         .valuesToArray()
