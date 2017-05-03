@@ -10,7 +10,9 @@ const config = {
 const app = firebase.initializeApp(config)
 const db = app.database()
 
-allSeries.exerciseSeries.forEach(series => {
+allSeries.exerciseSeries
+  .filter(x => x.text.startsWith('Herrsingel'))
+  .forEach(series => {
   const division = series.text.split(' ').join('')
   db.ref('/teams').orderByChild('series').equalTo(series.id).on('value', (snapshot) => {
     let teams = []
@@ -31,7 +33,6 @@ allSeries.exerciseSeries.forEach(series => {
       const matches = [{text: 'Match', result: [{home: 0, away: 0}]}]
 
       const migratedMatch = {homeTeam, awayTeam, date, time, lane: lanes, matches, series: series.id}
-
       db.ref('/matches').push(migratedMatch)
     })
   })

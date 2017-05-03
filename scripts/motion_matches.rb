@@ -10,7 +10,8 @@ class Matches
 	
 	def all
     matches = Array.new
-		for division in ['Damsingel', 'HerrsingelDiv1', 'HerrsingelDiv2', 'HerrsingelDiv3'] do
+		# for division in ['Damsingel', 'HerrsingelDiv1', 'HerrsingelDiv2', 'HerrsingelDiv3'] do
+		for division in ['HerrsingelDiv1', 'HerrsingelDiv2', 'HerrsingelDiv3'] do
 			@doc = Nokogiri::HTML(open("http://idrottonline.se/ForeningenPartilleTennis-Tennis/Motionsserier/#{division}/"))
         rows = @doc.css('.PageBodyDiv table:last tbody tr')
         rows.each do |row|

@@ -9,7 +9,8 @@ class Teams
 	
   def all
     teams = Array.new
-		for division in ['Damsingel', 'HerrsingelDiv1', 'HerrsingelDiv2', 'HerrsingelDiv3'] do
+		# for division in ['Damsingel', 'HerrsingelDiv1', 'HerrsingelDiv2', 'HerrsingelDiv3'] do
+		for division in ['HerrsingelDiv1', 'HerrsingelDiv2', 'HerrsingelDiv3'] do
 			@doc = Nokogiri::HTML(open("http://idrottonline.se/ForeningenPartilleTennis-Tennis/Motionsserier/#{division}/"))
       load_team_info division
 			@teams.each do |key, value|
@@ -58,16 +59,17 @@ class Teams
 		rows.each do |row|
 			cellContainers = row.css('td')
 			cells = cellContainers
+      offset = 0
       next if cells.length < 3
-			next if cells[1].content.strip.gsub("\r\n","") == 'Lag'
-			next if cells[1].content.strip.gsub("\r\n","") == 'Namn'
-			team_ranking = cells[0].content.strip
-      # puts team_ranking
-			team_name = cells[1].content.strip.gsub("&nbsp;", "").gsub(/(\s|\u00A0)+/, ' ')
-      # puts team_name
-      email = get_email(cellContainers[2].css('p img'), division)
-			phone = cells[3].content.strip
-      phone = cells[4].content.strip if (cells.length > 4)
+      offset = 1 if cells.length > 5
+			next if cells[1 + offset].content.strip.gsub("\r\n","") == 'Lag'
+			next if cells[1 + offset].content.strip.gsub("\r\n","") == 'Namn'
+			team_ranking = cells[0 + offset].content.strip
+      next if team_ranking.to_i == 0
+			team_name = cells[1 + offset].content.strip.gsub("&nbsp;", "").gsub(/(\s|\u00A0)+/, ' ')
+      email =  get_email(cells[2 + offset].css('p img'), division)
+			phone = cells[3 + offset].content.strip
+      phone = cells[4 + offset].content.strip if (cells.length > 4)
       phone = "0721-843748" if (team_name == "Johan Hellström" and phone.length < 2)
 
 			@teams[team_ranking] = {:team_name => team_name, :contact => '', :phone => phone, :email => email}
@@ -77,6 +79,7 @@ class Teams
   def get_email(email_cell, division)
     email = ''
     if email_cell[0] == nil
+      puts email_cell
       email_cell = cellContainers[2].css('h2 img')
     end
 
