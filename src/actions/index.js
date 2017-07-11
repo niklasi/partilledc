@@ -1,4 +1,5 @@
 import { FirebaseList, firebaseAuth } from '../firebase'
+import superagent from 'superagent'
 
 const seriesList = new FirebaseList({onLoad: loadSeriesSuccess}, (attr) => Object.assign({}, attr))
 
@@ -98,6 +99,16 @@ export function loadTodaysMatches (today) {
   return (dispatch) => {
     matchList.path = '/matches'
     matchList.subscribe(dispatch, {child: 'date', equalTo: today})
+  }
+}
+
+export function loadMyMatches (email) {
+  return (dispatch) => {
+    superagent.get('https://us-central1-project-8539870983476533695.cloudfunctions.net/mymatches')
+    .query({ email })
+    .end((err, result) => {
+      return dispatch(loadMatchesSuccess(result.body)) 
+    })
   }
 }
 

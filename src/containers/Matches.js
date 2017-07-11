@@ -2,7 +2,7 @@ import React from 'react'
 import Match from './Match'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import { connect } from 'react-redux'
-import { saveMatch, loadTodaysMatches, loadMatches, unloadMatches } from '../actions'
+import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../actions'
 
 const GridLayout = WidthProvider(Responsive)
 const defaultProps = {className: 'layout',
@@ -18,31 +18,37 @@ class Matches extends React.Component {
   }
 
   componentDidMount () {
-    this.getMatches(this.props.params.series)
+    this.getMatches(this.props.route.path, this.props.params.series)
   }
 
-  getMatches (series) {
+  getMatches (path, series) {
     clearInterval(this.interval)
 
-    if (series) {
-      this.props.loadMatches(series)
-    } else {
-      const today = () => new Date().toLocaleDateString('sv-SE')
-      let currentDay = today()
-      this.props.loadTodaysMatches(currentDay)
+    switch (path) { 
+      case '/series/:series/matches':
+        this.props.loadMatches(series)
+        break
+      case '/todays-matches':
+        const today = () => new Date().toLocaleDateString('sv-SE')
+        let currentDay = today()
+        this.props.loadTodaysMatches(currentDay)
 
-      this.interval = setInterval(() => {
-        if (currentDay !== today()) {
-          currentDay = today()
-          this.props.loadTodaysMatches(currentDay)
-        }
-      }, 1000 * 60)
+        this.interval = setInterval(() => {
+          if (currentDay !== today()) {
+            currentDay = today()
+            this.props.loadTodaysMatches(currentDay)
+          }
+        }, 1000 * 60)
+        break
+      case '/my-matches':
+        this.props.loadMyMatches(this.props.user.email)
+        break
     }
   }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.params !== this.props.params) {
-      this.getMatches(nextProps.params.series)
+      this.getMatches(nextProps.route.path, nextProps.params.series)
     }
   }
 
@@ -65,6 +71,7 @@ Matches.propTypes = {
   matches: React.PropTypes.array.isRequired,
   loadMatches: React.PropTypes.func.isRequired,
   loadTodaysMatches: React.PropTypes.func.isRequired,
+  loadMyMatches: React.PropTypes.func.isRequired,
   unloadMatches: React.PropTypes.func.isRequired,
   saveMatch: React.PropTypes.func.isRequired
 }
@@ -74,4 +81,4 @@ const mapStateToProps = (state, ownProps) => {
   return {matches, user, ownProps}
 }
 
-export default connect(mapStateToProps, {saveMatch, loadTodaysMatches, loadMatches, unloadMatches})(Matches)
+export default connect(mapStateToProps, {saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches})(Matches)

@@ -38,6 +38,16 @@ class App extends React.Component {
       }
       return <MenuItem primaryText='Logga ut' onTouchTap={this.props.signOut} />
     }
+
+    const myMatches = () => {
+      if (!this.props.user.isAnonymous) {
+        return <ListItem>
+          <Link to={'/my-matches'} onClick={this.handleToggle}> Mina matcher
+          </Link>
+          </ListItem>
+      }
+    }
+
     return <div>
              <AppBar
                key='AppBar'
@@ -60,6 +70,7 @@ class App extends React.Component {
                  </Subheader>
                  {series.exerciseSeries.map(listItemFactory)}
                  <Divider />
+                 {myMatches()}
                  <ListItem>
                    <Link to={'/todays-matches'} onClick={this.handleToggle}> Dagens matcher
                    </Link>

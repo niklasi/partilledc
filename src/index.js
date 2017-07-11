@@ -27,9 +27,10 @@ const start = () => {
              <Router history={hashHistory}>
                <Route path='/' component={App}>
                  <Route path='/series/:series/teams' component={Teams} />
-                 <Route path='/series/:series/matches' component={Matches} />
+                 <Route path='/series/:series/matches' onEnter={(nextState) => nextState.location.state = {tag: 'series'}}component={Matches} />
                  <Route path='series/:series/table' component={SeriesTable} />
-                 <Route path='/todays-matches' component={Matches} />
+                 <Route path='/todays-matches' onEnter={(nextState) => nextState.location.state = {tag: 'today'}} component={Matches} />
+                 <Route path='/my-matches' onEnter={(nextState) => nextState.location.state = {tag: 'my'}} component={Matches} />
                  <Route path='/sign-in' component={SignIn} />
                  <Route path='/register-user' component={RegisterUser} />
                  <Route path='/reset-password' component={ResetPassword} />
