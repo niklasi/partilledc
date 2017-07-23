@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "firebase-admin": "^5.0.1",
     "react-scripts": "^0.8.4",
     "request": "^2.74.0",
     "standard": "^8.6.0",
