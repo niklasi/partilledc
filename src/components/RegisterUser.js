@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
@@ -30,7 +31,7 @@ const RegisterUser = ({registerUser}) => {
 }
 
 RegisterUser.propTypes = {
-  registerUser: React.PropTypes.func.isRequired
+  registerUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
 import Team from './Team'
 import { Responsive, WidthProvider } from 'react-grid-layout'
@@ -38,10 +39,10 @@ class Teams extends React.Component {
 }
 
 Teams.propTypes = {
-  params: React.PropTypes.object.isRequired,
-  teams: React.PropTypes.array.isRequired,
-  loadTeams: React.PropTypes.func.isRequired,
-  unloadTeams: React.PropTypes.func.isRequired
+  params: PropTypes.object.isRequired,
+  teams: PropTypes.array.isRequired,
+  loadTeams: PropTypes.func.isRequired,
+  unloadTeams: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
@@ -26,7 +27,7 @@ const ConfirmPasswordReset = ({auth, location, confirmPasswordReset}) => {
 }
 
 ConfirmPasswordReset.propTypes = {
-  confirmPasswordReset: React.PropTypes.func.isRequired
+  confirmPasswordReset: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {

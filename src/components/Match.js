@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types' 
 import { Card, CardHeader } from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
@@ -93,9 +94,9 @@ class Match extends Component {
 }
 
 Match.propTypes = {
-  match: React.PropTypes.object.isRequired,
-  saveMatch: React.PropTypes.func.isRequired,
-  user: React.PropTypes.object
+  match: PropTypes.object.isRequired,
+  saveMatch: PropTypes.func.isRequired,
+  user: PropTypes.object
 }
 
 export default Match

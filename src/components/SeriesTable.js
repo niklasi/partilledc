@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types' 
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import { connect } from 'react-redux'
 import { loadSeriesTable, unloadSeriesTable } from '../actions'
@@ -76,10 +77,10 @@ class SeriesTable extends React.Component {
 }
 
 SeriesTable.propTypes = {
-  params: React.PropTypes.object.isRequired,
-  seriesTable: React.PropTypes.array.isRequired,
-  loadSeriesTable: React.PropTypes.func.isRequired,
-  unloadSeriesTable: React.PropTypes.func.isRequired
+  params: PropTypes.object.isRequired,
+  seriesTable: PropTypes.array.isRequired,
+  loadSeriesTable: PropTypes.func.isRequired,
+  unloadSeriesTable: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {

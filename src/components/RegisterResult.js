@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types' 
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
@@ -52,8 +53,8 @@ class RegisterResult extends React.Component {
 }
 
 RegisterResult.propTypes = {
-  match: React.PropTypes.object.isRequired,
-  onChangeResult: React.PropTypes.func.isRequired
+  match: PropTypes.object.isRequired,
+  onChangeResult: PropTypes.func.isRequired
 }
 
 export default RegisterResult

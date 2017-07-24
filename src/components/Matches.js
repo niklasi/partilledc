@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types' 
 import Match from './Match'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import { connect } from 'react-redux'
@@ -43,6 +44,8 @@ class Matches extends React.Component {
       case '/my-matches':
         this.props.loadMyMatches(this.props.user.email)
         break
+      default:
+        console.log('No matching path')
     }
   }
 
@@ -66,14 +69,14 @@ class Matches extends React.Component {
 }
 
 Matches.propTypes = {
-  params: React.PropTypes.object.isRequired,
-  user: React.PropTypes.object,
-  matches: React.PropTypes.array.isRequired,
-  loadMatches: React.PropTypes.func.isRequired,
-  loadTodaysMatches: React.PropTypes.func.isRequired,
-  loadMyMatches: React.PropTypes.func.isRequired,
-  unloadMatches: React.PropTypes.func.isRequired,
-  saveMatch: React.PropTypes.func.isRequired
+  params: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  matches: PropTypes.array.isRequired,
+  loadMatches: PropTypes.func.isRequired,
+  loadTodaysMatches: PropTypes.func.isRequired,
+  loadMyMatches: PropTypes.func.isRequired,
+  unloadMatches: PropTypes.func.isRequired,
+  saveMatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types' 
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
@@ -82,10 +83,10 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  routes: React.PropTypes.array,
-  children: React.PropTypes.element,
-  user: React.PropTypes.object,
-  signOut: React.PropTypes.func.isRequired
+  routes: PropTypes.array,
+  children: PropTypes.element,
+  user: PropTypes.object,
+  signOut: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {

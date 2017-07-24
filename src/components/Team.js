@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types' 
 import { Card, CardHeader } from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
@@ -19,7 +20,7 @@ class Team extends Component {
 }
 
 Team.propTypes = {
-  team: React.PropTypes.object.isRequired
+  team: PropTypes.object.isRequired
 }
 
 export default Team
