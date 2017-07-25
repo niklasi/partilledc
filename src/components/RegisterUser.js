@@ -1,8 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
+import { Responsive, WidthProvider } from 'react-grid-layout'
 import { registerUser } from '../actions'
 import { Form, TextField, Button } from './Shared'
+
+const GridLayout = WidthProvider(Responsive)
+const defaultProps = {
+  className: 'layout',
+  cols: {lg: 12, md: 12, sm: 12, xs: 12, xxs: 12},
+  rowHeight: 60
+}
+
+const dataGridItem = {
+  x: 2, y: 1, w: 8, h: 1, isDraggable: false
+}
 
 const RegisterUser = ({registerUser}) => {
   let username = ''
@@ -20,15 +32,19 @@ const RegisterUser = ({registerUser}) => {
     registerUser(username, password)
   }
 
-  return <div style={{marginLeft: '20px'}}>
-    <Form onSubmit={handleRegisterUser} name={'register-user'}>
-    <TextField label='Epost' onChange={handleUsername} />
-    <br />
-    <TextField label='Lösenord' type='password' onChange={handlePassword} />
-    <br />
-    <Button type='submit' label='Skapa konto' primary />
-    </Form>
+  return <Form onSubmit={handleRegisterUser} name={'register-user'}>
+    <GridLayout key='layout' {...defaultProps}>
+    <div key={"row-1"} data-grid={dataGridItem}>
+    <TextField label='Epost' style={{width: '100%'}} onChange={handleUsername} />
     </div>
+    <div key={"row-2"} data-grid={dataGridItem}>
+    <TextField label='Lösenord' style={{width: '100%'}} type='password' onChange={handlePassword} />
+    </div>
+    <div key={"row-3"} data-grid={dataGridItem}>
+    <Button fullWidth label='Skapa konto' primary />
+    </div>
+    </GridLayout>
+    </Form>
 }
 
 RegisterUser.propTypes = {
