@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types' 
+import { withRouter } from 'react-router'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
@@ -24,6 +25,12 @@ class App extends React.Component {
 
   handleToggle () {
     this.setState({open: !this.state.open})
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.user.isAnonymous !== nextProps.user.isAnonymous) {
+      this.props.router.push('/')
+    }
   }
 
   render () {
@@ -94,5 +101,5 @@ const mapStateToProps = (state, ownProps) => {
   return {user, ownProps}
 }
 
-export default connect(mapStateToProps, {signOut})(App)
+export default connect(mapStateToProps, {signOut})(withRouter(App))
 /* eslint-enable react/jsx-indent */
