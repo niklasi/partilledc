@@ -59,9 +59,8 @@ SignIn.propTypes = {
   signIn: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const {auth} = state
-  return {auth, ownProps}
+const mapStateToProps = () => {
+  return {}
 }
 
 export default connect(mapStateToProps, {signIn})(SignIn)

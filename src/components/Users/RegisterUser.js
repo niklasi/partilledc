@@ -52,8 +52,8 @@ RegisterUser.propTypes = {
   registerUser: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {ownProps}
+const mapStateToProps = () => {
+  return {}
 }
 
 export default connect(mapStateToProps, {registerUser})(RegisterUser)
