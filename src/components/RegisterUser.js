@@ -6,6 +6,7 @@ import { registerUser } from '../actions'
 import { Form, TextField, Button } from './Shared'
 
 const GridLayout = WidthProvider(Responsive)
+
 const defaultProps = {
   className: 'layout',
   cols: {lg: 12, md: 12, sm: 12, xs: 12, xxs: 12},
@@ -34,13 +35,13 @@ const RegisterUser = ({registerUser}) => {
 
   return <Form onSubmit={handleRegisterUser} name={'register-user'}>
     <GridLayout key='layout' {...defaultProps}>
-    <div key={"row-1"} data-grid={dataGridItem}>
+    <div key={"register-user-row-1"} data-grid={dataGridItem}>
     <TextField label='Epost' style={{width: '100%'}} onChange={handleUsername} />
     </div>
-    <div key={"row-2"} data-grid={dataGridItem}>
+    <div key={"register-user-row-2"} data-grid={dataGridItem}>
     <TextField label='Lösenord' style={{width: '100%'}} type='password' onChange={handlePassword} />
     </div>
-    <div key={"row-3"} data-grid={dataGridItem}>
+    <div key={"register-user-row-3"} data-grid={dataGridItem}>
     <Button fullWidth label='Skapa konto' primary />
     </div>
     </GridLayout>
