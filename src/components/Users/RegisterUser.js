@@ -42,7 +42,7 @@ const RegisterUser = ({registerUser}) => {
     <TextField label='Lösenord' style={{width: '100%'}} type='password' onChange={handlePassword} />
     </div>
     <div key={"register-user-row-3"} data-grid={dataGridItem}>
-    <Button fullWidth label='Skapa konto' primary />
+    <Button type='submit' fullWidth label='Skapa konto' primary />
     </div>
     </GridLayout>
     </Form>
