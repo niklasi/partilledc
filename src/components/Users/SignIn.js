@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Responsive, WidthProvider } from 'react-grid-layout'
-import { signIn } from '../actions'
-import { Form, TextField, Button } from './Shared'
+import { signIn } from '../../actions'
+import { Form, TextField, Button } from '../Shared'
 
 const GridLayout = WidthProvider(Responsive)
 const defaultProps = {

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
 import { Responsive, WidthProvider } from 'react-grid-layout'
-import { registerUser } from '../actions'
-import { Form, TextField, Button } from './Shared'
+import { registerUser } from '../../actions'
+import { Form, TextField, Button } from '../Shared'
 
 const GridLayout = WidthProvider(Responsive)
 
