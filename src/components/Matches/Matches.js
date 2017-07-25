@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Match from './Match'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import { connect } from 'react-redux'
-import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../actions'
+import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../../actions'
 
 const GridLayout = WidthProvider(Responsive)
 const defaultProps = {className: 'layout',

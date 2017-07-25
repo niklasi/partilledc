@@ -11,8 +11,8 @@ import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import series from '../series.json'
-import { signOut } from '../actions'
+import series from '../../series.json'
+import { signOut } from '../../actions'
 
 /* eslint-disable react/jsx-indent */
 class App extends React.Component {

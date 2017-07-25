@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
-import TextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton'
 import { resetPassword } from '../actions'
+import { Form, TextField, Button } from './Shared'
 
 const ResetPassword = ({auth, resetPassword}) => {
   let email = ''
@@ -17,11 +16,13 @@ const ResetPassword = ({auth, resetPassword}) => {
   }
 
   return <div style={{marginLeft: '20px'}}>
+           <Form onSubmit={handleReset} name={'handle-reset'}>
            <a>Skicka instruktioner som beskriver hur du återställer ditt lösenord.</a>
            <br />
-           <TextField floatingLabelText='Epost' onChange={handleEmail} />
+           <TextField label='Epost' onChange={handleEmail} />
            <br />
-           <FlatButton label='Skicka' primary onTouchTap={handleReset} />
+           <Button type='submit' label='Skicka' primary />
+           </Form>
          </div>
 }
 

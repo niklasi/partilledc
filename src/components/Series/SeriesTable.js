@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types' 
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import { connect } from 'react-redux'
-import { loadSeriesTable, unloadSeriesTable } from '../actions'
-import allSeries from '../series.json'
+import { loadSeriesTable, unloadSeriesTable } from '../../actions'
+import allSeries from '../../series.json'
 
 class SeriesTable extends React.Component {
 

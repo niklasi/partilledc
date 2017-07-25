@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Team from './Team'
 import { Responsive, WidthProvider } from 'react-grid-layout'
-import { loadTeams, unloadTeams } from '../actions'
+import { loadTeams, unloadTeams } from '../../actions'
 
 const GridLayout = WidthProvider(Responsive)
 const defaultProps = {className: 'layout',

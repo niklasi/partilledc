@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
-import TextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton'
 import { registerUser } from '../actions'
+import { Form, TextField, Button } from './Shared'
 
 const RegisterUser = ({registerUser}) => {
   let username = ''
@@ -17,17 +16,19 @@ const RegisterUser = ({registerUser}) => {
     password = value
   }
 
-  const handleSignIn = () => {
+  const handleRegisterUser = (evt) => {
     registerUser(username, password)
   }
 
   return <div style={{marginLeft: '20px'}}>
-           <TextField floatingLabelText='Epost' onChange={handleUsername} />
-           <br />
-           <TextField floatingLabelText='Lösenord' type='password' onChange={handlePassword} />
-           <br />
-           <FlatButton label='Skapa konto' primary onTouchTap={handleSignIn} />
-         </div>
+    <Form onSubmit={handleRegisterUser} name={'register-user'}>
+    <TextField label='Epost' onChange={handleUsername} />
+    <br />
+    <TextField label='Lösenord' type='password' onChange={handlePassword} />
+    <br />
+    <Button type='submit' label='Skapa konto' primary />
+    </Form>
+    </div>
 }
 
 RegisterUser.propTypes = {

@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
-import TextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton'
 import { Link } from 'react-router'
 import { signIn } from '../actions'
+import { Form, TextField, Button } from './Shared'
 
 const SignIn = ({auth, signIn}) => {
   let username = ''
@@ -22,16 +21,20 @@ const SignIn = ({auth, signIn}) => {
     signIn(username, password)
   }
 
-  return <div style={{marginLeft: '20px'}}>
-           <TextField floatingLabelText='Epost' onChange={handleUsername} />
-           <br />
-           <TextField floatingLabelText='Lösenord' type='password' onChange={handlePassword} />
-           <br />
-           <FlatButton label='Logga in' primary onTouchTap={handleSignIn} />
-           <br />
-           <Link to='/reset-password'> Problem att logga in?
-           </Link>
-         </div>
+  return (
+    <div style={{marginLeft: '20px'}}>
+    <Form onSubmit={handleSignIn} name={'sign-in'}>
+    <TextField label='Epost' onChange={handleUsername} />
+    <br />
+    <TextField label='Lösenord' type='password' onChange={handlePassword} />
+    <br />
+    <Button type='submit' label='Logga in' primary />
+    <br />
+    </Form>
+    <Link to='/reset-password'> Problem att logga in?
+    </Link>
+    </div>
+  )
 }
 
 SignIn.propTypes = {

@@ -7,7 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RegisterResult from './RegisterResult'
-import { matchPoints } from '../lib/partilledc-score'
+import { matchPoints } from '../../lib/partilledc-score'
 
 const colMapper = ({ text, result = [] }) => <TableRowColumn key={text} style={{whiteSpace: 'normal'}}>
                                                {result.filter(r => r.home !== 0 || r.away !== 0).map(r => r.home + '-' + r.away).join(', ')}

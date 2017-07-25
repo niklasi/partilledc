@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types' 
 import { connect } from 'react-redux'
-import TextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton'
 import { confirmPasswordReset } from '../actions'
+import { Form, TextField, Button } from './Shared'
 
 const ConfirmPasswordReset = ({auth, location, confirmPasswordReset}) => {
   let password = ''
@@ -13,16 +12,17 @@ const ConfirmPasswordReset = ({auth, location, confirmPasswordReset}) => {
   }
 
   const handleConfirmReset = () => {
-    console.log(location.query.oobCode)
     confirmPasswordReset(location.query.oobCode, password)
   }
 
   return <div style={{marginLeft: '20px'}}>
+          <Form onSubmit={handleConfirmReset} name={'confirm-password-reset'}>
            <a>Ange ditt nya lösenord</a>
            <br />
-           <TextField type='password' floatingLabelText='Lösenord' onChange={handlePassword} />
+           <TextField type='password' label='Lösenord' onChange={handlePassword} />
            <br />
-           <FlatButton label='Skicka' primary onTouchTap={handleConfirmReset} />
+           <Button type='submit' label='Skicka' primary />
+           </Form>
          </div>
 }
 
