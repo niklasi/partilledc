@@ -11,7 +11,8 @@ import { connect } from 'react-redux'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import LockOpen from 'material-ui/svg-icons/action/lock-open'
+import LockClosed from 'material-ui/svg-icons/action/lock-outline'
 import series from '../../series.json'
 import { signOut } from '../../actions'
 
@@ -56,14 +57,16 @@ class App extends React.Component {
       }
     }
 
+    const rightIcon = () => {
+      return this.props.user.isAnonymous ? <LockClosed /> : <LockOpen />
+    }
+
     return <div>
              <AppBar
                key='AppBar'
-               title={this.props.user.email}
+               title=''
                onLeftIconButtonTouchTap={this.handleToggle}
-               iconElementRight={<IconMenu iconButtonElement={<IconButton>
-                                                                <MoreVertIcon />
-                                                              </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
+               iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
                                    {menu()}
                                  </IconMenu>} />
              {this.props.children}
