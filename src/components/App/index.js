@@ -63,13 +63,16 @@ class App extends React.Component {
 
     return <div>
              <AppBar
+               style={{position: 'fixed', top: '0px', height: '60px'}}
                key='AppBar'
                title=''
                onLeftIconButtonTouchTap={this.handleToggle}
                iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
                                    {menu()}
                                  </IconMenu>} />
+             <div style={{marginTop: '60px'}}>
              {this.props.children}
+              </div>
              <Drawer docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
                <List>
                  <Subheader>
