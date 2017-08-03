@@ -12,9 +12,13 @@ class Team extends Component {
     const {palette} = getMuiTheme()
 
     return <Card>
-             <CardHeader avatar={<Avatar size={35} backgroundColor={palette.accent1Color}>
+             <CardHeader style={{overflow: 'hidden'}} avatar={
+               <Avatar size={35} backgroundColor={palette.accent1Color}>
                                    {team.teamRanking}
-                                 </Avatar>} title={team.teamName} subtitle={<div>{'Kontakt: ' + team.contact}<div>{'Tel: ' + team.phone}</div><div>{'Email: ' + team.email}</div></div>} />
+                                 </Avatar>} 
+                title={team.teamName} 
+                subtitle={<div>{team.contact}<div>{team.phone}</div><div>{team.email}</div></div>}>
+                </CardHeader>
            </Card>
   }
 }

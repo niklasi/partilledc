@@ -66,7 +66,7 @@ class Match extends Component {
 
     const formatMatchPoints = (score) => `${score.home.points}-${score.away.points}`
     return <Card>
-             <CardHeader avatar={<Avatar size={35} backgroundColor={palette.accent1Color}>
+             <CardHeader style={{overflow: 'hidden'}} avatar={<Avatar size={35} backgroundColor={palette.accent1Color}>
                                    {formatMatchPoints(matchPoints(match.matches.map(m => m.result)))}
                                  </Avatar>} title={`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`} subtitle={'Bana ' + match.lane + ' ' + match.date + ' kl ' + match.time} />
              <Table selectable={false} multiselectable={false}>
