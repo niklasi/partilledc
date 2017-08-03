@@ -22,6 +22,7 @@ class App extends React.Component {
     super(props)
     this.state = {open: false}
     this.handleToggle = this.handleToggle.bind(this)
+    this.signOut = this.signOut.bind(this)
   }
 
   handleToggle () {
@@ -40,25 +41,32 @@ class App extends React.Component {
     return seriesNames.length > 0 ? `${seriesNames} - ${routeName}` : routeName
   }
 
+  signOut (evt) {
+    evt.preventDefault()
+    this.props.signOut()
+  }
+
+  menu () {
+    if (this.props.user.isAnonymous) {
+      const menuItems = [{to: '/register-user', text: 'Ny användare'}, {to: '/sign-in', text: 'Logga in'}]
+      return menuItems.map(item => <MenuItem key={item.text}>
+        <Link to={item.to}>
+        {item.text}
+        </Link>
+        </MenuItem>)
+    }
+
+    return <MenuItem primaryText='Logga ut' onTouchTap={this.signOut} />
+  }
+
   componentWillReceiveProps (nextProps) {
     if (this.props.user.isAnonymous !== nextProps.user.isAnonymous) {
-      this.props.router.push('/')
+      nextProps.user.isAnonymous ? this.props.router.push('/') : this.props.router.goBack()
     }
   }
 
   render () {
     const listItemFactory = (serie) => <ListItem key={serie.id} primaryText={serie.text} nestedItems={[ <ListItem key={'team-' + serie.id}> <Link to={'/series/' + serie.id + '/teams'} onClick={this.handleToggle}> Lag </Link> </ListItem>, <ListItem key={'matches-' + serie.id}> <Link to={'/series/' + serie.id + '/matches'} onClick={this.handleToggle}> Matcher </Link> </ListItem>, <ListItem key={'table-' + serie.id}> <Link to={'/series/' + serie.id + '/table'} onClick={this.handleToggle}> Tabell </Link> </ListItem> ]} />
-    const menu = () => {
-      if (this.props.user.isAnonymous) {
-        const menuItems = [{to: '/register-user', text: 'Ny användare'}, {to: '/sign-in', text: 'Logga in'}]
-        return menuItems.map(item => <MenuItem key={item.text}>
-                                     <Link to={item.to}>
-                                     {item.text}
-                                     </Link>
-                                     </MenuItem>)
-      }
-      return <MenuItem primaryText='Logga ut' onTouchTap={this.props.signOut} />
-    }
 
     const myMatches = () => {
       if (!this.props.user.isAnonymous) {
@@ -80,7 +88,7 @@ class App extends React.Component {
                title={this.title()}
                onLeftIconButtonTouchTap={this.handleToggle}
                iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-                                   {menu()}
+                                   {this.menu()}
                                  </IconMenu>} />
              <div style={{marginTop: '60px'}}>
              {this.props.children}

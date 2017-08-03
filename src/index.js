@@ -22,7 +22,7 @@ const start = () => {
   render(<MuiThemeProvider>
            <Provider store={store}>
              <Router history={hashHistory}>
-               <Route path='/' component={App}>
+               <Route path='/' name='' component={App}>
                  <Route path='/series/:series/teams' name='Lag' component={Teams} />
                  <Route path='/series/:series/matches' name='Matcher' onEnter={(nextState) => nextState.location.state = {tag: 'series'}}component={Matches} />
                  <Route path='series/:series/table' name='Tabell' component={SeriesTable} />
