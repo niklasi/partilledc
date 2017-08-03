@@ -1,0 +1,19 @@
+{
+  "rules": {
+    ".read":true,
+    "matches": {
+      ".indexOn": ["series", "date", "homeTeam/id", "awayTeam/id"],
+      "$match": {
+        ".write": "root.child('admins/' + auth.uid).exists() || root.child('teams/' + data.child('homeTeam/id').val() + '/email').val() == auth.email || root.child('teams/' + data.child('awayTeam/id').val() + '/email').val() == auth.email"
+      }
+    },
+    "teams": {
+      ".indexOn": ["series", "email"],
+      ".write": "root.child('admins/' + auth.uid).exists()"
+    },
+    "admins": {
+      ".read": false,
+      ".write": false
+    }
+  }
+}

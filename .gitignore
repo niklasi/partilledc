@@ -11,4 +11,3 @@ build
 npm-debug.log
 .firebaserc
 credentials/
-firebase.rules.json
