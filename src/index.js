@@ -23,15 +23,15 @@ const start = () => {
            <Provider store={store}>
              <Router history={hashHistory}>
                <Route path='/' component={App}>
-                 <Route path='/series/:series/teams' component={Teams} />
-                 <Route path='/series/:series/matches' onEnter={(nextState) => nextState.location.state = {tag: 'series'}}component={Matches} />
-                 <Route path='series/:series/table' component={SeriesTable} />
-                 <Route path='/todays-matches' onEnter={(nextState) => nextState.location.state = {tag: 'today'}} component={Matches} />
-                 <Route path='/my-matches' onEnter={(nextState) => nextState.location.state = {tag: 'my'}} component={Matches} />
-                 <Route path='/sign-in' component={SignIn} />
-                 <Route path='/register-user' component={RegisterUser} />
-                 <Route path='/reset-password' component={ResetPassword} />
-                 <Route path='/confirm-password-reset' component={ConfirmPasswordReset} />
+                 <Route path='/series/:series/teams' name='Lag' component={Teams} />
+                 <Route path='/series/:series/matches' name='Matcher' onEnter={(nextState) => nextState.location.state = {tag: 'series'}}component={Matches} />
+                 <Route path='series/:series/table' name='Tabell' component={SeriesTable} />
+                 <Route path='/todays-matches' name='Dagens matcher' onEnter={(nextState) => nextState.location.state = {tag: 'today'}} component={Matches} />
+                 <Route path='/my-matches' name='Mina matcher' onEnter={(nextState) => nextState.location.state = {tag: 'my'}} component={Matches} />
+                 <Route path='/sign-in' name='Logga in' component={SignIn} />
+                 <Route path='/register-user' name='Ny användare' component={RegisterUser} />
+                 <Route path='/reset-password' name='Återställ lösenord' component={ResetPassword} />
+                 <Route path='/confirm-password-reset' name='Bekräfta' component={ConfirmPasswordReset} />
                </Route>
              </Router>
            </Provider>

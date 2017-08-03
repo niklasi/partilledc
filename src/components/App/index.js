@@ -28,6 +28,18 @@ class App extends React.Component {
     this.setState({open: !this.state.open})
   }
 
+  title () {
+    const seriesNames = series.companySeries
+      .concat(series.exerciseSeries)
+      .filter(x => x.id === this.props.params.series)
+      .map(x => x.text)
+    
+    const routes = this.props.routes
+    const routeName = routes[routes.length - 1].name
+
+    return seriesNames.length > 0 ? `${seriesNames} - ${routeName}` : routeName
+  }
+
   componentWillReceiveProps (nextProps) {
     if (this.props.user.isAnonymous !== nextProps.user.isAnonymous) {
       this.props.router.push('/')
@@ -65,7 +77,7 @@ class App extends React.Component {
              <AppBar
                style={{position: 'fixed', top: '0px', height: '60px'}}
                key='AppBar'
-               title=''
+               title={this.title()}
                onLeftIconButtonTouchTap={this.handleToggle}
                iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
                                    {menu()}
