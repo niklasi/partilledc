@@ -43,7 +43,6 @@ const initAuth = (dispatch) => {
     firebaseAuth.onAuthStateChanged(
       user => {
         dispatch(currentUser(user))
-        // unsub()
         resolve()
       },
       error => reject(error)
