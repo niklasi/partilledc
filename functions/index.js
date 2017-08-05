@@ -30,6 +30,28 @@ exports.mymatches = functions.https.onRequest((request, response) => {
   }) 
 })
 
+exports.addUser = functions.auth.user().onCreate(evt => {
+  const db = admin.database()
+  const email = evt.data.email
+
+  db.ref('/teams')
+    .orderByChild('email')
+    .equalTo(email)
+    .once('value', snapshots => {
+    
+    const user = {email, teams: []}
+    snapshots.forEach(team => {
+      user.teams.push(team.key)
+    })
+
+    db.ref('/users/' + evt.data.uid).set(user)
+  })
+})
+
+exports.removeUser = functions.auth.user().onDelete(evt => {
+  return admin.database().ref("/users/" + evt.data.uid).remove()
+})
+
 exports.test = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     response.setHeader('content-type', 'text/calendar')
