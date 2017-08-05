@@ -6,22 +6,26 @@ admin.initializeApp(functions.config().firebase);
 exports.mymatches = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const db = admin.database()
-    const email = request.query.email === 'niklas@ingholt.com' ? 'daniel.eek68@gmail.com' : request.query.email
-    db.ref('/teams').orderByChild('email').equalTo(email).on('value', snapshot => {
+    db
+      .ref('/users/' + request.query.uid)
+      .once('value', snapshot => {
+        
+        const teams = snapshot.val().teams || {}
+        const promises = []
 
-      const promises = []
-      snapshot.forEach(team => {
-        promises.push(db.ref('/matches').orderByChild('homeTeam/id').equalTo(team.key).once('value'))
-        promises.push(db.ref('/matches').orderByChild('awayTeam/id').equalTo(team.key).once('value'))
-      })
-      Promise.all(promises).then(snapshots => {
-        const matches = snapshots
-          .map(s => s.val())
-          .map(x => Object.keys(x).map(key => x[key]))
-          .reduce((matches, list) => matches.concat(list), [])
+        Object.keys(teams).forEach(x => {
+          promises.push(db.ref('/matches').orderByChild('homeTeam/id').equalTo(teams[x]).once('value'))
+          promises.push(db.ref('/matches').orderByChild('awayTeam/id').equalTo(teams[x]).once('value'))
+        })
 
-        response.status(200).send(matches)
-      })
+        Promise.all(promises).then(snapshots => {
+          const matches = snapshots
+            .map(s => s.val())
+            .map(x => Object.keys(x).map(key => x[key]))
+            .reduce((matches, list) => matches.concat(list), [])
+
+          response.status(200).send(matches)
+        })
     })
   }) 
 })

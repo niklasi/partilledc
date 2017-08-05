@@ -42,7 +42,7 @@ class Matches extends React.Component {
         }, 1000 * 60)
         break
       case '/my-matches':
-        this.props.loadMyMatches(this.props.user.email)
+        this.props.loadMyMatches(this.props.user.uid)
         break
       default:
         console.log('No matching path')

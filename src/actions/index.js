@@ -102,10 +102,10 @@ export function loadTodaysMatches (today) {
   }
 }
 
-export function loadMyMatches (email) {
+export function loadMyMatches (uid) {
   return (dispatch) => {
     superagent.get('https://us-central1-project-8539870983476533695.cloudfunctions.net/mymatches')
-    .query({ email })
+    .query({ uid })
     .end((err, result) => {
       return dispatch(loadMatchesSuccess(result.body)) 
     })
