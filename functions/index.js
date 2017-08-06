@@ -21,7 +21,7 @@ exports.mymatches = functions.https.onRequest((request, response) => {
         Promise.all(promises).then(snapshots => {
           const matches = snapshots
             .map(s => s.val())
-            .map(x => Object.keys(x).map(key => x[key]))
+            .map(x => Object.keys(x).map(key => Object.assign({}, {id: key}, x[key])))
             .reduce((matches, list) => matches.concat(list), [])
 
           response.status(200).send(matches)
