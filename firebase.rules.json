@@ -4,7 +4,7 @@
     "matches": {
       ".indexOn": ["series", "date", "homeTeam/id", "awayTeam/id"],
       "$match": {
-        ".write": "root.child('users/' + auth.uid).child('admin').val() === true || root.child('teams/' + data.child('homeTeam/id').val() + '/email').val() == auth.email || root.child('teams/' + data.child('awayTeam/id').val() + '/email').val() == auth.email"
+        ".write": "root.child('users/' + auth.uid).child('admin').val() === true || root.child('users/' + auth.uid + '/teams/' + data.child('homeTeam/id').val()).exists() || root.child('users/' + auth.uid + '/teams/' + data.child('awayTeam/id').val()).exists()"
       }
     },
     "teams": {
