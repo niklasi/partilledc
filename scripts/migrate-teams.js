@@ -10,6 +10,20 @@ const config = {
 const app = firebase.initializeApp(config)
 const db = app.database()
 
+db.ref('/users').once('value', snapshots => {
+  
+  snapshots.forEach(x => {
+    const user = x.val()
+    let teams = {}
+    Object.keys(user.teams || {})
+      .map(key => user.teams[key])
+      .forEach(team => teams[team] = true)
+    user.teams = teams
+    db.ref('/users/' + x.key).set(user)
+  })
+})
+
+return
 const companySeries = allSeries.companySeries
 const exerciseSeries = allSeries.exerciseSeries
 

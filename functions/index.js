@@ -13,9 +13,9 @@ exports.mymatches = functions.https.onRequest((request, response) => {
         const teams = snapshot.val().teams || {}
         const promises = []
 
-        Object.keys(teams).forEach(x => {
-          promises.push(db.ref('/matches').orderByChild('homeTeam/id').equalTo(teams[x]).once('value'))
-          promises.push(db.ref('/matches').orderByChild('awayTeam/id').equalTo(teams[x]).once('value'))
+        Object.keys(teams).forEach(teamId => {
+          promises.push(db.ref('/matches').orderByChild('homeTeam/id').equalTo(teamId).once('value'))
+          promises.push(db.ref('/matches').orderByChild('awayTeam/id').equalTo(teamId).once('value'))
         })
 
         Promise.all(promises).then(snapshots => {
@@ -39,9 +39,9 @@ exports.addUser = functions.auth.user().onCreate(evt => {
     .equalTo(email)
     .once('value', snapshots => {
     
-    const user = {email, teams: []}
+    const user = {email, teams: {}}
     snapshots.forEach(team => {
-      user.teams.push(team.key)
+      user.teams[team.key] = true
     })
 
     db.ref('/users/' + evt.data.uid).set(user)
