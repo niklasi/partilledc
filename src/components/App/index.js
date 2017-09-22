@@ -81,16 +81,22 @@ class App extends React.Component {
       return this.props.user.isAnonymous ? <LockClosed /> : <LockOpen />
     }
 
+    let display = 'flex'
+    let marginTop = '60px'
+    if (window.location !== window.parent.location) {
+      display = 'none'
+      marginTop = '0px'
+    }
     return <div>
              <AppBar
-               style={{position: 'fixed', top: '0px', height: '60px'}}
+               style={{display, position: 'fixed', top: '0px', height: '60px'}}
                key='AppBar'
                title={this.title()}
                onLeftIconButtonTouchTap={this.handleToggle}
                iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
                                    {this.menu()}
                                  </IconMenu>} />
-             <div style={{marginTop: '60px'}}>
+             <div style={{marginTop}}>
              {this.props.children}
               </div>
              <Drawer docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
