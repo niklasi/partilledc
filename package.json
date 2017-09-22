@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "firebase-admin": "^5.0.1",
-    "firebase-tools": "^3.9.1",
+    "firebase-admin": "^5.2.1",
+    "firebase-tools": "^3.12.0",
     "react-scripts": "^1.0.0",
-    "request": "^2.74.0",
+    "request": "^2.82.0",
     "standard": "^8.6.0",
     "tap": "^8.0.1"
   },
@@ -16,7 +16,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-grid-layout": "^0.14.7",
+    "react-grid-layout": "^0.15.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
     "react-scripts": "1.0.10",
@@ -24,7 +24,7 @@
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
-    "superagent": "^3.5.2"
+    "superagent": "^3.6.0"
   },
   "scripts": {
     "test": "babel-tap test/test-*.js",
