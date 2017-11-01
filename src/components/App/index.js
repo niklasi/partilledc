@@ -101,11 +101,12 @@ class App extends React.Component {
               </div>
              <Drawer docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
                <List>
-                 <Subheader>
-                   Företagsserier
+                 <Subheader style={{fontSize: '24px'}}>
+                   Lagserier
                  </Subheader>
                  {series.companySeries.map(listItemFactory)}
-                 <Subheader>
+                 <Divider />
+                 <Subheader style={{fontSize: '24px'}}>
                    Motionsserier
                  </Subheader>
                  {series.exerciseSeries.map(listItemFactory)}
