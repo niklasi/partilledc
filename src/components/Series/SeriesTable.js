@@ -31,8 +31,8 @@ class SeriesTable extends React.Component {
       <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
         <TableRow>
           <TableHeaderColumn>
-                   Lag
-                 </TableHeaderColumn>
+            {companySeries ? 'Lag' : 'Spelare'}
+          </TableHeaderColumn>
           <TableHeaderColumn>
                    Matcher
                  </TableHeaderColumn>
