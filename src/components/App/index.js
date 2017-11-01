@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
@@ -34,7 +34,7 @@ class App extends React.Component {
       .concat(series.exerciseSeries)
       .filter(x => x.id === this.props.params.series)
       .map(x => x.text)
-    
+
     const routes = this.props.routes
     const routeName = routes[routes.length - 1].name
 
@@ -56,7 +56,7 @@ class App extends React.Component {
         </MenuItem>)
     }
 
-    return <MenuItem primaryText='Logga ut' onTouchTap={this.signOut} />
+    return <MenuItem disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} primaryText='Logga ut' onTouchTap={this.signOut} />
   }
 
   componentWillReceiveProps (nextProps) {
