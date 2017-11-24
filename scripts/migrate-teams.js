@@ -11,7 +11,7 @@ const app = firebase.initializeApp(config)
 const db = app.database()
 
 // db.ref('/users').once('value', userSnapshots => {
-  
+
 //   db.ref('/teams').once('value', teamSnapshots => {
 //     const teams = []
 //     teamSnapshots.forEach(teamSnapshot => {
@@ -32,7 +32,7 @@ const db = app.database()
 //       console.log(user)
 //       db.ref('/users/' + userKey).set(user)
 //     })
-    
+
 //   })
 // })
 
@@ -48,24 +48,24 @@ process.stdin
     companySeries
       .concat(exerciseSeries)
       .forEach(series => {
-      console.log(series.text)
-      const division = series.order || series.text.split(' ').join('')
-      const teams = JSON.parse(input)
-      teams
+        console.log(series.text)
+        const division = series.order || series.text.split(' ').join('')
+        const teams = JSON.parse(input)
+        teams
         .filter(team => division === team.division)
         .map((team) => {
-          return { 
+          return {
             teamName: team.team_name,
             series: series.id,
-            teamRanking: team.team_ranking, 
-            contact: team.contact, 
-            phone: team.phone, 
-            email: team.email 
+            teamRanking: team.team_ranking,
+            contact: team.contact,
+            phone: team.phone,
+            email: team.email
           }
         })
         .forEach((team) => {
           // db.ref('/teams').push(team)
           console.log(team)
         })
-    })
+      })
   })

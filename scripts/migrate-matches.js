@@ -10,7 +10,7 @@ const config = {
 const app = firebase.initializeApp(config)
 const db = app.database()
 
-const companySeries = allSeries. companySeries
+const companySeries = allSeries.companySeries
   .map(x => Object.assign(x, {type: 'Company'}))
 const exerciseSeries = allSeries.exerciseSeries
   .map(x => Object.assign(x, {type: 'Exercise'}))
@@ -48,28 +48,28 @@ process.stdin
                 const {lanes, time, date} = match
 
                 const matches = series.type === 'Exercise'
-                  ? 
-                  [
+                  ?
+                [
                     {text: 'Match', result: [{home: 0, away: 0}]}
-                  ]
-                  : 
-                  [
-                    { text: 'Dubbel', result: [ { home: 0, away: 0 } ] }, 
+                ]
+                  :
+                [
+                    { text: 'Dubbel', result: [ { home: 0, away: 0 } ] },
                     { text: '1:a singel', result: [ { home: 0, away: 0 } ] },
-                    { text: '2:a singel', result: [ { home: 0, away: 0 } ] } 
-                  ]
+                    { text: '2:a singel', result: [ { home: 0, away: 0 } ] }
+                ]
 
                 const migratedMatch = {
-                  homeTeam, 
-                  awayTeam, 
-                  date, 
-                  time, 
-                  lane: lanes, 
-                  matches, 
+                  homeTeam,
+                  awayTeam,
+                  date,
+                  time,
+                  lane: lanes,
+                  matches,
                   series: series.id}
 
-                // db.ref('/matches').push(migratedMatch)
-                console.log(migratedMatch.homeTeam.teamName + ' - ' + migratedMatch.awayTeam.teamName)
+                db.ref('/matches').push(migratedMatch)
+                console.log(migratedMatch.homeTeam.teamName + ' - ' + migratedMatch.awayTeam.teamName + ', ' + date + ' kl ' + time)
               })
           })
       })
