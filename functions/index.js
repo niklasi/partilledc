@@ -1,7 +1,7 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+const functions = require('firebase-functions')
+const admin = require('firebase-admin')
 const cors = require('cors')({origin: true})
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp(functions.config().firebase)
 
 exports.mymatches = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
@@ -9,7 +9,6 @@ exports.mymatches = functions.https.onRequest((request, response) => {
     db
       .ref('/users/' + request.query.uid)
       .once('value', snapshot => {
-        
         const teams = snapshot.val().teams || {}
         const promises = []
 
@@ -26,30 +25,31 @@ exports.mymatches = functions.https.onRequest((request, response) => {
 
           response.status(200).send(matches)
         })
-    })
-  }) 
+      })
+  })
 })
 
 exports.addUser = functions.auth.user().onCreate(evt => {
   const db = admin.database()
   const email = evt.data.email
 
-  db.ref('/teams')
-    .orderByChild('email')
-    .equalTo(email)
-    .once('value', snapshots => {
-    
-    const user = {email, teams: {}}
-    snapshots.forEach(team => {
-      user.teams[team.key] = true
+  db.ref('/teams').once('value', teamSnapshots => {
+    const teams = []
+    teamSnapshots.forEach(teamSnapshot => {
+      teams.push({teamId: teamSnapshot.key, email: teamSnapshot.val().email})
     })
+
+    const user = {email, teams: {}}
+    teams
+      .filter(x => x.email.toLowerCase().includes(user.email.toLowerCase()))
+      .forEach(x => (user.teams[x.teamId] = true))
 
     db.ref('/users/' + evt.data.uid).set(user)
   })
 })
 
 exports.removeUser = functions.auth.user().onDelete(evt => {
-  return admin.database().ref("/users/" + evt.data.uid).remove()
+  return admin.database().ref('/users/' + evt.data.uid).remove()
 })
 
 exports.test = functions.https.onRequest((request, response) => {
