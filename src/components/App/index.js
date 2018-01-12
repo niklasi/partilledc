@@ -87,9 +87,19 @@ class App extends React.Component {
       display = 'none'
       marginTop = '0px'
     }
+
+    if (('standalone' in window.navigator) && window.navigator.standalone) {
+      var iphoneXFix = {marginTop: '30px'}
+      var iphoneXTitleFix = {marginTop: '22px'}
+      marginTop = '80px'
+    }
+
     return <div>
              <AppBar
-               style={{display, position: 'fixed', top: '0px', height: '60px'}}
+               style={{display, position: 'fixed', top: '0px', height: marginTop}}
+               titleStyle={iphoneXTitleFix}
+               iconStyleLeft={iphoneXFix}
+               iconStyleRight={iphoneXFix}
                key='AppBar'
                title={this.title()}
                onLeftIconButtonTouchTap={this.handleToggle}
@@ -99,7 +109,7 @@ class App extends React.Component {
              <div style={{marginTop}}>
              {this.props.children}
               </div>
-             <Drawer docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
+             <Drawer containerStyle={iphoneXFix} docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
                <List>
                  <Subheader style={{fontSize: '24px'}}>
                    Lagserier
