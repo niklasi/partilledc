@@ -10,34 +10,6 @@ const config = {
 const app = firebase.initializeApp(config)
 const db = app.database()
 
-// db.ref('/users').once('value', userSnapshots => {
-
-//   db.ref('/teams').once('value', teamSnapshots => {
-//     const teams = []
-//     teamSnapshots.forEach(teamSnapshot => {
-//       teams.push({teamId: teamSnapshot.key, email: teamSnapshot.val().email})
-//     })
-
-//     userSnapshots.forEach(userSnapshot => {
-//       const userKey = userSnapshot.key
-//       const user = userSnapshot.val()
-
-//       user.teams = {}
-//       teams
-//         .filter(x => x.email === user.email).
-//         forEach(x => user.teams[x.teamId] = true)
-//       // Object.keys(user.teams || {})
-//       //   .map(key => user.teams[key])
-//       //   .forEach(team => teams[team] = true)
-//       console.log(user)
-//       db.ref('/users/' + userKey).set(user)
-//     })
-
-//   })
-// })
-
-// return
-
 const companySeries = allSeries.companySeries
 const exerciseSeries = allSeries.exerciseSeries
 
