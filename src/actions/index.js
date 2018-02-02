@@ -68,7 +68,7 @@ export function unloadSeriesTable () {
   seriesTableList.unsubscribe()
   return {
     type: 'UNLOAD_SERIES_TABLE',
-    payload: []
+    payload: {}
   }
 }
 
@@ -91,6 +91,7 @@ export function matchChanged (match) {
 export function loadMatches (seriesId) {
   return (dispatch) => {
     matchList.path = '/matches'
+    matchList.unsubscribe()
     matchList.subscribe(dispatch, {child: 'series', equalTo: seriesId})
   }
 }
@@ -107,7 +108,7 @@ export function loadMyMatches (uid) {
     superagent.get('https://us-central1-project-8539870983476533695.cloudfunctions.net/mymatches')
     .query({ uid })
     .end((err, result) => {
-      return dispatch(loadMatchesSuccess(result.body)) 
+      return dispatch(loadMatchesSuccess(result.body))
     })
   }
 }

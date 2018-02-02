@@ -60,7 +60,7 @@ const exerciseSeriesRanking = (t1, t2) => {
 }
 
 const seriesTable = (state, action) => {
-  state = state || []
+  state = state || {}
   switch (action.type) {
     case 'LOAD_SERIES_TABLE_SUCCESS':
       // teamName, teamId, series, matches, teamp, matchp, teamRanking
@@ -73,15 +73,16 @@ const seriesTable = (state, action) => {
         }
       })
 
+      let series = ''
       const ranking = allSeries.companySeries
         .filter(s => {
-          const series = action.payload.length > 0 ? action.payload[0].series : ''
+          series = action.payload.length > 0 ? action.payload[0].series : ''
           return s.id === series
         }).length > 0
         ? companySeriesRanking
         : exerciseSeriesRanking
 
-      return action.payload
+      state[series] = action.payload
         .map(m => {
           const matchp = matchPoints(m.matches.map(i => i.result))
           const teamp = teamPoints(matchp)
@@ -98,7 +99,7 @@ const seriesTable = (state, action) => {
 
           return [homeTeam, awayTeam]
         })
-        .reduce(flatten)
+        .reduce(flatten, [])
         .reduce((map, team) => {
           let existingTeam = map[team.id]
           if (existingTeam) {
@@ -118,6 +119,8 @@ const seriesTable = (state, action) => {
         }, map)
         .valuesToArray()
         .sort(ranking)
+
+      return Object.assign({}, state)
 
     case 'UNLOAD_SERIES_TABLE':
       return action.payload

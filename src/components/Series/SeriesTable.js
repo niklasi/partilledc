@@ -27,6 +27,8 @@ class SeriesTable extends React.Component {
     const displayMatchp = companySeries ? undefined : 'none'
     const displaySetAndGame = companySeries ? 'none' : undefined
 
+    const seriesTable = this.props.seriesTable[this.props.series] || []
+
     return <Table selectable={false}>
       <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
         <TableRow>
@@ -51,7 +53,7 @@ class SeriesTable extends React.Component {
         </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false}>
-        {this.props.seriesTable.map(team => <TableRow key={team.id}>
+        {seriesTable.map(team => <TableRow key={team.id}>
           <TableRowColumn style={{whiteSpace: 'normal'}}>
             {team.teamName}
           </TableRowColumn>
@@ -77,7 +79,7 @@ class SeriesTable extends React.Component {
 }
 
 SeriesTable.propTypes = {
-  seriesTable: PropTypes.array.isRequired,
+  seriesTable: PropTypes.object.isRequired,
   loadSeriesTable: PropTypes.func.isRequired,
   unloadSeriesTable: PropTypes.func.isRequired
 }

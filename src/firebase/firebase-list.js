@@ -44,7 +44,7 @@ export class FirebaseList {
   }
 
   subscribe (emit, filter) {
-    this.unsubscribe()
+    // this.unsubscribe()
 
     let ref = firebaseDb.ref(this._path)
     if (filter) {
@@ -58,20 +58,31 @@ export class FirebaseList {
       emit(this._actions.onLoad(list))
     })
 
+    const unhandled = () => {
+      this.unsubscribe()
+      return {
+        type: 'UNHANDLED',
+        payload: {}
+      }
+    }
+
     ref.on('child_added', snapshot => {
       if (initialized) {
-        emit(this._actions.onAdd(this.unwrapSnapshot(snapshot)))
+        const onAdd = this._actions.onAdd || unhandled
+        emit(onAdd(this.unwrapSnapshot(snapshot)))
       } else {
         list.push(this.unwrapSnapshot(snapshot))
       }
     })
 
     ref.on('child_changed', snapshot => {
-      emit(this._actions.onChange(this.unwrapSnapshot(snapshot)))
+      const onChange = this._actions.onChange || unhandled
+      emit(onChange(this.unwrapSnapshot(snapshot)))
     })
 
     ref.on('child_removed', snapshot => {
-      emit(this._actions.onRemove(this.unwrapSnapshot(snapshot)))
+      const onRemove = this._actions.onRemove || unhandled
+      emit(onRemove(this.unwrapSnapshot(snapshot)))
     })
 
     this._unsubscribe = () => ref.off()
