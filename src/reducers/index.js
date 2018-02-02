@@ -31,32 +31,32 @@ const mapTeamToTableSeries = ({id, teamName, teamRanking}) => {
 }
 
 const companySeriesRanking = (t1, t2) => {
-    const teamp = t2.teamp - t1.teamp
-    if (teamp !== 0) return teamp
+  const teamp = t2.teamp - t1.teamp
+  if (teamp !== 0) return teamp
 
-    const matchp = (t2.matchp.won.points - t2.matchp.lost.points) - (t1.matchp.won.points - t1.matchp.lost.points)
-    if (matchp !== 0) return matchp
+  const matchp = (t2.matchp.won.points - t2.matchp.lost.points) - (t1.matchp.won.points - t1.matchp.lost.points)
+  if (matchp !== 0) return matchp
 
-    const matches = t1.matches - t2.matches
-    if (matches !== 0) return matches
+  const matches = t1.matches - t2.matches
+  if (matches !== 0) return matches
 
-    return t2.teamRanking - t1.teamRanking
+  return t2.teamRanking - t1.teamRanking
 }
 
 const exerciseSeriesRanking = (t1, t2) => {
-    const teamp = t2.teamp - t1.teamp
-    if (teamp !== 0) return teamp
+  const teamp = t2.teamp - t1.teamp
+  if (teamp !== 0) return teamp
 
-    const setsp = (t2.matchp.won.sets - t2.matchp.lost.sets) - (t1.matchp.won.sets - t1.matchp.lost.sets)
-    if (setsp !== 0) return setsp
+  const setsp = (t2.matchp.won.sets - t2.matchp.lost.sets) - (t1.matchp.won.sets - t1.matchp.lost.sets)
+  if (setsp !== 0) return setsp
 
-    const gamesp = (t2.matchp.won.games - t2.matchp.lost.games) - (t1.matchp.won.games - t1.matchp.lost.games)
-    if (gamesp !== 0) return gamesp
+  const gamesp = (t2.matchp.won.games - t2.matchp.lost.games) - (t1.matchp.won.games - t1.matchp.lost.games)
+  if (gamesp !== 0) return gamesp
 
-    const matches = t1.matches - t2.matches
-    if (matches !== 0) return matches
+  const matches = t1.matches - t2.matches
+  if (matches !== 0) return matches
 
-    return t2.teamRanking - t1.teamRanking
+  return t2.teamRanking - t1.teamRanking
 }
 
 const seriesTable = (state, action) => {
@@ -74,10 +74,14 @@ const seriesTable = (state, action) => {
       })
 
       const ranking = allSeries.companySeries
-        .filter(s => s.id === action.payload.series) > 0
-        ? companySeriesRanking 
+        .filter(s => {
+          const series = action.payload.length > 0 ? action.payload[0].series : ''
+          return s.id === series
+        }).length > 0
+        ? companySeriesRanking
         : exerciseSeriesRanking
 
+      const tmp = []
       return action.payload
         .map(m => {
           const matchp = matchPoints(m.matches.map(i => i.result))
@@ -114,6 +118,10 @@ const seriesTable = (state, action) => {
           return map
         }, map)
         .valuesToArray()
+        .map(x => {
+          tmp.push(x)
+          return x
+        })
         .sort(ranking)
 
     case 'UNLOAD_SERIES_TABLE':
