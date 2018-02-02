@@ -8,12 +8,12 @@ import allSeries from '../../series.json'
 class SeriesTable extends React.Component {
 
   componentDidMount () {
-    this.props.loadSeriesTable(this.props.params.series)
+    this.props.loadSeriesTable(this.props.series)
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.params !== this.props.params) {
-      this.props.loadSeriesTable(nextProps.params.series)
+    if (nextProps.series !== this.props.series) {
+      this.props.loadSeriesTable(nextProps.series)
     }
   }
 
@@ -22,7 +22,7 @@ class SeriesTable extends React.Component {
   }
 
   render () {
-    const companySeries = allSeries.companySeries.filter(s => s.id === this.props.params.series).length > 0
+    const companySeries = allSeries.companySeries.filter(s => s.id === this.props.series).length > 0
 
     const displayMatchp = companySeries ? undefined : 'none'
     const displaySetAndGame = companySeries ? 'none' : undefined
@@ -77,7 +77,6 @@ class SeriesTable extends React.Component {
 }
 
 SeriesTable.propTypes = {
-  params: PropTypes.object.isRequired,
   seriesTable: PropTypes.array.isRequired,
   loadSeriesTable: PropTypes.func.isRequired,
   unloadSeriesTable: PropTypes.func.isRequired
@@ -85,7 +84,9 @@ SeriesTable.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   const {seriesTable} = state
-  return {seriesTable, ownProps}
+  const params = ownProps.params || {}
+  const series = params.series || ownProps.series
+  return {seriesTable, series}
 }
 
 export default connect(mapStateToProps, {loadSeriesTable, unloadSeriesTable})(SeriesTable)
