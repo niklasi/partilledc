@@ -81,7 +81,6 @@ const seriesTable = (state, action) => {
         ? companySeriesRanking
         : exerciseSeriesRanking
 
-      const tmp = []
       return action.payload
         .map(m => {
           const matchp = matchPoints(m.matches.map(i => i.result))
@@ -118,10 +117,6 @@ const seriesTable = (state, action) => {
           return map
         }, map)
         .valuesToArray()
-        .map(x => {
-          tmp.push(x)
-          return x
-        })
         .sort(ranking)
 
     case 'UNLOAD_SERIES_TABLE':
