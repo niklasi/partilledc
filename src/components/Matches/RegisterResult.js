@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
@@ -31,24 +31,24 @@ class RegisterResult extends React.Component {
         }
 
         return <SelectField
-                 key={team + '-' + set}
-                 value={result[team] || 0}
-                 style={styles.customWidth}
-                 onChange={changeScore}>
-                 <MenuItem value={0} primaryText='0' />
-                 <MenuItem value={1} primaryText='1' />
-                 <MenuItem value={2} primaryText='2' />
-                 <MenuItem value={3} primaryText='3' />
-                 <MenuItem value={4} primaryText='4' />
-               </SelectField>
+          key={team + '-' + set}
+          value={result[team] || 0}
+          style={styles.customWidth}
+          onChange={changeScore}>
+          <MenuItem value={0} primaryText='0' />
+          <MenuItem value={1} primaryText='1' />
+          <MenuItem value={2} primaryText='2' />
+          <MenuItem value={3} primaryText='3' />
+          <MenuItem value={4} primaryText='4' />
+        </SelectField>
       }
 
       return ['home', 'away'].map(teamFieldFactory)
     }
 
     return <div>
-             {this.state.match.result.map(resultFactory)}
-           </div>
+      {this.state.match.result.map(resultFactory)}
+    </div>
   }
 }
 

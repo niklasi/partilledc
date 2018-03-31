@@ -14,6 +14,6 @@ export default (preloadedState) => {
     preloadedState,
     applyMiddleware(thunkMiddleware)
   )
-  
+
   return store
 }

@@ -8,14 +8,14 @@ const config = {
 }
 
 const app = firebase.initializeApp(config)
-const db = app.database()
+const db = app.database() // eslint-disable-line no-unused-vars
 
 const companySeries = allSeries.companySeries
 const exerciseSeries = allSeries.exerciseSeries
 
 let input = ''
 process.stdin
-  .on('data', (data) => input += data.toString())
+  .on('data', (data) => (input += data.toString()))
   .on('end', () => {
     companySeries
       .concat(exerciseSeries)
@@ -24,20 +24,20 @@ process.stdin
         const division = series.order || series.text.split(' ').join('')
         const teams = JSON.parse(input)
         teams
-        .filter(team => division === team.division)
-        .map((team) => {
-          return {
-            teamName: team.team_name,
-            series: series.id,
-            teamRanking: team.team_ranking,
-            contact: team.contact,
-            phone: team.phone,
-            email: team.email
-          }
-        })
-        .forEach((team) => {
-          // db.ref('/teams').push(team)
-          console.log(team)
-        })
+          .filter(team => division === team.division)
+          .map((team) => {
+            return {
+              teamName: team.team_name,
+              series: series.id,
+              teamRanking: team.team_ranking,
+              contact: team.contact,
+              phone: team.phone,
+              email: team.email
+            }
+          })
+          .forEach((team) => {
+            // db.ref('/teams').push(team)
+            console.log(team)
+          })
       })
   })

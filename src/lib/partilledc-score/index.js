@@ -6,7 +6,7 @@ export function score (results) {
   const sets = results
     .reduce((setWins, set) => {
       const {home, away} = set
-      
+
       if (home === 4) return {home: setWins.home + 1, away: setWins.away}
       if (away === 4) return {home: setWins.home, away: setWins.away + 1}
 
@@ -18,7 +18,7 @@ export function score (results) {
     }, { home: 0, away: 0 })
 
   const games = results.reduce((gameWins, game) => {
-    return {home: gameWins.home + game.home, away: gameWins.away + game.away} 
+    return {home: gameWins.home + game.home, away: gameWins.away + game.away}
   }, { home: 0, away: 0 })
 
   let homePoints = 0
@@ -38,7 +38,7 @@ export function score (results) {
     homePoints = 0
     awayPoints = 2
   }
-  
+
   return {
     home: {
       points: homePoints,

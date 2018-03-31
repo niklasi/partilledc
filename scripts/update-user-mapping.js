@@ -29,4 +29,3 @@ db.ref('/users').once('value', userSnapshots => {
     })
   })
 })
-

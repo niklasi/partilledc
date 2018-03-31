@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
+import { withRouter, Link } from 'react-router'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
 import Divider from 'material-ui/Divider'
-import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
@@ -51,9 +50,9 @@ class App extends React.Component {
       const menuItems = [{to: '/register-user', text: 'Ny användare'}, {to: '/sign-in', text: 'Logga in'}]
       return menuItems.map(item => <MenuItem key={item.text}>
         <Link to={item.to}>
-        {item.text}
+          {item.text}
         </Link>
-        </MenuItem>)
+      </MenuItem>)
     }
 
     return <MenuItem disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} primaryText='Logga ut' onTouchTap={this.signOut} />
@@ -73,7 +72,7 @@ class App extends React.Component {
         return <ListItem>
           <Link to={'/my-matches'} onClick={this.handleToggle}> Mina matcher
           </Link>
-          </ListItem>
+        </ListItem>
       }
     }
 
@@ -95,40 +94,40 @@ class App extends React.Component {
     }
 
     return <div>
-             <AppBar
-               style={{display, position: 'fixed', top: '0px', height: marginTop}}
-               titleStyle={iphoneXTitleFix}
-               iconStyleLeft={iphoneXFix}
-               iconStyleRight={iphoneXFix}
-               key='AppBar'
-               title={this.title()}
-               onLeftIconButtonTouchTap={this.handleToggle}
-               iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-                                   {this.menu()}
-                                 </IconMenu>} />
-             <div style={{marginTop}}>
-             {this.props.children}
-              </div>
-             <Drawer containerStyle={iphoneXFix} docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
-               <List>
-                 <Subheader style={{fontSize: '24px'}}>
+      <AppBar
+        style={{display, position: 'fixed', top: '0px', height: marginTop}}
+        titleStyle={iphoneXTitleFix}
+        iconStyleLeft={iphoneXFix}
+        iconStyleRight={iphoneXFix}
+        key='AppBar'
+        title={this.title()}
+        onLeftIconButtonTouchTap={this.handleToggle}
+        iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
+          {this.menu()}
+        </IconMenu>} />
+      <div style={{marginTop}}>
+        {this.props.children}
+      </div>
+      <Drawer containerStyle={iphoneXFix} docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
+        <List>
+          <Subheader style={{fontSize: '24px'}}>
                    Lagserier
-                 </Subheader>
-                 {series.companySeries.map(listItemFactory)}
-                 <Divider />
-                 <Subheader style={{fontSize: '24px'}}>
+          </Subheader>
+          {series.companySeries.map(listItemFactory)}
+          <Divider />
+          <Subheader style={{fontSize: '24px'}}>
                    Motionsserier
-                 </Subheader>
-                 {series.exerciseSeries.map(listItemFactory)}
-                 <Divider />
-                 {myMatches()}
-                 <ListItem>
-                   <Link to={'/todays-matches'} onClick={this.handleToggle}> Dagens matcher
-                   </Link>
-                 </ListItem>
-               </List>
-             </Drawer>
-           </div>
+          </Subheader>
+          {series.exerciseSeries.map(listItemFactory)}
+          <Divider />
+          {myMatches()}
+          <ListItem>
+            <Link to={'/todays-matches'} onClick={this.handleToggle}> Dagens matcher
+            </Link>
+          </ListItem>
+        </List>
+      </Drawer>
+    </div>
   }
 }
 

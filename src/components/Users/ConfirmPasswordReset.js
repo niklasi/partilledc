@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import { confirmPasswordReset } from '../../actions'
@@ -30,14 +30,14 @@ const ConfirmPasswordReset = ({auth, location, confirmPasswordReset}) => {
 
   return (
     <Form onSubmit={handleConfirmReset} name={'confirm-password-reset'}>
-    <GridLayout key='layout' {...defaultProps}>
-    <div key={"confirm-reset-row-1"} data-grid={dataGridItem}>
-    <TextField type='password' label='Nytt lösenord' style={{width: '100%'}} onChange={handlePassword} />
-    </div>
-    <div key={"confirm-reset-row-2"} data-grid={dataGridItem}>
-    <Button type='submit' fullWidth label='Uppdatera' primary />
-    </div>
-    </GridLayout>
+      <GridLayout key='layout' {...defaultProps}>
+        <div key={'confirm-reset-row-1'} data-grid={dataGridItem}>
+          <TextField type='password' label='Nytt lösenord' style={{width: '100%'}} onChange={handlePassword} />
+        </div>
+        <div key={'confirm-reset-row-2'} data-grid={dataGridItem}>
+          <Button type='submit' fullWidth label='Uppdatera' primary />
+        </div>
+      </GridLayout>
     </Form>
   )
 }

@@ -17,7 +17,7 @@ const exerciseSeries = allSeries.exerciseSeries
 
 let input = ''
 process.stdin
-  .on('data', (data) => input += data.toString())
+  .on('data', (data) => (input += data.toString()))
   .on('end', () => {
     const matches = JSON.parse(input)
     companySeries
@@ -48,16 +48,14 @@ process.stdin
                 const {lanes, time, date} = match
 
                 const matches = series.type === 'Exercise'
-                  ?
-                [
+                  ? [
                     {text: 'Match', result: [{home: 0, away: 0}]}
-                ]
-                  :
-                [
+                  ]
+                  : [
                     { text: 'Dubbel', result: [ { home: 0, away: 0 } ] },
                     { text: '1:a singel', result: [ { home: 0, away: 0 } ] },
                     { text: '2:a singel', result: [ { home: 0, away: 0 } ] }
-                ]
+                  ]
 
                 const migratedMatch = {
                   homeTeam,

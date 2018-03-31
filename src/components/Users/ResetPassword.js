@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import { resetPassword } from '../../actions'
@@ -29,14 +29,14 @@ const ResetPassword = ({auth, resetPassword}) => {
 
   return <Form onSubmit={handleReset} name={'handle-reset'}>
     <GridLayout key='layout' {...defaultProps}>
-    <div key={"reset-row-1"} data-grid={dataGridItem}>
-    <TextField label='Epost' style={{width: '100%'}} onChange={handleEmail} />
-    </div>
-    <div key={"reset-row-2"} data-grid={dataGridItem}>
-    <Button type='submit' fullWidth label='Återställ lösenord' primary />
-    </div>
+      <div key={'reset-row-1'} data-grid={dataGridItem}>
+        <TextField label='Epost' style={{width: '100%'}} onChange={handleEmail} />
+      </div>
+      <div key={'reset-row-2'} data-grid={dataGridItem}>
+        <Button type='submit' fullWidth label='Återställ lösenord' primary />
+      </div>
     </GridLayout>
-    </Form>
+  </Form>
 }
 
 ResetPassword.propTypes = {

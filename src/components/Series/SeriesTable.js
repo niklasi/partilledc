@@ -6,7 +6,6 @@ import { loadSeriesTable, unloadSeriesTable } from '../../actions'
 import allSeries from '../../series.json'
 
 class SeriesTable extends React.Component {
-
   componentDidMount () {
     this.props.loadSeriesTable(this.props.series)
   }
@@ -37,19 +36,19 @@ class SeriesTable extends React.Component {
           </TableHeaderColumn>
           <TableHeaderColumn>
                    Matcher
-                 </TableHeaderColumn>
+          </TableHeaderColumn>
           <TableHeaderColumn style={{display: displayMatchp}}>
                    Matchp
-                 </TableHeaderColumn>
+          </TableHeaderColumn>
           <TableHeaderColumn style={{display: displaySetAndGame}}>
                    Set
-                 </TableHeaderColumn>
+          </TableHeaderColumn>
           <TableHeaderColumn style={{display: displaySetAndGame}}>
                    Gem
-                 </TableHeaderColumn>
+          </TableHeaderColumn>
           <TableHeaderColumn>
                    Poäng
-                 </TableHeaderColumn>
+          </TableHeaderColumn>
         </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false}>

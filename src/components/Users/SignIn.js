@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Responsive, WidthProvider } from 'react-grid-layout'
@@ -35,22 +35,22 @@ const SignIn = ({auth, signIn}) => {
 
   return (
     <Form onSubmit={handleSignIn} name={'sign-in'}>
-    <GridLayout key='layout' {...defaultProps}>
-    <div key={"sign-in-row-1"} data-grid={dataGridItem}>
-    <TextField label='Epost' style={{width: '100%'}} onChange={handleUsername} />
-    </div>
-    <div key={"sign-in-row-2"} data-grid={dataGridItem}>
-    <TextField label='Lösenord' type='password' style={{width: '100%'}} onChange={handlePassword} />
-    </div>
-    <div key={"sign-in-row-3"} data-grid={dataGridItem}>
-    <Button type='submit' fullWidth label='Logga in' primary />
-    </div>
-    <div key={"sign-in-row-4"} data-grid={dataGridItem}>
-    <Link to='/reset-password'>
-      <Button fullWidth label='Problem att logga in?' secondary />
-    </Link>
-    </div>
-    </GridLayout>
+      <GridLayout key='layout' {...defaultProps}>
+        <div key={'sign-in-row-1'} data-grid={dataGridItem}>
+          <TextField label='Epost' style={{width: '100%'}} onChange={handleUsername} />
+        </div>
+        <div key={'sign-in-row-2'} data-grid={dataGridItem}>
+          <TextField label='Lösenord' type='password' style={{width: '100%'}} onChange={handlePassword} />
+        </div>
+        <div key={'sign-in-row-3'} data-grid={dataGridItem}>
+          <Button type='submit' fullWidth label='Logga in' primary />
+        </div>
+        <div key={'sign-in-row-4'} data-grid={dataGridItem}>
+          <Link to='/reset-password'>
+            <Button fullWidth label='Problem att logga in?' secondary />
+          </Link>
+        </div>
+      </GridLayout>
     </Form>
   )
 }

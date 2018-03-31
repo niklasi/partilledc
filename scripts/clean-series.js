@@ -32,4 +32,3 @@ db.ref('/matches')
       // db.ref('/matches/' + match.key).remove()
     })
   })
-

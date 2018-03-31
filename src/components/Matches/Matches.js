@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 import Match from './Match'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import { connect } from 'react-redux'
@@ -12,7 +12,6 @@ const defaultProps = {className: 'layout',
 }
 
 class Matches extends React.Component {
-
   constructor (props) {
     super(props)
     this.interval = null
@@ -25,7 +24,7 @@ class Matches extends React.Component {
   getMatches (path, series) {
     clearInterval(this.interval)
 
-    switch (path) { 
+    switch (path) {
       case '/series/:series/matches':
         this.props.loadMatches(series)
         break
@@ -61,10 +60,10 @@ class Matches extends React.Component {
 
   render () {
     return <GridLayout key='layout' {...defaultProps}>
-             {this.props.matches.map((match, index) => <div key={'match-' + index} data-grid={{x: (index % 2) * 6, y: index + 1, w: 6, h: 1, isDraggable: false}}>
-                                                         <Match saveMatch={this.props.saveMatch} match={match} user={this.props.user} />
-                                                       </div>)}
-           </GridLayout>
+      {this.props.matches.map((match, index) => <div key={'match-' + index} data-grid={{x: (index % 2) * 6, y: index + 1, w: 6, h: 1, isDraggable: false}}>
+        <Match saveMatch={this.props.saveMatch} match={match} user={this.props.user} />
+      </div>)}
+    </GridLayout>
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Team from './Team'
 import { Responsive, WidthProvider } from 'react-grid-layout'
@@ -14,7 +14,6 @@ const defaultProps = {className: 'layout',
 }
 
 class Teams extends React.Component {
-
   componentDidMount () {
     this.props.loadTeams(this.props.params.series)
   }
@@ -31,10 +30,10 @@ class Teams extends React.Component {
 
   render () {
     return <GridLayout key='layout' {...defaultProps}>
-             {this.props.teams.map((team, index) => <div key={'team-' + index} data-grid={{x: (index % 2) * 6, y: index + 1, w: 6, h: 1}}>
-                                                         <Team team={team} />
-                                                       </div>)}
-           </GridLayout>
+      {this.props.teams.map((team, index) => <div key={'team-' + index} data-grid={{x: (index % 2) * 6, y: index + 1, w: 6, h: 1}}>
+        <Team team={team} />
+      </div>)}
+    </GridLayout>
   }
 }
 
