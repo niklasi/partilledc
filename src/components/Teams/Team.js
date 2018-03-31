@@ -11,13 +11,11 @@ class Team extends Component {
     const {palette} = getMuiTheme()
 
     return <Card>
-      <CardHeader style={{overflow: 'hidden'}} avatar={
-        <Avatar size={35} backgroundColor={palette.accent1Color}>
-          {team.teamRanking}
-        </Avatar>}
-        title={team.teamName} // eslint-disable-line indent
-        subtitle={<div>{team.contact}<div>{team.phone}</div><div>{team.email}</div></div> // eslint-disable-line indent
-      }
+      <CardHeader
+        style={{overflow: 'hidden'}}
+        avatar={<Avatar size={35} backgroundColor={palette.accent1Color}>{team.teamRanking}</Avatar>}
+        title={team.teamName}
+        subtitle={<div>{team.contact}<div>{team.phone}</div><div>{team.email}</div></div>}
       />
     </Card>
   }
