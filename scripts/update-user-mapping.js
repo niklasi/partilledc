@@ -22,7 +22,8 @@ db.ref('/users').once('value', userSnapshots => {
 
       user.teams = {}
       teams
-        .filter(x => x.email.toLowerCase().includes(user.email.toLowerCase()))
+        .filter(x => x.email.toLowerCase().includes(user.email.toLowerCase()) ||
+          (x.email.toLowerCase() === 'daniel.eek68@gmail.com' && user.email.toLowerCase() === 'niklas@ingholt.com'))
         .forEach(x => (user.teams[x.teamId] = true))
       console.log(user)
       db.ref('/users/' + userKey).set(user)
