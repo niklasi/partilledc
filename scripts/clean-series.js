@@ -9,7 +9,7 @@ const config = {
 const app = firebase.initializeApp(config)
 const db = app.database()
 
-const seriesId = '-KROX8xD3kGu2kg0bUk2'
+// const seriesId = '-KROWbh3_h1nNRkRSbC9'
 
 db.ref('/teams')
   .orderByChild('series')
@@ -18,7 +18,7 @@ db.ref('/teams')
     snapshot.forEach(team => {
       const {teamName} = team.val()
       console.log(teamName, team.key)
-      // db.ref('/teams/' + team.key).remove()
+      db.ref('/teams/' + team.key).remove()
     })
   })
 
@@ -29,6 +29,6 @@ db.ref('/matches')
     snapshot.forEach(match => {
       const {homeTeam, awayTeam, date} = match.val()
       console.log(homeTeam.teamName + ' - ' + awayTeam.teamName + ', ' + date, match.key)
-      // db.ref('/matches/' + match.key).remove()
+      db.ref('/matches/' + match.key).remove()
     })
   })

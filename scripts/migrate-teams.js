@@ -36,7 +36,7 @@ process.stdin
             }
           })
           .forEach((team) => {
-            // db.ref('/teams').push(team)
+            db.ref('/teams').push(team)
             console.log(team)
           })
       })
