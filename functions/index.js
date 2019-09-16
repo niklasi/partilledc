@@ -51,21 +51,3 @@ exports.addUser = functions.auth.user().onCreate(evt => {
 exports.removeUser = functions.auth.user().onDelete(evt => {
   return admin.database().ref('/users/' + evt.data.uid).remove()
 })
-
-exports.test = functions.https.onRequest((request, response) => {
-  cors(request, response, () => {
-    response.setHeader('content-type', 'text/calendar')
-    response.status(200).send(`BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//hacksw/handcal//NONSGML v1.0//EN
-BEGIN:VEVENT
-UID:uid1@example.com
-DTSTAMP:200714T170000Z
-ORGANIZER;CN=John Doe:MAILTO:john.doe@example.com
-DTSTART:20170714T170000Z
-DTEND:20170715T035959Z
-SUMMARY:Bastille Day Party
-END:VEVENT
-END:VCALENDAR`)
-  })
-})
