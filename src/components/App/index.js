@@ -113,12 +113,12 @@ class App extends React.Component {
           <Subheader style={{fontSize: '24px'}}>
                    Lagserier
           </Subheader>
-          {series.companySeries.map(listItemFactory)}
+          {series.companySeries.filter(x => x.active === true).map(listItemFactory)}
           <Divider />
           <Subheader style={{fontSize: '24px'}}>
                    Motionsserier
           </Subheader>
-          {series.exerciseSeries.map(listItemFactory)}
+          {series.exerciseSeries.filter(x => x.active === true).map(listItemFactory)}
           <Divider />
           {myMatches()}
           <ListItem>

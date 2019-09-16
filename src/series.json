@@ -1,51 +1,74 @@
-{ 
-  "companySeries" : [
+{
+  "companySeries": [
     {
       "id": "-KM8T4K3iAxhOD80iO5C",
-      "order" : 1,
-      "text" : "Division 1"
+      "order": 1,
+      "text": "Division 1",
+      "active": true
     },
     {
       "id": "-KM8T3jwHOKSXcXM-O9V",
-      "order" : 2,
-      "text" : "Division 2"
+      "order": 2,
+      "text": "Division 2",
+      "active": true
     },
     {
       "id": "-KM8SwTAZsNsCX0ipYww",
-      "order" : 3,
-      "text" : "Division 3"
+      "order": 3,
+      "text": "Division 3",
+      "active": true
     }
   ],
   "exerciseSeries": [
-    {"id":"-KROWbh3_h1nNRkRSbC9",
-      "text" : "Damsingel"
+    {
+      "id": "-KROWbh3_h1nNRkRSbC9",
+      "text": "Damsingel",
+      "active": true
     },
-    {"id":"-KROWiq01nCacrI_fLup",
-      "text" : "Damdubbel Div 1"
+    {
+      "id": "-KROWiq01nCacrI_fLup",
+      "text": "Damdubbel",
+      "active": true
     },
-    {"id":"-L3FycYksY0sjT9d4dlv",
-      "text" : "Damdubbel Div 2"
+    {
+      "id": "-L3FycYksY0sjT9d4dlv",
+      "text": "Damdubbel Div 2",
+      "active": false
     },
-    {"id":"-KROX7cl4pO_jCBQFzyM",
-      "text" : "Herrsingel Div 1"
+    {
+      "id": "-KROX7cl4pO_jCBQFzyM",
+      "text": "Herrsingel Div 1",
+      "active": true
     },
-    {"id":"-KROX8RrkS1L3TFYjWlL",
-      "text" : "Herrsingel Div 2"
+    {
+      "id": "-KROX8RrkS1L3TFYjWlL",
+      "text": "Herrsingel Div 2",
+      "active": true
     },
-    {"id":"-KROX8xD3kGu2kg0bUk2",
-      "text" : "Herrsingel Div 3"
+    {
+      "id": "-KROX8xD3kGu2kg0bUk2",
+      "text": "Herrsingel Div 3",
+      "active": true
     },
-    {"id":"-L3FPJyRVyMggWaKViYO",
-      "text" : "Herrsingel Div 4"
+    {
+      "id": "-L3FPJyRVyMggWaKViYO",
+      "text": "Herrsingel Div 4",
+      "active": false
     },
-    {"id":"-KROXCZyca_qfT83l6Gq",
-      "text" : "Herrdubbel"
+    {
+      "id": "-KROXCZyca_qfT83l6Gq",
+      "text": "Herrdubbel",
+      "active": false
     },
-    {"id":"-L3_e0j_VHq8SLg5RSDA",
-      "text" : "Mixeddubbel Div 1"
+    {
+      "id": "-L3_e0j_VHq8SLg5RSDA",
+      "text": "Mixeddubbel",
+      "active": true
     },
-    {"id":"-KROXGlU9MW-faMIf0nJ",
-      "text" : "Mixeddubbel Div 2"
+    {
+      "id": "-KROXGlU9MW-faMIf0nJ",
+      "text": "Mixeddubbel Div 2",
+      "active": false
     }
   ]
 }
