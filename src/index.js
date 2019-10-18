@@ -6,6 +6,7 @@ import Teams from './components/Teams/Teams'
 import SeriesTable from './components/Series/SeriesTable'
 import AllSeriesTable from './components/Series/AllSeries'
 import Matches from './components/Matches/Matches'
+import Reset from './components/Reset'
 import { SignIn, ResetPassword, ConfirmPasswordReset, RegisterUser } from './components/Users'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import { Router, Route, hashHistory } from 'react-router'
@@ -29,6 +30,7 @@ const start = () => {
           <Route path='/series/:series/teams' name='Lag' component={Teams} />
           <Route path='/series/:series/matches' name='Matcher' onEnter={(nextState) => { nextState.location.state = {tag: 'series'} }} component={Matches} />
           <Route path='series/:series/table' name='Tabell' component={SeriesTable} />
+          <Route path='series/:series/reset' name='Nollställ' component={Reset} />
           <Route path='/todays-matches' name='Dagens matcher' onEnter={(nextState) => { nextState.location.state = {tag: 'today'} }} component={Matches} />
           <Route path='/my-matches' name='Mina matcher' onEnter={(nextState) => { nextState.location.state = {tag: 'my'} }} component={Matches} />
           <Route path='/sign-in' name='Logga in' component={SignIn} />

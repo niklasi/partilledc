@@ -158,4 +158,14 @@ const user = (state, action) => {
   }
 }
 
-export default combineReducers({series, teams, seriesTable, matches, user})
+const scrapedData = (state, action) => {
+  state = state || {}
+  switch (action.type) {
+    case 'LOAD_SCRAPED_SERIES_SUCCESS':
+      return Object.assign({}, state, action.payload)
+    default:
+      return state
+  }
+}
+
+export default combineReducers({series, teams, seriesTable, matches, user, scrapedData})

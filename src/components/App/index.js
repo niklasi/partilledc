@@ -65,7 +65,25 @@ class App extends React.Component {
   }
 
   render () {
-    const listItemFactory = (serie) => <ListItem key={serie.id} primaryText={serie.text} nestedItems={[ <ListItem key={'team-' + serie.id}> <Link to={'/series/' + serie.id + '/teams'} onClick={this.handleToggle}> Lag </Link> </ListItem>, <ListItem key={'matches-' + serie.id}> <Link to={'/series/' + serie.id + '/matches'} onClick={this.handleToggle}> Matcher </Link> </ListItem>, <ListItem key={'table-' + serie.id}> <Link to={'/series/' + serie.id + '/table'} onClick={this.handleToggle}> Tabell </Link> </ListItem> ]} />
+    const listItemFactory = (serie) => {
+      const items = [
+        <ListItem key={'team-' + serie.id}>
+          <Link to={'/series/' + serie.id + '/teams'} onClick={this.handleToggle}> Lag </Link>
+        </ListItem>,
+        <ListItem key={'matches-' + serie.id}>
+          <Link to={'/series/' + serie.id + '/matches'} onClick={this.handleToggle}> Matcher </Link>
+        </ListItem>,
+        <ListItem key={'table-' + serie.id}>
+          <Link to={'/series/' + serie.id + '/table'} onClick={this.handleToggle}> Tabell </Link>
+        </ListItem>
+      ]
+      if (this.props.user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2') {
+        items.push(<ListItem key={'reset-' + serie.id}>
+          <Link to={{pathname: '/series/' + serie.id + '/reset', state: {slug: serie.slug}}} onClick={this.handleToggle}> Admin </Link>
+        </ListItem>)
+      }
+      return <ListItem key={serie.id} primaryText={serie.text} nestedItems={items} />
+    }
 
     const myMatches = () => {
       if (!this.props.user.isAnonymous) {

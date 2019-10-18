@@ -4,66 +4,78 @@
       "id": "-KM8T4K3iAxhOD80iO5C",
       "order": 1,
       "text": "Division 1",
-      "active": true
+      "active": true,
+      "slug": "lagserien/1"
     },
     {
       "id": "-KM8T3jwHOKSXcXM-O9V",
       "order": 2,
       "text": "Division 2",
-      "active": true
+      "active": true,
+      "slug": "lagserien/2"
     },
     {
       "id": "-KM8SwTAZsNsCX0ipYww",
       "order": 3,
       "text": "Division 3",
-      "active": true
+      "active": true,
+      "slug": "lagserien/3"
     }
   ],
   "exerciseSeries": [
     {
       "id": "-KROWbh3_h1nNRkRSbC9",
       "text": "Damsingel",
-      "active": true
+      "active": true,
+      "slug": "motionserier/Damsingel"
     },
     {
       "id": "-KROWiq01nCacrI_fLup",
       "text": "Damdubbel Div 1",
-      "active": true
+      "active": true,
+      "slug": "motionserier/DamdubbelDiv1"
     },
     {
       "id": "-L3FycYksY0sjT9d4dlv",
       "text": "Damdubbel Div 2",
-      "active": true
+      "active": true,
+      "slug": "motionserier/DamdubbelDiv2"
     },
     {
       "id": "-KROX7cl4pO_jCBQFzyM",
       "text": "Herrsingel Div 1",
-      "active": true
+      "active": true,
+      "slug": "motionserier/HerrsingelDiv1"
     },
     {
       "id": "-KROX8RrkS1L3TFYjWlL",
       "text": "Herrsingel Div 2",
-      "active": true
+      "active": true,
+      "slug": "motionserier/HerrsingelDiv2"
     },
     {
       "id": "-KROX8xD3kGu2kg0bUk2",
       "text": "Herrsingel Div 3",
-      "active": true
+      "active": true,
+      "slug": "motionserier/HerrsingelDiv3"
     },
     {
       "id": "-L3FPJyRVyMggWaKViYO",
       "text": "Herrsingel Div 4",
-      "active": false
+      "active": false,
+      "slug": "motionserier/HerrsingelDiv4"
     },
     {
       "id": "-KROXCZyca_qfT83l6Gq",
       "text": "Herrdubbel",
-      "active": false
+      "active": false,
+      "slug": "motionserier/Herrdubbel"
     },
     {
       "id": "-L3_e0j_VHq8SLg5RSDA",
       "text": "Mixeddubbel",
-      "active": true
+      "active": true,
+      "slug": "motionserier/Mixeddubbel"
     },
     {
       "id": "-KROXGlU9MW-faMIf0nJ",

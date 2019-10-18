@@ -181,3 +181,20 @@ export function signOut () {
     })
   }
 }
+
+export function loadScrapedSeriesSuccess (scrapedData) {
+  return {
+    type: 'LOAD_SCRAPED_SERIES_SUCCESS',
+    payload: scrapedData
+  }
+}
+
+export function loadScrapedSeries (slug) {
+  return (dispatch) => {
+    superagent.get('/scraper/' + slug)
+      .end((err, result) => {
+        if (err) console.log(err)
+        return dispatch(loadScrapedSeriesSuccess(result.body))
+      })
+  }
+}
