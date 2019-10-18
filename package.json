@@ -34,6 +34,9 @@
     "eject": "react-scripts eject",
     "deploy": "npm run build && firebase deploy"
   },
+  "engines": {
+    "node": "10"
+  },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/config/eslint.js"
   }
