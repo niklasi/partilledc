@@ -163,6 +163,8 @@ const scrapedData = (state, action) => {
   switch (action.type) {
     case 'LOAD_SCRAPED_SERIES_SUCCESS':
       return Object.assign({}, state, action.payload)
+    case 'LOAD_RESET_SERIES_SUCCESS':
+      return Object.assign({}, state)
     default:
       return state
   }

@@ -189,12 +189,29 @@ export function loadScrapedSeriesSuccess (scrapedData) {
   }
 }
 
+export function loadResetSeriesSuccess () {
+  return {
+    type: 'LOAD_RESET_SERIES_SUCCESS'
+  }
+}
+
 export function loadScrapedSeries (slug) {
   return (dispatch) => {
     superagent.get('/scraper/' + slug)
       .end((err, result) => {
         if (err) console.log(err)
         return dispatch(loadScrapedSeriesSuccess(result.body))
+      })
+  }
+}
+
+export function resetSeries (seriesId, slug, uid) {
+  return (dispatch) => {
+    superagent.get('https://us-central1-project-8539870983476533695.cloudfunctions.net/resetSeries')
+      .query({ seriesId, slug, uid })
+      .end((err, result) => {
+        if (err) console.log(err)
+        return dispatch(loadResetSeriesSuccess())
       })
   }
 }

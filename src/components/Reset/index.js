@@ -1,7 +1,8 @@
 import React from 'react'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
+import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from 'react-redux'
-import { loadScrapedSeries } from '../../actions'
+import { loadScrapedSeries, resetSeries } from '../../actions'
 import allSeries from '../../series.json'
 
 class Reset extends React.Component {
@@ -16,6 +17,10 @@ class Reset extends React.Component {
   }
 
   render () {
+    const series = this.props.series
+    const slug = this.props.slug
+    const uid = this.props.user.uid
+
     const companySeries = allSeries.companySeries.filter(s => s.id === this.props.series).length > 0
     const displayContact = companySeries ? undefined : 'none'
     const teams = this.props.scrapedData.teams || []
@@ -97,16 +102,17 @@ class Reset extends React.Component {
           </TableRow>)}
         </TableBody>
       </Table>
+      <RaisedButton label='Nollställ serien' secondary fullWidth onClick={() => this.props.resetSeries(series, slug, uid)} />
     </div>)
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {scrapedData} = state
+  const {scrapedData, user} = state
   const params = ownProps.params || {}
   const series = params.series || ownProps.series
   const slug = ownProps.location.state.slug
-  return {scrapedData, series, slug}
+  return {scrapedData, user, series, slug}
 }
 
-export default connect(mapStateToProps, {loadScrapedSeries})(Reset)
+export default connect(mapStateToProps, {loadScrapedSeries, resetSeries})(Reset)
