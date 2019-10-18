@@ -3,6 +3,12 @@
     "public": "build",
     "rewrites": [
       {
+      "source": "/scraper/**",
+      "run": {
+        "serviceId": "partilletennis-scraper"
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
