@@ -34,6 +34,9 @@ class Reset extends React.Component {
     const series = this.props.series
     const slug = this.props.slug
     const uid = this.props.user.uid
+    const seriesName = allSeries.companySeries
+      .concat(allSeries.exerciseSeries)
+      .find(x => x.id === series).text
 
     const companySeries = allSeries.companySeries.filter(s => s.id === this.props.series).length > 0
     const displayContact = companySeries ? undefined : 'none'
@@ -134,7 +137,7 @@ class Reset extends React.Component {
       </Table>
       <RaisedButton label='Nollställ serien' secondary fullWidth onClick={this.toggleDialog} />
       <Dialog
-        title='Nollställ serie'
+        title={'Nollställ ' + seriesName}
         actions={actions}
         modal={false}
         open={this.state.open}
