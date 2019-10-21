@@ -38,6 +38,7 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
             // console.log(teamName, team.key)
               db.ref(teamsRef + '/' + team.key).remove()
             })
+            console.log('Series ' + seriesId + ' teams cleaned')
             resolve()
           })
       })
@@ -52,6 +53,7 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
             // console.log(homeTeam.teamName + ' - ' + awayTeam.teamName + ', ' + date, match.key)
               db.ref(matchesRef + '/' + match.key).remove()
             })
+            console.log('Series ' + seriesId + ' matches cleaned')
             resolve()
           })
       })
@@ -76,6 +78,7 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
             db.ref(teamsRef).push(team)
           // console.log(team.teamName)
           })
+        console.log('Series ' + seriesId + ' teams migrated')
         resolve()
       })
     }
@@ -126,8 +129,37 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
                 db.ref(matchesRef).push(migratedMatch)
               // console.log(migratedMatch.homeTeam.teamName + ' - ' + migratedMatch.awayTeam.teamName + ', ' + date + ' kl ' + time)
               })
+            console.log('Series ' + seriesId + ' matches migrated')
             resolve()
           })
+      })
+    }
+
+    function updateUserMapping () {
+      return new Promise(function (resolve) {
+        db.ref('/users').once('value', userSnapshots => {
+          db.ref('/teams').once('value', teamSnapshots => {
+            const teams = []
+            teamSnapshots.forEach(teamSnapshot => {
+              teams.push({teamId: teamSnapshot.key, email: teamSnapshot.val().email})
+            })
+
+            userSnapshots.forEach(userSnapshot => {
+              const userKey = userSnapshot.key
+              const user = userSnapshot.val()
+
+              user.teams = {}
+              teams
+                .filter(x => x.email.toLowerCase().includes(user.email.toLowerCase()) ||
+                  (x.email.toLowerCase() === 'daniel.eek68@gmail.com' && user.email.toLowerCase() === 'niklas@ingholt.com'))
+                .forEach(x => (user.teams[x.teamId] = true))
+              // console.log(user)
+              db.ref('/users/' + userKey).set(user)
+            })
+            console.log('Series ' + seriesId + ' user mappings updated')
+            resolve()
+          })
+        })
       })
     }
 
@@ -140,6 +172,7 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
       await cleanSeries()
       await migrateTeams(data.teams)
       await migrateMatches(data.matches)
+      await updateUserMapping()
 
       return response.status(200).send('Serien nollställd')
     })
