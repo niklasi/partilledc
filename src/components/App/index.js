@@ -80,7 +80,7 @@ class App extends React.Component {
       if (this.props.user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' ||
         this.props.user.uid === 't9Q8UPdd1oOvyA4PN4C4VeBMeaW2') {
         items.push(<ListItem key={'reset-' + serie.id}>
-          <Link to={{pathname: '/series/' + serie.id + '/reset', state: {slug: serie.slug}}} onClick={this.handleToggle}> Admin </Link>
+          <Link to={{pathname: '/series/' + serie.id + '/reset', state: {slug: serie.slug}}} onClick={this.handleToggle}> Nollställ </Link>
         </ListItem>)
       }
       return <ListItem key={serie.id} primaryText={serie.text} nestedItems={items} />
