@@ -23,8 +23,8 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
       return response.status(400).send('Missing uid')
     }
 
-    const teamsRef = '/teamsNext'
-    const matchesRef = '/matchesNext'
+    const teamsRef = '/teams'
+    const matchesRef = '/matches'
     const db = admin.database()
 
     function cleanSeries () {
