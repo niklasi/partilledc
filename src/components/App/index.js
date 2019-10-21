@@ -77,7 +77,8 @@ class App extends React.Component {
           <Link to={'/series/' + serie.id + '/table'} onClick={this.handleToggle}> Tabell </Link>
         </ListItem>
       ]
-      if (this.props.user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2') {
+      if (this.props.user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' ||
+        this.props.user.uid === 't9Q8UPdd1oOvyA4PN4C4VeBMeaW2') {
         items.push(<ListItem key={'reset-' + serie.id}>
           <Link to={{pathname: '/series/' + serie.id + '/reset', state: {slug: serie.slug}}} onClick={this.handleToggle}> Admin </Link>
         </ListItem>)
