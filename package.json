@@ -6,7 +6,6 @@
     "firebase-admin": "^9.3.0",
     "firebase-tools": "^8.13.1",
     "react-scripts": "^3.4.1",
-    "request": "^2.82.0",
     "standard": "^11.0.1",
     "tap": "^8.0.1"
   },
