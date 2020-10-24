@@ -60,7 +60,7 @@ class Match extends Component {
     const match = this.props.match
 
     const actions = [
-      <FlatButton label='Stäng' primary onTouchTap={this.handleClose} disabled={this.state.requirePin && this.state.wrongPin} />
+      <FlatButton label='Stäng' primary onClick={this.handleClose} disabled={this.state.requirePin && this.state.wrongPin} />
     ]
 
     const {palette} = getMuiTheme()
@@ -76,7 +76,7 @@ class Match extends Component {
           label={item.text}
           primary
           labelStyle={{textTransform: 'none'}}
-          onTouchTap={open} />
+          onClick={open} />
       </TableHeaderColumn>
     }
 

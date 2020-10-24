@@ -55,7 +55,7 @@ class App extends React.Component {
       </MenuItem>)
     }
 
-    return <MenuItem disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} primaryText='Logga ut' onTouchTap={this.signOut} />
+    return <MenuItem disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} primaryText='Logga ut' onClick={this.signOut} />
   }
 
   componentWillReceiveProps (nextProps) {
@@ -120,7 +120,7 @@ class App extends React.Component {
         iconStyleRight={iphoneXFix}
         key='AppBar'
         title={this.title()}
-        onLeftIconButtonTouchTap={this.handleToggle}
+        onLeftIconButtonClick={this.handleToggle}
         iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
           {this.menu()}
         </IconMenu>} />
