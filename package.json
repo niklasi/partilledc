@@ -5,7 +5,7 @@
   "devDependencies": {
     "firebase-admin": "^5.2.1",
     "firebase-tools": "^7.3.2",
-    "react-scripts": "^1.0.0",
+    "react-scripts": "^1.0.10",
     "request": "^2.82.0",
     "standard": "^11.0.1",
     "tap": "^8.0.1"
@@ -20,7 +20,6 @@
     "react-grid-layout": "^0.15.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
-    "react-scripts": "1.0.10",
     "react-tap-event-plugin": "^2.0.0",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
