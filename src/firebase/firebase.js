@@ -1,4 +1,6 @@
-import { initializeApp } from 'firebase'
+import { initializeApp } from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
 import { firebaseConfig } from './config'
 
 export const firebaseApp = initializeApp(firebaseConfig)
