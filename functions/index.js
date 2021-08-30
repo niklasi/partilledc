@@ -3,7 +3,7 @@ const admin = require('firebase-admin')
 const cors = require('cors')({origin: true})
 const r2 = require('r2')
 
-admin.initializeApp(functions.config().firebase)
+admin.initializeApp()
 
 exports.resetSeries = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
