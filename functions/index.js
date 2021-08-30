@@ -207,7 +207,7 @@ exports.mymatches = functions.https.onRequest((request, response) => {
 
 exports.addUser = functions.auth.user().onCreate(evt => {
   const db = admin.database()
-  const email = evt.data.email
+  const email = evt.email
 
   db.ref('/teams').once('value', teamSnapshots => {
     const teams = []
@@ -220,10 +220,10 @@ exports.addUser = functions.auth.user().onCreate(evt => {
       .filter(x => x.email.toLowerCase().includes(user.email.toLowerCase()))
       .forEach(x => (user.teams[x.teamId] = true))
 
-    db.ref('/users/' + evt.data.uid).set(user)
+    return db.ref('/users/' + evt.uid).set(user)
   })
 })
 
 exports.removeUser = functions.auth.user().onDelete(evt => {
-  return admin.database().ref('/users/' + evt.data.uid).remove()
+  return admin.database().ref('/users/' + evt.uid).remove()
 })
