@@ -3,9 +3,9 @@
     "public": "build",
     "rewrites": [
       {
-      "source": "/scraper/**",
-      "run": {
-        "serviceId": "partilletennis-scraper"
+        "source": "/scraper/**",
+        "run": {
+          "serviceId": "partilletennis-scraper"
         }
       },
       {
@@ -27,5 +27,25 @@
   },
   "database": {
     "rules": "firebase.rules.json"
+  },
+  "functions": {
+    "source": "functions"
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "functions": {
+      "port": 5001
+    },
+    "database": {
+      "port": 9000
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true
+    }
   }
 }
