@@ -1,6 +1,9 @@
+import firebase from 'firebase/app'
+import 'firebase/functions'
 import { FirebaseList, firebaseAuth } from '../firebase'
 import superagent from 'superagent'
 
+let functionUrl = firebase.functions().emulatorOrigin ? firebase.functions().emulatorOrigin + '/project-8539870983476533695/' + firebase.functions().region : 'https://us-central1-project-8539870983476533695.cloudfunctions.net'
 const seriesList = new FirebaseList({onLoad: loadSeriesSuccess}, (attr) => Object.assign({}, attr))
 
 export function loadSeriesSuccess (series) {
@@ -105,7 +108,7 @@ export function loadTodaysMatches (today) {
 
 export function loadMyMatches (uid) {
   return (dispatch) => {
-    superagent.get('https://us-central1-project-8539870983476533695.cloudfunctions.net/mymatches')
+    superagent.get(functionUrl + '/mymatches')
       .query({ uid })
       .end((err, result) => {
         if (err) console.log(err)
@@ -207,7 +210,7 @@ export function loadScrapedSeries (slug) {
 
 export function resetSeries (seriesId, slug, uid) {
   return (dispatch) => {
-    superagent.get('https://us-central1-project-8539870983476533695.cloudfunctions.net/resetSeries')
+    superagent.get(functionUrl + '/resetSeries')
       .query({ seriesId, slug, uid })
       .end((err, result) => {
         if (err) console.log(err)
