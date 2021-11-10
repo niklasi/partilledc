@@ -209,7 +209,7 @@ exports.addUser = functions.auth.user().onCreate(evt => {
   const db = admin.database()
   const email = evt.email
 
-  db.ref('/teams').once('value', teamSnapshots => {
+  return db.ref('/teams').once('value', teamSnapshots => {
     const teams = []
     teamSnapshots.forEach(teamSnapshot => {
       teams.push({teamId: teamSnapshot.key, email: teamSnapshot.val().email})
