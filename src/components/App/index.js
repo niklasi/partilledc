@@ -83,7 +83,7 @@ class App extends React.Component {
           <Link to={{pathname: '/series/' + serie.id + '/reset', state: {slug: serie.slug}}} onClick={this.handleToggle}> Nollställ </Link>
         </ListItem>)
       }
-      return <ListItem key={serie.id} primaryText={serie.text} nestedItems={items} />
+      return <ListItem data-testid={serie.text} key={serie.id} primaryText={serie.text} nestedItems={items} />
     }
 
     const myMatches = () => {
