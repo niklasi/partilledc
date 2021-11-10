@@ -30,7 +30,7 @@
   "scripts": {
     "test": "babel-tap test/test-*.js",
     "start": "react-scripts start",
-    "dev": "GOOGLE_APPLICATION_CREDENTIALS=$PWD/credentials/partilletennis-firebase.json firebase emulators:start",
+    "dev": "GOOGLE_APPLICATION_CREDENTIALS=$PWD/credentials/partilletennis-firebase.json firebase emulators:start --import /Users/niklas/dev/niklasi/partilledc/data/",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "deploy": "npm run build && firebase deploy"
