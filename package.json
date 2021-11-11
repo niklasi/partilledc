@@ -8,7 +8,7 @@
     "firebase-admin": "^9.11.1",
     "firebase-tools": "^9.16.5",
     "jest-environment-jsdom-fifteen": "^1.0.2",
-    "react-scripts": "1.1.5",
+    "react-scripts": "4.0.3",
     "request": "^2.82.0",
     "standard": "^11.0.1"
   },
@@ -29,7 +29,7 @@
     "superagent": "^3.6.0"
   },
   "scripts": {
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "start": "react-scripts start",
     "dev": "GOOGLE_APPLICATION_CREDENTIALS=$PWD/credentials/partilletennis-firebase.json firebase emulators:start --only database,auth,functions --import /Users/niklas/dev/niklasi/partilledc/data/",
     "build": "react-scripts build",
@@ -39,7 +39,10 @@
   "engines": {
     "node": "10"
   },
-  "eslintConfig": {
-    "extends": "./node_modules/react-scripts/config/eslint.js"
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
