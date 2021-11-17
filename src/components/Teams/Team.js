@@ -8,16 +8,18 @@ class Team extends Component {
   render () {
     const team = this.props.team
 
-    const {palette} = getMuiTheme()
+    const { palette } = getMuiTheme()
 
-    return <Card>
-      <CardHeader
-        style={{overflow: 'hidden'}}
-        avatar={<Avatar size={35} backgroundColor={palette.accent1Color}>{team.teamRanking}</Avatar>}
-        title={team.teamName}
-        subtitle={<div>{team.contact}<div>{team.phone}</div><div>{team.email}</div></div>}
-      />
-    </Card>
+    return (
+      <Card>
+        <CardHeader
+          style={{ overflow: 'hidden' }}
+          avatar={<Avatar size={35} backgroundColor={palette.accent1Color}>{team.teamRanking}</Avatar>}
+          title={team.teamName}
+          subtitle={<div>{team.contact}<div>{team.phone}</div><div>{team.email}</div></div>}
+        />
+      </Card>
+    )
   }
 }
 

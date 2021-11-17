@@ -51,7 +51,7 @@ export class FirebaseList {
       ref = ref.orderByChild(filter.child).equalTo(filter.equalTo)
     }
     let initialized = false
-    let list = []
+    const list = []
 
     ref.once('value', () => {
       initialized = true
@@ -93,7 +93,7 @@ export class FirebaseList {
   }
 
   unwrapSnapshot (snapshot) {
-    let attrs = snapshot.val()
+    const attrs = snapshot.val()
     attrs.id = snapshot.key
     return this._modelFactory(attrs)
   }

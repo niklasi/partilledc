@@ -3,8 +3,8 @@ import 'firebase/functions'
 import { FirebaseList, firebaseAuth } from '../firebase'
 import superagent from 'superagent'
 
-let functionUrl = firebase.functions().emulatorOrigin ? firebase.functions().emulatorOrigin + '/project-8539870983476533695/' + firebase.functions().region : 'https://us-central1-project-8539870983476533695.cloudfunctions.net'
-const seriesList = new FirebaseList({onLoad: loadSeriesSuccess}, (attr) => Object.assign({}, attr))
+const functionUrl = firebase.functions().emulatorOrigin ? firebase.functions().emulatorOrigin + '/project-8539870983476533695/' + firebase.functions().region : 'https://us-central1-project-8539870983476533695.cloudfunctions.net'
+const seriesList = new FirebaseList({ onLoad: loadSeriesSuccess }, (attr) => Object.assign({}, attr))
 
 export function loadSeriesSuccess (series) {
   return {
@@ -27,7 +27,7 @@ export function unloadSeries () {
   }
 }
 
-const teamsList = new FirebaseList({onLoad: loadTeamsSuccess}, (attr) => Object.assign({}, attr))
+const teamsList = new FirebaseList({ onLoad: loadTeamsSuccess }, (attr) => Object.assign({}, attr))
 
 export function loadTeamsSuccess (teams) {
   return {
@@ -39,7 +39,7 @@ export function loadTeamsSuccess (teams) {
 export function loadTeams (seriesId) {
   return (dispatch) => {
     teamsList.path = '/teams'
-    teamsList.subscribe(dispatch, {child: 'series', equalTo: seriesId})
+    teamsList.subscribe(dispatch, { child: 'series', equalTo: seriesId })
   }
 }
 
@@ -51,7 +51,7 @@ export function unloadTeams () {
   }
 }
 
-const seriesTableList = new FirebaseList({onLoad: loadSeriesTableSuccess}, (attr) => Object.assign({}, attr))
+const seriesTableList = new FirebaseList({ onLoad: loadSeriesTableSuccess }, (attr) => Object.assign({}, attr))
 
 export function loadSeriesTableSuccess (seriesTable) {
   return {
@@ -63,7 +63,7 @@ export function loadSeriesTableSuccess (seriesTable) {
 export function loadSeriesTable (seriesId) {
   return (dispatch) => {
     seriesTableList.path = '/matches'
-    seriesTableList.subscribe(dispatch, {child: 'series', equalTo: seriesId})
+    seriesTableList.subscribe(dispatch, { child: 'series', equalTo: seriesId })
   }
 }
 
@@ -75,7 +75,7 @@ export function unloadSeriesTable () {
   }
 }
 
-const matchList = new FirebaseList({onLoad: loadMatchesSuccess, onChange: matchChanged}, (attr) => Object.assign({}, attr))
+const matchList = new FirebaseList({ onLoad: loadMatchesSuccess, onChange: matchChanged }, (attr) => Object.assign({}, attr))
 
 export function loadMatchesSuccess (matches) {
   return {
@@ -95,14 +95,14 @@ export function loadMatches (seriesId) {
   return (dispatch) => {
     matchList.path = '/matches'
     matchList.unsubscribe()
-    matchList.subscribe(dispatch, {child: 'series', equalTo: seriesId})
+    matchList.subscribe(dispatch, { child: 'series', equalTo: seriesId })
   }
 }
 
 export function loadTodaysMatches (today) {
   return (dispatch) => {
     matchList.path = '/matches'
-    matchList.subscribe(dispatch, {child: 'date', equalTo: today})
+    matchList.subscribe(dispatch, { child: 'date', equalTo: today })
   }
 }
 

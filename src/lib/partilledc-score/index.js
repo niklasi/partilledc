@@ -5,20 +5,20 @@ export function matchPlayed (sets) {
 export function score (results) {
   const sets = results
     .reduce((setWins, set) => {
-      const {home, away} = set
+      const { home, away } = set
 
-      if (home === 4) return {home: setWins.home + 1, away: setWins.away}
-      if (away === 4) return {home: setWins.home, away: setWins.away + 1}
+      if (home === 4) return { home: setWins.home + 1, away: setWins.away }
+      if (away === 4) return { home: setWins.home, away: setWins.away + 1 }
 
       if (setWins.home !== setWins.away) return setWins
-      if (home - away > 1) return {home: setWins.home + 1, away: setWins.away}
-      if (away - home > 1) return {home: setWins.home, away: setWins.away + 1}
+      if (home - away > 1) return { home: setWins.home + 1, away: setWins.away }
+      if (away - home > 1) return { home: setWins.home, away: setWins.away + 1 }
 
       return setWins
     }, { home: 0, away: 0 })
 
   const games = results.reduce((gameWins, game) => {
-    return {home: gameWins.home + game.home, away: gameWins.away + game.away}
+    return { home: gameWins.home + game.home, away: gameWins.away + game.away }
   }, { home: 0, away: 0 })
 
   let homePoints = 0
@@ -55,7 +55,7 @@ export function score (results) {
 
 export function matchPoints (results) {
   return results.filter(matchPlayed).map(score).reduce((p, c) => {
-    const {home, away} = p
+    const { home, away } = p
     return {
       home: {
         points: home.points + c.home.points,
@@ -68,13 +68,13 @@ export function matchPoints (results) {
         games: away.games + c.away.games
       }
     }
-  }, {home: {points: 0, sets: 0, games: 0}, away: {points: 0, sets: 0, games: 0}})
+  }, { home: { points: 0, sets: 0, games: 0 }, away: { points: 0, sets: 0, games: 0 } })
 }
 
-export function teamPoints ({home, away}) {
-  if (home.points === 0 && away.points === 0) return {home: 0, away: 0}
-  if (home.points > away.points) return {home: 2, away: 0}
-  if (home.points < away.points) return {home: 0, away: 2}
+export function teamPoints ({ home, away }) {
+  if (home.points === 0 && away.points === 0) return { home: 0, away: 0 }
+  if (home.points > away.points) return { home: 2, away: 0 }
+  if (home.points < away.points) return { home: 0, away: 2 }
 
-  return {home: 1, away: 1}
+  return { home: 1, away: 1 }
 }

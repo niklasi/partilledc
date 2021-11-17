@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const cors = require('cors')({origin: true})
+const cors = require('cors')({ origin: true })
 const r2 = require('r2')
 
 admin.initializeApp()
@@ -89,33 +89,33 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
           .orderByChild('series')
           .equalTo(seriesId)
           .once('value', (snapshot) => {
-            let teams = []
+            const teams = []
             snapshot.forEach(team => {
-              const {teamRanking, teamName} = team.val()
-              teams.push({id: team.key, teamRanking, teamName})
+              const { teamRanking, teamName } = team.val()
+              teams.push({ id: team.key, teamRanking, teamName })
             })
 
             matches
               .forEach(match => {
-                let homeTeam = teams
+                const homeTeam = teams
                   .find(team => team.teamRanking === match.home_team)
-                let awayTeam = teams
+                const awayTeam = teams
                   .find(team => team.teamRanking === match.away_team)
 
                 homeTeam.matchp = 0
                 awayTeam.matchp = 0
 
-                const {lanes, time, date} = match
+                const { lanes, time, date } = match
 
                 const matches = lanes.indexOf('+') === -1
                   ? [
-                    {text: 'Match', result: [{home: 0, away: 0}]}
-                  ]
+                      { text: 'Match', result: [{ home: 0, away: 0 }] }
+                    ]
                   : [
-                    { text: 'Dubbel', result: [ { home: 0, away: 0 } ] },
-                    { text: '1:a singel', result: [ { home: 0, away: 0 } ] },
-                    { text: '2:a singel', result: [ { home: 0, away: 0 } ] }
-                  ]
+                      { text: 'Dubbel', result: [{ home: 0, away: 0 }] },
+                      { text: '1:a singel', result: [{ home: 0, away: 0 }] },
+                      { text: '2:a singel', result: [{ home: 0, away: 0 }] }
+                    ]
 
                 const migratedMatch = {
                   homeTeam,
@@ -124,7 +124,8 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
                   time,
                   lane: lanes,
                   matches,
-                  series: seriesId}
+                  series: seriesId
+                }
 
                 db.ref(matchesRef).push(migratedMatch)
               // console.log(migratedMatch.homeTeam.teamName + ' - ' + migratedMatch.awayTeam.teamName + ', ' + date + ' kl ' + time)
@@ -141,7 +142,7 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
           db.ref('/teams').once('value', teamSnapshots => {
             const teams = []
             teamSnapshots.forEach(teamSnapshot => {
-              teams.push({teamId: teamSnapshot.key, email: teamSnapshot.val().email})
+              teams.push({ teamId: teamSnapshot.key, email: teamSnapshot.val().email })
             })
 
             userSnapshots.forEach(userSnapshot => {
@@ -196,7 +197,7 @@ exports.mymatches = functions.https.onRequest((request, response) => {
         Promise.all(promises).then(snapshots => {
           const matches = snapshots
             .map(s => s.val())
-            .map(x => Object.keys(x).map(key => Object.assign({}, {id: key}, x[key])))
+            .map(x => Object.keys(x).map(key => Object.assign({}, { id: key }, x[key])))
             .reduce((matches, list) => matches.concat(list), [])
 
           response.status(200).send(matches)
@@ -212,10 +213,10 @@ exports.addUser = functions.auth.user().onCreate(evt => {
   return db.ref('/teams').once('value', teamSnapshots => {
     const teams = []
     teamSnapshots.forEach(teamSnapshot => {
-      teams.push({teamId: teamSnapshot.key, email: teamSnapshot.val().email})
+      teams.push({ teamId: teamSnapshot.key, email: teamSnapshot.val().email })
     })
 
-    const user = {email, teams: {}}
+    const user = { email, teams: {} }
     teams
       .filter(x => x.email.toLowerCase().includes(user.email.toLowerCase()))
       .forEach(x => (user.teams[x.teamId] = true))

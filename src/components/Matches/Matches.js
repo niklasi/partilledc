@@ -6,8 +6,9 @@ import { connect } from 'react-redux'
 import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../../actions'
 
 const GridLayout = WidthProvider(Responsive)
-const defaultProps = {className: 'layout',
-  cols: {lg: 12, md: 12, sm: 6, xs: 6, xxs: 6},
+const defaultProps = {
+  className: 'layout',
+  cols: { lg: 12, md: 12, sm: 6, xs: 6, xxs: 6 },
   rowHeight: 180
 }
 
@@ -28,7 +29,7 @@ class Matches extends React.Component {
       case '/series/:series/matches':
         this.props.loadMatches(series)
         break
-      case '/todays-matches':
+      case '/todays-matches': {
         const today = () => new Date().toLocaleDateString('sv-SE')
         let currentDay = today()
         this.props.loadTodaysMatches(currentDay)
@@ -40,6 +41,7 @@ class Matches extends React.Component {
           }
         }, 1000 * 60)
         break
+      }
       case '/my-matches':
         this.props.loadMyMatches(this.props.user.uid)
         break
@@ -48,7 +50,7 @@ class Matches extends React.Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.params !== this.props.params) {
       this.getMatches(nextProps.route.path, nextProps.params.series)
     }
@@ -59,11 +61,14 @@ class Matches extends React.Component {
   }
 
   render () {
-    return <GridLayout key='layout' {...defaultProps}>
-      {this.props.matches.map((match, index) => <div key={'match-' + index} data-grid={{x: (index % 2) * 6, y: index + 1, w: 6, h: 1, isDraggable: false}}>
-        <Match saveMatch={this.props.saveMatch} match={match} user={this.props.user} />
-      </div>)}
-    </GridLayout>
+    return (
+      <GridLayout key='layout' {...defaultProps}>
+        {this.props.matches.map((match, index) =>
+          <div key={'match-' + index} data-grid={{ x: (index % 2) * 6, y: index + 1, w: 6, h: 1, isDraggable: false }}>
+            <Match saveMatch={this.props.saveMatch} match={match} user={this.props.user} />
+          </div>)}
+      </GridLayout>
+    )
   }
 }
 
@@ -79,8 +84,8 @@ Matches.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {matches, user} = state
-  return {matches, user, ownProps}
+  const { matches, user } = state
+  return { matches, user, ownProps }
 }
 
-export default connect(mapStateToProps, {saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches})(Matches)
+export default connect(mapStateToProps, { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches })(Matches)

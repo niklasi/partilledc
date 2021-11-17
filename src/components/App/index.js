@@ -15,17 +15,16 @@ import LockClosed from 'material-ui/svg-icons/action/lock-outline'
 import series from '../../series.json'
 import { signOut } from '../../actions'
 
-/* eslint-disable react/jsx-indent */
 class App extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {open: false}
+    this.state = { open: false }
     this.handleToggle = this.handleToggle.bind(this)
-    this.signOut = this.signOut.bind(this)
+    this.handleSignOut = this.handleSignOut.bind(this)
   }
 
   handleToggle () {
-    this.setState({open: !this.state.open})
+    this.setState({ open: !this.state.open })
   }
 
   title () {
@@ -40,25 +39,26 @@ class App extends React.Component {
     return seriesNames.length > 0 ? `${seriesNames} - ${routeName}` : routeName
   }
 
-  signOut (evt) {
+  handleSignOut (evt) {
     evt.preventDefault()
     this.props.signOut()
   }
 
   menu () {
     if (this.props.user.isAnonymous) {
-      const menuItems = [{to: '/register-user', text: 'Ny användare'}, {to: '/sign-in', text: 'Logga in'}]
-      return menuItems.map(item => <MenuItem key={item.text}>
-        <Link to={item.to}>
-          {item.text}
-        </Link>
-      </MenuItem>)
+      const menuItems = [{ to: '/register-user', text: 'Ny användare' }, { to: '/sign-in', text: 'Logga in' }]
+      return menuItems.map(item =>
+        <MenuItem key={item.text}>
+          <Link to={item.to}>
+            {item.text}
+          </Link>
+        </MenuItem>)
     }
 
-    return <MenuItem disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} primaryText='Logga ut' onTouchTap={this.signOut} />
+    return <MenuItem disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} primaryText='Logga ut' onTouchTap={this.handleSignOut} />
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (this.props.user.isAnonymous !== nextProps.user.isAnonymous) {
       nextProps.user.isAnonymous ? this.props.router.push('/') : this.props.router.goBack()
     }
@@ -79,19 +79,22 @@ class App extends React.Component {
       ]
       if (this.props.user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' ||
         this.props.user.uid === 't9Q8UPdd1oOvyA4PN4C4VeBMeaW2') {
-        items.push(<ListItem key={'reset-' + serie.id}>
-          <Link to={{pathname: '/series/' + serie.id + '/reset', state: {slug: serie.slug}}} onClick={this.handleToggle}> Nollställ </Link>
-        </ListItem>)
+        items.push(
+          <ListItem key={'reset-' + serie.id}>
+            <Link to={{ pathname: '/series/' + serie.id + '/reset', state: { slug: serie.slug } }} onClick={this.handleToggle}> Nollställ </Link>
+          </ListItem>)
       }
       return <ListItem data-testid={serie.text} key={serie.id} primaryText={serie.text} nestedItems={items} />
     }
 
     const myMatches = () => {
       if (!this.props.user.isAnonymous) {
-        return <ListItem>
-          <Link to={'/my-matches'} onClick={this.handleToggle}> Mina matcher
-          </Link>
-        </ListItem>
+        return (
+          <ListItem>
+            <Link to='/my-matches' onClick={this.handleToggle}> Mina matcher
+            </Link>
+          </ListItem>
+        )
       }
     }
 
@@ -106,47 +109,55 @@ class App extends React.Component {
       marginTop = '0px'
     }
 
+    let iphoneXFix
+    let iphoneXTitleFix
+
     if (('standalone' in window.navigator) && window.navigator.standalone) {
-      var iphoneXFix = {marginTop: '30px'}
-      var iphoneXTitleFix = {marginTop: '22px'}
+      iphoneXFix = { marginTop: '30px' }
+      iphoneXTitleFix = { marginTop: '22px' }
       marginTop = '80px'
     }
 
-    return <div>
-      <AppBar
-        style={{display, position: 'fixed', top: '0px', height: marginTop}}
-        titleStyle={iphoneXTitleFix}
-        iconStyleLeft={iphoneXFix}
-        iconStyleRight={iphoneXFix}
-        key='AppBar'
-        title={this.title()}
-        onLeftIconButtonTouchTap={this.handleToggle}
-        iconElementRight={<IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{horizontal: 'right', vertical: 'top'}} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-          {this.menu()}
-        </IconMenu>} />
-      <div style={{marginTop}}>
-        {this.props.children}
+    return (
+      <div>
+        <AppBar
+          style={{ display, position: 'fixed', top: '0px', height: marginTop }}
+          titleStyle={iphoneXTitleFix}
+          iconStyleLeft={iphoneXFix}
+          iconStyleRight={iphoneXFix}
+          key='AppBar'
+          title={this.title()}
+          onLeftIconButtonTouchTap={this.handleToggle}
+          iconElementRight={
+            <IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
+              {this.menu()}
+            </IconMenu>
+}
+        />
+        <div style={{ marginTop }}>
+          {this.props.children}
+        </div>
+        <Drawer containerStyle={iphoneXFix} docked={false} onRequestChange={(open) => this.setState({ open })} open={this.state.open}>
+          <List>
+            <Subheader style={{ fontSize: '24px' }}>
+              Lagserier
+            </Subheader>
+            {series.companySeries.filter(x => x.active === true).map(listItemFactory)}
+            <Divider />
+            <Subheader style={{ fontSize: '24px' }}>
+              Motionsserier
+            </Subheader>
+            {series.exerciseSeries.filter(x => x.active === true).map(listItemFactory)}
+            <Divider />
+            {myMatches()}
+            <ListItem>
+              <Link to='/todays-matches' onClick={this.handleToggle}> Dagens matcher
+              </Link>
+            </ListItem>
+          </List>
+        </Drawer>
       </div>
-      <Drawer containerStyle={iphoneXFix} docked={false} onRequestChange={(open) => this.setState({open})} open={this.state.open}>
-        <List>
-          <Subheader style={{fontSize: '24px'}}>
-                   Lagserier
-          </Subheader>
-          {series.companySeries.filter(x => x.active === true).map(listItemFactory)}
-          <Divider />
-          <Subheader style={{fontSize: '24px'}}>
-                   Motionsserier
-          </Subheader>
-          {series.exerciseSeries.filter(x => x.active === true).map(listItemFactory)}
-          <Divider />
-          {myMatches()}
-          <ListItem>
-            <Link to={'/todays-matches'} onClick={this.handleToggle}> Dagens matcher
-            </Link>
-          </ListItem>
-        </List>
-      </Drawer>
-    </div>
+    )
   }
 }
 
@@ -158,9 +169,9 @@ App.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {user} = state
-  return {user, ownProps}
+  const { user } = state
+  return { user, ownProps }
 }
 
-export default connect(mapStateToProps, {signOut})(withRouter(App))
+export default connect(mapStateToProps, { signOut })(withRouter(App))
 /* eslint-enable react/jsx-indent */

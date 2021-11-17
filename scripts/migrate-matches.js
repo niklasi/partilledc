@@ -11,9 +11,9 @@ const app = firebase.initializeApp(config)
 const db = app.database()
 
 const companySeries = allSeries.companySeries
-  .map(x => Object.assign(x, {type: 'Company'}))
+  .map(x => Object.assign(x, { type: 'Company' }))
 const exerciseSeries = allSeries.exerciseSeries
-  .map(x => Object.assign(x, {type: 'Exercise'}))
+  .map(x => Object.assign(x, { type: 'Exercise' }))
 
 let input = ''
 process.stdin
@@ -28,34 +28,34 @@ process.stdin
           .orderByChild('series')
           .equalTo(series.id)
           .once('value', (snapshot) => {
-            let teams = []
+            const teams = []
             snapshot.forEach(team => {
-              const {teamRanking, teamName} = team.val()
-              teams.push({id: team.key, teamRanking, teamName})
+              const { teamRanking, teamName } = team.val()
+              teams.push({ id: team.key, teamRanking, teamName })
             })
 
             matches
               .filter(match => match.division === division)
               .forEach(match => {
-                let homeTeam = teams
+                const homeTeam = teams
                   .find(team => team.teamRanking === match.home_team)
-                let awayTeam = teams
+                const awayTeam = teams
                   .find(team => team.teamRanking === match.away_team)
 
                 homeTeam.matchp = 0
                 awayTeam.matchp = 0
 
-                const {lanes, time, date} = match
+                const { lanes, time, date } = match
 
                 const matches = series.type === 'Exercise'
                   ? [
-                    {text: 'Match', result: [{home: 0, away: 0}]}
-                  ]
+                      { text: 'Match', result: [{ home: 0, away: 0 }] }
+                    ]
                   : [
-                    { text: 'Dubbel', result: [ { home: 0, away: 0 } ] },
-                    { text: '1:a singel', result: [ { home: 0, away: 0 } ] },
-                    { text: '2:a singel', result: [ { home: 0, away: 0 } ] }
-                  ]
+                      { text: 'Dubbel', result: [{ home: 0, away: 0 }] },
+                      { text: '1:a singel', result: [{ home: 0, away: 0 }] },
+                      { text: '2:a singel', result: [{ home: 0, away: 0 }] }
+                    ]
 
                 const migratedMatch = {
                   homeTeam,
@@ -64,7 +64,8 @@ process.stdin
                   time,
                   lane: lanes,
                   matches,
-                  series: series.id}
+                  series: series.id
+                }
 
                 db.ref('/matches').push(migratedMatch)
                 console.log(migratedMatch.homeTeam.teamName + ' - ' + migratedMatch.awayTeam.teamName + ', ' + date + ' kl ' + time)

@@ -13,7 +13,7 @@ db.ref('/users').once('value', userSnapshots => {
   db.ref('/teams').once('value', teamSnapshots => {
     const teams = []
     teamSnapshots.forEach(teamSnapshot => {
-      teams.push({teamId: teamSnapshot.key, email: teamSnapshot.val().email})
+      teams.push({ teamId: teamSnapshot.key, email: teamSnapshot.val().email })
     })
 
     userSnapshots.forEach(userSnapshot => {

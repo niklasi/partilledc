@@ -10,7 +10,7 @@ class SeriesTable extends React.Component {
     this.props.loadSeriesTable(this.props.series)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.series !== this.props.series) {
       this.props.loadSeriesTable(nextProps.series)
     }
@@ -28,52 +28,55 @@ class SeriesTable extends React.Component {
 
     const seriesTable = this.props.seriesTable[this.props.series] || []
 
-    return <Table selectable={false}>
-      <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
-        <TableRow>
-          <TableHeaderColumn>
-            {companySeries ? 'Lag' : 'Spelare'}
-          </TableHeaderColumn>
-          <TableHeaderColumn>
-                   Matcher
-          </TableHeaderColumn>
-          <TableHeaderColumn style={{display: displayMatchp}}>
-                   Matchp
-          </TableHeaderColumn>
-          <TableHeaderColumn style={{display: displaySetAndGame}}>
-                   Set
-          </TableHeaderColumn>
-          <TableHeaderColumn style={{display: displaySetAndGame}}>
-                   Gem
-          </TableHeaderColumn>
-          <TableHeaderColumn>
-                   Poäng
-          </TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-      <TableBody displayRowCheckbox={false}>
-        {seriesTable.map(team => <TableRow key={team.id}>
-          <TableRowColumn style={{whiteSpace: 'normal'}}>
-            {team.teamName}
-          </TableRowColumn>
-          <TableRowColumn style={{whiteSpace: 'normal'}}>
-            {team.matches}
-          </TableRowColumn>
-          <TableRowColumn style={{whiteSpace: 'normal', display: displayMatchp}}>
-            {`${team.matchp.won.points}-${team.matchp.lost.points}`}
-          </TableRowColumn>
-          <TableRowColumn style={{whiteSpace: 'normal', display: displaySetAndGame}}>
-            {`${team.matchp.won.sets}-${team.matchp.lost.sets}`}
-          </TableRowColumn>
-          <TableRowColumn style={{whiteSpace: 'normal', display: displaySetAndGame}}>
-            {`${team.matchp.won.games}-${team.matchp.lost.games}`}
-          </TableRowColumn>
-          <TableRowColumn style={{whiteSpace: 'normal'}}>
-            {team.teamp}
-          </TableRowColumn>
-        </TableRow>)}
-      </TableBody>
-    </Table>
+    return (
+      <Table selectable={false}>
+        <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
+          <TableRow>
+            <TableHeaderColumn>
+              {companySeries ? 'Lag' : 'Spelare'}
+            </TableHeaderColumn>
+            <TableHeaderColumn>
+              Matcher
+            </TableHeaderColumn>
+            <TableHeaderColumn style={{ display: displayMatchp }}>
+              Matchp
+            </TableHeaderColumn>
+            <TableHeaderColumn style={{ display: displaySetAndGame }}>
+              Set
+            </TableHeaderColumn>
+            <TableHeaderColumn style={{ display: displaySetAndGame }}>
+              Gem
+            </TableHeaderColumn>
+            <TableHeaderColumn>
+              Poäng
+            </TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+          {seriesTable.map(team =>
+            <TableRow key={team.id}>
+              <TableRowColumn style={{ whiteSpace: 'normal' }}>
+                {team.teamName}
+              </TableRowColumn>
+              <TableRowColumn style={{ whiteSpace: 'normal' }}>
+                {team.matches}
+              </TableRowColumn>
+              <TableRowColumn style={{ whiteSpace: 'normal', display: displayMatchp }}>
+                {`${team.matchp.won.points}-${team.matchp.lost.points}`}
+              </TableRowColumn>
+              <TableRowColumn style={{ whiteSpace: 'normal', display: displaySetAndGame }}>
+                {`${team.matchp.won.sets}-${team.matchp.lost.sets}`}
+              </TableRowColumn>
+              <TableRowColumn style={{ whiteSpace: 'normal', display: displaySetAndGame }}>
+                {`${team.matchp.won.games}-${team.matchp.lost.games}`}
+              </TableRowColumn>
+              <TableRowColumn style={{ whiteSpace: 'normal' }}>
+                {team.teamp}
+              </TableRowColumn>
+            </TableRow>)}
+        </TableBody>
+      </Table>
+    )
   }
 }
 
@@ -84,10 +87,10 @@ SeriesTable.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {seriesTable} = state
+  const { seriesTable } = state
   const params = ownProps.params || {}
   const series = params.series || ownProps.series
-  return {seriesTable, series}
+  return { seriesTable, series }
 }
 
-export default connect(mapStateToProps, {loadSeriesTable, unloadSeriesTable})(SeriesTable)
+export default connect(mapStateToProps, { loadSeriesTable, unloadSeriesTable })(SeriesTable)
