@@ -1,16 +1,18 @@
 /* global test, expect */
 import React from 'react'
-import { customRender as render } from '../../test-utils'
+import { customRender as render, within, fireEvent } from '../../test-utils'
 import App from '.'
 
-test('shows the children when the checkbox is checked', async () => {
-  const { getByText } = render(<App params={{ series: '' }} routes={[{ name: '' }]} />)
+test('menu test', async () => {
+  const { getByText, getByTestId, findByText, debug } = render(<App params={{ series: '' }} routes={[{ name: '' }]} />)
 
-  // const menuItem = getByTestId(/Division 1/i)
-  // const button = within(menuItem).getByRole('button')
+  const menuItem = getByTestId(/Division 1/i)
+  const button = within(menuItem).getByRole('button')
 
-  // expect(button).toBeDefined()
-  // fireEvent.click(button)
+  expect(button).toBeDefined()
+  fireEvent.click(button)
+
+  debug(menuItem)
 
   expect(getByText('Lagserier')).toBeDefined()
   expect(getByText('Motionsserier')).toBeDefined()
