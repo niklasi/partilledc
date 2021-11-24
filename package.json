@@ -5,6 +5,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
+    "cypress": "^9.1.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-config-standard-react": "^11.0.1",
     "firebase-admin": "^9.11.1",
@@ -32,6 +33,7 @@
   },
   "scripts": {
     "test": "react-scripts test",
+    "cypress": "cypress",
     "start": "react-scripts start",
     "dev": "GOOGLE_APPLICATION_CREDENTIALS=$PWD/credentials/partilletennis-firebase.json firebase emulators:start --only database,auth,functions --import /Users/niklas/dev/niklasi/partilledc/data/",
     "build": "react-scripts build",

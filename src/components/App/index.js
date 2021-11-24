@@ -67,14 +67,14 @@ class App extends React.Component {
   render () {
     const listItemFactory = (serie) => {
       const items = [
-        <ListItem key={'team-' + serie.id}>
-          <Link to={'/series/' + serie.id + '/teams'} onClick={this.handleToggle}> Lag </Link>
+        <ListItem key={`team-${serie.id}`}>
+          <Link data-testid={`menu-team-${serie.id}`} to={`/series/${serie.id}/teams`} onClick={this.handleToggle}> Lag </Link>
         </ListItem>,
-        <ListItem key={'matches-' + serie.id}>
-          <Link to={'/series/' + serie.id + '/matches'} onClick={this.handleToggle}> Matcher </Link>
+        <ListItem key={`matches-${serie.id}`}>
+          <Link data-testid={`menu-matches-${serie.id}`} to={`/series/${serie.id}/matches`} onClick={this.handleToggle}> Matcher </Link>
         </ListItem>,
-        <ListItem key={'table-' + serie.id}>
-          <Link to={'/series/' + serie.id + '/table'} onClick={this.handleToggle}> Tabell </Link>
+        <ListItem key={`table-${serie.id}`}>
+          <Link data-testid={`menu-table-${serie.id}`} to={`/series/${serie.id}/table`} onClick={this.handleToggle}> Tabell </Link>
         </ListItem>
       ]
       if (this.props.user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' ||
@@ -84,7 +84,7 @@ class App extends React.Component {
             <Link to={{ pathname: '/series/' + serie.id + '/reset', state: { slug: serie.slug } }} onClick={this.handleToggle}> Nollställ </Link>
           </ListItem>)
       }
-      return <ListItem data-testid={serie.text} key={serie.id} primaryText={serie.text} nestedItems={items} />
+      return <ListItem data-testid={serie.text.split(' ').join('-')} id={serie.id} key={serie.id} primaryText={serie.text} nestedItems={items} />
     }
 
     const myMatches = () => {
@@ -126,6 +126,7 @@ class App extends React.Component {
           iconStyleLeft={iphoneXFix}
           iconStyleRight={iphoneXFix}
           key='AppBar'
+          data-testid='menu'
           title={this.title()}
           onLeftIconButtonTouchTap={this.handleToggle}
           iconElementRight={
