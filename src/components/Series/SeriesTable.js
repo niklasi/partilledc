@@ -10,7 +10,7 @@ class SeriesTable extends React.Component {
     this.props.loadSeriesTable(this.props.series)
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.series !== this.props.series) {
       this.props.loadSeriesTable(nextProps.series)
     }

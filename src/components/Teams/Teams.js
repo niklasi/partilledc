@@ -19,7 +19,7 @@ class Teams extends React.Component {
     this.props.loadTeams(this.props.params.series)
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.params !== this.props.params) {
       this.props.loadTeams(nextProps.params.series)
     }

@@ -50,7 +50,7 @@ class Matches extends React.Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.params !== this.props.params) {
       this.getMatches(nextProps.route.path, nextProps.params.series)
     }

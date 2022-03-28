@@ -18,7 +18,7 @@ class Reset extends React.Component {
     this.props.loadScrapedSeries(this.props.slug)
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.slug !== this.props.slug) {
       this.props.loadScrapedSeries(nextProps.slug)
     }

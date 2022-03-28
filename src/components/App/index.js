@@ -58,7 +58,7 @@ class App extends React.Component {
     return <MenuItem disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} primaryText='Logga ut' onTouchTap={this.handleSignOut} />
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (this.props.user.isAnonymous !== nextProps.user.isAnonymous) {
       nextProps.user.isAnonymous ? this.props.router.push('/') : this.props.router.goBack()
     }
