@@ -67,12 +67,14 @@ class Matches extends React.Component {
     return (
       <div>
         <Print matches={this.props.matches} isCompanySeries={isCompanySeries} />
-        <GridLayout key='layout' {...defaultProps}>
-          {this.props.matches.map((match, index) =>
-            <div key={'match-' + index} data-grid={{ x: (index % 2) * 6, y: index + 1, w: 6, h: 1, isDraggable: false }}>
-              <Match saveMatch={this.props.saveMatch} match={match} user={this.props.user} />
-            </div>)}
-        </GridLayout>
+        <div className='print:hidden'>
+          <GridLayout key='layout' {...defaultProps}>
+            {this.props.matches.map((match, index) =>
+              <div key={'match-' + index} data-grid={{ x: (index % 2) * 6, y: index + 1, w: 6, h: 1, isDraggable: false }}>
+                <Match saveMatch={this.props.saveMatch} match={match} user={this.props.user} />
+              </div>)}
+          </GridLayout>
+        </div>
       </div>
     )
   }
