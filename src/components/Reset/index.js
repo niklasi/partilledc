@@ -1,5 +1,4 @@
 import React from 'react'
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
@@ -39,7 +38,7 @@ class Reset extends React.Component {
       .find(x => x.id === series).text
 
     const companySeries = allSeries.companySeries.filter(s => s.id === this.props.series).length > 0
-    const displayContact = companySeries ? undefined : 'none'
+    const displayContact = companySeries ? undefined : 'hidden'
     const teams = this.props.scrapedData.teams || []
     const matches = this.props.scrapedData.matches || []
     const actions = [
@@ -62,87 +61,85 @@ class Reset extends React.Component {
 
     return (
       <div>
-        <Table selectable={false}>
-          <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn>
+        <table className='md:table-fixed border border-collapse w-full'>
+          <thead className='text-left text-gray-400 h-14'>
+            <tr className='divide-y divide-solid border'>
+              <th className='hidden md:table-cell font-normal text-xs px-3'>
                 Ranking
-              </TableHeaderColumn>
-              <TableHeaderColumn>
+              </th>
+              <th className='font-normal text-xs px-3 md:px-0'>
                 Lag
-              </TableHeaderColumn>
-              <TableHeaderColumn style={{ display: displayContact }}>
+              </th>
+              <th className={`font-normal text-xs ${displayContact}`}>
                 Kontakt
-              </TableHeaderColumn>
-              <TableHeaderColumn>
+              </th>
+              <th className='font-normal text-xs'>
                 Telefon
-              </TableHeaderColumn>
-              <TableHeaderColumn>
+              </th>
+              <th className='font-normal text-xs'>
                 Email
-              </TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {
-        teams.map((team, index) =>
-          <TableRow key={'team-' + index}>
-            <TableRowColumn style={{ whiteSpace: 'normal' }}>
-              {team.team_ranking}
-            </TableRowColumn>
-            <TableRowColumn style={{ whiteSpace: 'normal' }}>
-              {team.team_name}
-            </TableRowColumn>
-            <TableRowColumn style={{ whiteSpace: 'normal', display: displayContact }}>
-              {team.contact}
-            </TableRowColumn>
-            <TableRowColumn style={{ whiteSpace: 'normal' }}>
-              {team.phone}
-            </TableRowColumn>
-            <TableRowColumn style={{ whiteSpace: 'normal' }}>
-              {team.email}
-            </TableRowColumn>
-          </TableRow>)
-      }
-          </TableBody>
-        </Table>
+              </th>
+            </tr>
+          </thead>
+          <tbody className='text-sm text-left'>
+            {teams.map((team, index) =>
+              <tr key={'team-' + index} className='divide-y divide-solid border h-12'>
+                <td className='hidden md:table-cell px-3'>
+                  {team.team_ranking}
+                </td>
+                <td className='px-3 md:px-0'>
+                  {team.team_name}
+                </td>
+                <td className={displayContact}>
+                  {team.contact}
+                </td>
+                <td>
+                  {team.phone}
+                </td>
+                <td>
+                  {team.email}
+                </td>
+              </tr>)}
+          </tbody>
+        </table>
         <hr />
-        <Table selectable={false}>
-          <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn>
+        <table className='md:table-fixed border border-collapse w-full'>
+          <thead className='text-left text-gray-400 h-14'>
+            <tr className='divide-y divide-solid border h-12'>
+              <th className='font-normal text-xs px-3'>
                 Datum
-              </TableHeaderColumn>
-              <TableHeaderColumn>
+              </th>
+              <th className='font-normal text-xs'>
                 Tid
-              </TableHeaderColumn>
-              <TableHeaderColumn>
+              </th>
+              <th className='font-normal text-xs'>
                 Lag
-              </TableHeaderColumn>
-              <TableHeaderColumn>
+              </th>
+              <th className='font-normal text-xs'>
                 Banor
-              </TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
+              </th>
+            </tr>
+          </thead>
+          <tbody className='text-sm text-left'>
             {
         matches.map((match, index) => (
-          <TableRow key={'match-' + index}>
-            <TableRowColumn style={{ whiteSpace: 'normal' }}>
+          <tr key={'match-' + index} className='divide-y divide-solid border h-12'>
+            <td className='px-3'>
               {match.date}
-            </TableRowColumn>
-            <TableRowColumn style={{ whiteSpace: 'normal' }}>
+            </td>
+            <td>
               {match.time}
-            </TableRowColumn>
-            <TableRowColumn style={{ whiteSpace: 'normal' }}>
+            </td>
+            <td>
               {match.home_team}-{match.away_team}
-            </TableRowColumn>
-            <TableRowColumn style={{ whiteSpace: 'normal' }}>
+            </td>
+            <td>
               {match.lanes}
-            </TableRowColumn>
-          </TableRow>))
+            </td>
+          </tr>))
       }
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
         <RaisedButton label='Nollställ serien' secondary fullWidth onClick={this.handleToggleDialog} />
         <Dialog
           title={'Nollställ ' + seriesName}
