@@ -1,57 +1,56 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, TableHeader, TableBody, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import { matchPoints } from '../../lib/partilledc-score'
 
 class PrintMatches extends React.Component {
   render () {
     const formatMatchPoints = (score) => `${score.home.points}-${score.away.points}`
     const colMapper = ({ text, result = [] }) =>
-      <TableRowColumn key={text} style={{ whiteSpace: 'normal' }}>
+      <td key={text}>
         {result.filter(r => r.home !== 0 || r.away !== 0).map(r => r.home + '-' + r.away).join(', ')}
-      </TableRowColumn>
+      </td>
     return (
-      <Table className='match-result-table' selectable={false}>
-        <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn>
+      <table className='hidden print:table border-collapse w-full'>
+        <thead className='text-left h-14'>
+          <tr className='divide-y divide-solid border'>
+            <th>
               {this.props.isCompanySeries ? 'Lag' : 'Spelare'}
-            </TableHeaderColumn>
-            <TableHeaderColumn>
+            </th>
+            <th>
               Speltid
-            </TableHeaderColumn>
-            <TableHeaderColumn>
+            </th>
+            <th>
               {this.props.isCompanySeries ? 'Dubbel' : 'Match'}
-            </TableHeaderColumn>
+            </th>
             {this.props.isCompanySeries &&
-              <TableHeaderColumn>
+              <th>
                 1:a singel
-              </TableHeaderColumn>}
+              </th>}
             {this.props.isCompanySeries &&
-              <TableHeaderColumn>
+              <th>
                 2:a singel
-              </TableHeaderColumn>}
-            <TableHeaderColumn>
+              </th>}
+            <th>
               Resultat
-            </TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
           {this.props.matches.map((match, index) =>
-            <TableRow key={`print-match-${index}`}>
-              <TableRowColumn style={{ whiteSpace: 'normal' }}>
+            <tr key={`print-match-${index}`} className='divide-y divide-solid border'>
+              <td>
                 {`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`}
-              </TableRowColumn>
-              <TableRowColumn style={{ whiteSpace: 'normal' }}>
+              </td>
+              <td>
                 {match.date + ' kl ' + match.time}
-              </TableRowColumn>
+              </td>
               {match.matches.map(colMapper)}
-              <TableRowColumn style={{ whiteSpace: 'normal' }}>
+              <td>
                 {formatMatchPoints(matchPoints(match.matches.map(m => m.result)))}
-              </TableRowColumn>
-            </TableRow>)}
-        </TableBody>
-      </Table>
+              </td>
+            </tr>)}
+        </tbody>
+      </table>
     )
   }
 }
