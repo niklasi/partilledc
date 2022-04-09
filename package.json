@@ -25,7 +25,6 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-grid-layout": "^0.15.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
     "react-tap-event-plugin": "^2.0.0",

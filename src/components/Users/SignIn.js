@@ -2,20 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Responsive, WidthProvider } from 'react-grid-layout'
 import { signIn } from '../../actions'
 import { Form, TextField, Button } from '../Shared'
-
-const GridLayout = WidthProvider(Responsive)
-const defaultProps = {
-  className: 'layout',
-  cols: { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 },
-  rowHeight: 60
-}
-
-const dataGridItem = {
-  x: 2, y: 1, w: 8, h: 1, isDraggable: false
-}
 
 const SignIn = ({ auth, signIn }) => {
   let username = ''
@@ -35,22 +23,20 @@ const SignIn = ({ auth, signIn }) => {
 
   return (
     <Form onSubmit={handleSignIn} name='sign-in'>
-      <GridLayout key='layout' {...defaultProps}>
-        <div key='sign-in-row-1' data-grid={dataGridItem}>
+      <div className='w-full flex flex-col items-center'>
+        <div className='w-11/12 md:w-8/12'>
           <TextField label='Epost' style={{ width: '100%' }} onChange={handleUsername} />
         </div>
-        <div key='sign-in-row-2' data-grid={dataGridItem}>
+        <div className='w-11/12 md:w-8/12'>
           <TextField label='Lösenord' type='password' style={{ width: '100%' }} onChange={handlePassword} />
         </div>
-        <div key='sign-in-row-3' data-grid={dataGridItem}>
-          <Button type='submit' fullWidth label='Logga in' primary />
-        </div>
-        <div key='sign-in-row-4' data-grid={dataGridItem}>
+        <Button type='submit' label='Logga in' primary />
+        <div className='my-3.5'>
           <Link to='/reset-password'>
-            <Button fullWidth label='Problem att logga in?' secondary />
+            <Button href='/reset-password' labelStyle={{ fontSize: '10px' }} label='Problem att logga in?' secondary />
           </Link>
         </div>
-      </GridLayout>
+      </div>
     </Form>
   )
 }

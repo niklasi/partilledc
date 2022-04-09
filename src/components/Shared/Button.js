@@ -7,6 +7,7 @@ const Button = (props) => {
       type={props.type}
       fullWidth={props.fullWidth}
       label={props.label}
+      labelStyle={props.labelStyle}
       primary={props.primary}
       secondary={props.secondary}
       disabled={props.disabled}

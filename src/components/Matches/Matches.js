@@ -1,18 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Match from './Match'
-import { Responsive, WidthProvider } from 'react-grid-layout'
 import { connect } from 'react-redux'
 import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../../actions'
 import allSeries from '../../series.json'
 import Print from './Print'
-
-const GridLayout = WidthProvider(Responsive)
-const defaultProps = {
-  className: 'layout',
-  cols: { lg: 12, md: 12, sm: 6, xs: 6, xxs: 6 },
-  rowHeight: 180
-}
 
 class Matches extends React.Component {
   constructor (props) {
@@ -67,13 +59,11 @@ class Matches extends React.Component {
     return (
       <div>
         <Print matches={this.props.matches} isCompanySeries={isCompanySeries} />
-        <div className='print:hidden'>
-          <GridLayout key='layout' {...defaultProps}>
-            {this.props.matches.map((match, index) =>
-              <div key={'match-' + index} data-grid={{ x: (index % 2) * 6, y: index + 1, w: 6, h: 1, isDraggable: false }}>
-                <Match saveMatch={this.props.saveMatch} match={match} user={this.props.user} />
-              </div>)}
-          </GridLayout>
+        <div className='print:hidden flex flex-wrap'>
+          {this.props.matches.map((match, index) =>
+            <div key={'match-' + index} className='basis-full md:basis-1/2 lg:basis-1/3 px-2 py-2'>
+              <Match saveMatch={this.props.saveMatch} match={match} user={this.props.user} />
+            </div>)}
         </div>
       </div>
     )

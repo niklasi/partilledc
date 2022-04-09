@@ -2,17 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Team from './Team'
-import { Responsive, WidthProvider } from 'react-grid-layout'
 import { loadTeams, unloadTeams } from '../../actions'
-
-const GridLayout = WidthProvider(Responsive)
-const defaultProps = {
-  className: 'layout',
-  breakpoints: { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 },
-  cols: { lg: 12, md: 12, sm: 6, xs: 6, xxs: 6 },
-  isDraggable: false,
-  rowHeight: 100
-}
 
 class Teams extends React.Component {
   componentDidMount () {
@@ -31,12 +21,12 @@ class Teams extends React.Component {
 
   render () {
     return (
-      <GridLayout key='layout' {...defaultProps}>
+      <div className='flex flex-wrap'>
         {this.props.teams.map((team, index) =>
-          <div key={'team-' + index} data-grid={{ x: (index % 2) * 6, y: index + 1, w: 6, h: 1 }}>
+          <div key={'team-' + index} className='basis-full md:basis-1/2 lg:basis-1/3 px-2 py-2'>
             <Team team={team} />
           </div>)}
-      </GridLayout>
+      </div>
     )
   }
 }
