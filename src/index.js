@@ -14,6 +14,7 @@ import { Provider } from 'react-redux'
 import configureStore from './store'
 import { firebaseAuth } from './firebase'
 import { currentUser } from './actions'
+import '@fontsource/roboto'
 
 injectTapEventPlugin()
 require('./assets/index.css')
