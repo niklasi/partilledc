@@ -33,7 +33,7 @@ const SignIn = ({ auth, signIn }) => {
         <Button type='submit' label='Logga in' primary />
         <div className='my-3.5'>
           <Link to='/reset-password'>
-            <Button href='/reset-password' labelStyle={{ fontSize: '10px' }} label='Problem att logga in?' secondary />
+            <Button className='text-xs' label='Problem att logga in?' secondary />
           </Link>
         </div>
       </div>

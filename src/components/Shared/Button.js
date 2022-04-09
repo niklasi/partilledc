@@ -1,17 +1,11 @@
 import React from 'react'
-import FlatButton from 'material-ui/FlatButton'
+import { overrideTailwindClasses as tailwindOverride } from 'tailwind-override'
 
 const Button = (props) => {
   return (
-    <FlatButton
-      type={props.type}
-      fullWidth={props.fullWidth}
-      label={props.label}
-      labelStyle={props.labelStyle}
-      primary={props.primary}
-      secondary={props.secondary}
-      disabled={props.disabled}
-    />
+    <button type={props.type} disabled={props.disabled} className={tailwindOverride(`${props.secondary ? 'text-secondary' : 'text-primary'} disabled:opacity-50 text-sm uppercase p-2 hover:bg-gray-100 disabled:hover:bg-inherit ${props.className ?? ''}`)}>
+      {props.label}
+    </button>
   )
 }
 
