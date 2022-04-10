@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField'
 import Avatar from 'material-ui/Avatar'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import Dialog from 'material-ui/Dialog'
-import FlatButton from 'material-ui/FlatButton'
+import Button from '../Shared/Button.js'
 import RegisterResult from './RegisterResult'
 import { matchPoints } from '../../lib/partilledc-score'
 
@@ -60,7 +60,7 @@ class Match extends Component {
     const match = this.props.match
 
     const actions = [
-      <FlatButton key='close_button' label='Stäng' primary onTouchTap={this.handleClose} disabled={this.state.requirePin && this.state.wrongPin} />
+      <Button key='close_button' label='Stäng' primary onTouchTap={this.handleClose} disabled={this.state.requirePin && this.state.wrongPin} />
     ]
 
     const header = (item) => {
@@ -71,11 +71,11 @@ class Match extends Component {
       }
       return (
         <TableHeaderColumn key={item.text} style={{ paddingLeft: '5px' }}>
-          <FlatButton
+          <Button
             label={item.text}
             primary
-            labelStyle={{ textTransform: 'none' }}
-            onTouchTap={open}
+            className='normal-case'
+            onClick={open}
           />
         </TableHeaderColumn>
       )
