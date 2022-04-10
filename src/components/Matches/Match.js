@@ -4,7 +4,6 @@ import { Card, CardHeader } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import Avatar from 'material-ui/Avatar'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RegisterResult from './RegisterResult'
@@ -64,8 +63,6 @@ class Match extends Component {
       <FlatButton key='close_button' label='Stäng' primary onTouchTap={this.handleClose} disabled={this.state.requirePin && this.state.wrongPin} />
     ]
 
-    const { palette } = getMuiTheme()
-
     const header = (item) => {
       const open = () => {
         if (!this.props.user.isAnonymous) {
@@ -97,7 +94,7 @@ class Match extends Component {
       <Card>
         <CardHeader
           style={{ overflow: 'hidden' }} avatar={
-            <Avatar size={35} backgroundColor={palette.accent1Color}>
+            <Avatar size={35} backgroundColor className='bg-secondary'>
               {formatMatchPoints(matchPoints(match.matches.map(m => m.result)))}
             </Avatar>
 } title={`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`} subtitle={'Bana ' + match.lane + ' ' + match.date + ' kl ' + match.time}
