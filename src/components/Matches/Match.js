@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardHeader } from 'material-ui/Card'
+import Card from '../Shared/Card'
 import TextField from 'material-ui/TextField'
-import Avatar from 'material-ui/Avatar'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import Dialog from 'material-ui/Dialog'
 import Button from '../Shared/Button.js'
@@ -91,14 +90,11 @@ class Match extends Component {
 
     const formatMatchPoints = (score) => `${score.home.points}-${score.away.points}`
     return (
-      <Card>
-        <CardHeader
-          style={{ overflow: 'hidden' }} avatar={
-            <Avatar size={35} backgroundColor className='bg-secondary'>
-              {formatMatchPoints(matchPoints(match.matches.map(m => m.result)))}
-            </Avatar>
-} title={`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`} subtitle={'Bana ' + match.lane + ' ' + match.date + ' kl ' + match.time}
-        />
+      <Card
+        avatar={formatMatchPoints(matchPoints(match.matches.map(m => m.result)))}
+        title={`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`}
+        subtitle={'Bana ' + match.lane + ' ' + match.date + ' kl ' + match.time}
+      >
         <Table selectable={false} multiselectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
             <TableRow>
