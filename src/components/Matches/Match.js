@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Card from '../Shared/Card'
-import TextField from 'material-ui/TextField'
+import TextField from '../Shared/TextField'
 import Dialog from 'material-ui/Dialog'
 import Button from '../Shared/Button.js'
 import RegisterResult from './RegisterResult'
@@ -58,7 +58,7 @@ class Match extends Component {
     const match = this.props.match
 
     const actions = [
-      <Button key='close_button' label='Stäng' primary onTouchTap={this.handleClose} disabled={this.state.requirePin && this.state.wrongPin} />
+      <Button key='close_button' label='Stäng' primary onClick={this.handleClose} disabled={this.state.requirePin && this.state.wrongPin} />
     ]
 
     const header = (item) => {

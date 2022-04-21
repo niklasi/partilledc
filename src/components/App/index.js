@@ -4,8 +4,6 @@ import { withRouter, Link } from 'react-router'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
-import Divider from 'material-ui/Divider'
 import { connect } from 'react-redux'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
@@ -140,16 +138,16 @@ class App extends React.Component {
         </div>
         <Drawer containerStyle={iphoneXFix} docked={false} onRequestChange={(open) => this.setState({ open })} open={this.state.open}>
           <List>
-            <Subheader style={{ fontSize: '24px' }}>
+            <p className='text-2xl pl-4 text-gray-500'>
               Lagserier
-            </Subheader>
+            </p>
             {series.companySeries.filter(x => x.active === true).map(listItemFactory)}
-            <Divider />
-            <Subheader style={{ fontSize: '24px' }}>
+            <hr />
+            <p className='text-2xl pl-4 text-gray-500'>
               Motionsserier
-            </Subheader>
+            </p>
             {series.exerciseSeries.filter(x => x.active === true).map(listItemFactory)}
-            <Divider />
+            <hr />
             {myMatches()}
             <ListItem>
               <Link to='/todays-matches' onClick={this.handleToggle}> Dagens matcher
