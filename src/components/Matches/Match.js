@@ -2,16 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Card from '../Shared/Card'
 import TextField from 'material-ui/TextField'
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import Dialog from 'material-ui/Dialog'
 import Button from '../Shared/Button.js'
 import RegisterResult from './RegisterResult'
 import { matchPoints } from '../../lib/partilledc-score'
 
 const colMapper = ({ text, result = [] }) =>
-  <TableRowColumn key={text} style={{ whiteSpace: 'normal' }}>
+  <p key={text} className='text-sm whitespace-normal'>
     {result.filter(r => r.home !== 0 || r.away !== 0).map(r => r.home + '-' + r.away).join(', ')}
-  </TableRowColumn>
+  </p>
 
 class Match extends Component {
   constructor (props) {
@@ -69,14 +68,12 @@ class Match extends Component {
         }
       }
       return (
-        <TableHeaderColumn key={item.text} style={{ paddingLeft: '5px' }}>
-          <Button
-            label={item.text}
-            primary
-            className='normal-case'
-            onClick={open}
-          />
-        </TableHeaderColumn>
+        <Button
+          label={item.text}
+          primary
+          className='normal-case'
+          onClick={open}
+        />
       )
     }
 
@@ -95,18 +92,16 @@ class Match extends Component {
         title={`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`}
         subtitle={'Bana ' + match.lane + ' ' + match.date + ' kl ' + match.time}
       >
-        <Table selectable={false} multiselectable={false}>
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
-            <TableRow>
-              {match.matches.map(header)}
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            <TableRow>
-              {match.matches.map(colMapper)}
-            </TableRow>
-          </TableBody>
-        </Table>
+        <div className='flex flex-row justify-between'>
+          {match.matches.map((match, index) => {
+            return (
+              <div key={`match-${index}`} className='flex flex-col flex-wrap items-center'>
+                {header(match)}
+                {colMapper(match)}
+              </div>
+            )
+          })}
+        </div>
         <Dialog
           title={this.state.requirePin ? 'Ange pin' : 'Resultat'}
           actions={actions}
