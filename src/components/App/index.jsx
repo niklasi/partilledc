@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter, Link } from 'react-router'
 import AppBar from 'material-ui/AppBar'
@@ -8,10 +7,9 @@ import { connect } from 'react-redux'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
-import LockOpen from 'material-ui/svg-icons/action/lock-open'
-import LockClosed from 'material-ui/svg-icons/action/lock-outline'
 import series from '../../series.json'
 import { signOut } from '../../actions'
+import '@fontsource/material-icons-outlined'
 
 class App extends React.Component {
   constructor (props) {
@@ -96,7 +94,7 @@ class App extends React.Component {
     }
 
     const rightIcon = () => {
-      return this.props.user.isAnonymous ? <LockClosed /> : <LockOpen />
+      return this.props.user.isAnonymous ? <span className='material-icons-outlined'>lock</span> : <span className='material-icons-outlined'>lock_open</span> 
     }
 
     let display = 'flex'

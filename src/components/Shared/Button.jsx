@@ -1,4 +1,3 @@
-import React from 'react'
 import { overrideTailwindClasses as tailwindOverride } from 'tailwind-override'
 
 const Button = (props) => {

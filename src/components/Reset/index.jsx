@@ -1,7 +1,5 @@
-import React from 'react'
 import Dialog from 'material-ui/Dialog'
-import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton'
+import Button from '../Shared/Button'
 import { connect } from 'react-redux'
 import { loadScrapedSeries, resetSeries } from '../../actions'
 import allSeries from '../../series.json'
@@ -42,13 +40,13 @@ class Reset extends React.Component {
     const teams = this.props.scrapedData.teams || []
     const matches = this.props.scrapedData.matches || []
     const actions = [
-      <FlatButton
+      <Button
         key='cancel'
         label='Avbryt'
         secondary
         onClick={this.handleToggleDialog}
       />,
-      <FlatButton
+      <Button
         key='reset'
         label='Nollställ'
         primary
@@ -140,7 +138,7 @@ class Reset extends React.Component {
       }
           </tbody>
         </table>
-        <RaisedButton label='Nollställ serien' secondary fullWidth onClick={this.handleToggleDialog} />
+        <Button label='Nollställ serien' className='w-full text-white bg-secondary' onClick={this.handleToggleDialog} />
         <Dialog
           title={'Nollställ ' + seriesName}
           actions={actions}
