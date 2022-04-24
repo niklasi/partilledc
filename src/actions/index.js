@@ -1,7 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/functions'
 import { FirebaseList, firebaseAuth } from '../firebase'
-import superagent from 'superagent'
 
 const functionUrl = firebase.functions().emulatorOrigin ? firebase.functions().emulatorOrigin + '/project-8539870983476533695/' + firebase.functions().region : 'https://us-central1-project-8539870983476533695.cloudfunctions.net'
 const seriesList = new FirebaseList({ onLoad: loadSeriesSuccess }, (attr) => Object.assign({}, attr))
@@ -108,12 +107,12 @@ export function loadTodaysMatches (today) {
 
 export function loadMyMatches (uid) {
   return (dispatch) => {
-    superagent.get(functionUrl + '/mymatches')
-      .query({ uid })
-      .end((err, result) => {
-        if (err) console.log(err)
-        return dispatch(loadMatchesSuccess(result.body))
+    fetch(`${functionUrl}/mymatches?uid=${uid}`)
+      .then(response => response.json())
+      .then(data => {
+        return dispatch(loadMatchesSuccess(data))
       })
+      .catch(console.log)
   }
 }
 
@@ -200,21 +199,22 @@ export function loadResetSeriesSuccess () {
 
 export function loadScrapedSeries (slug) {
   return (dispatch) => {
-    superagent.get('/scraper/' + slug)
-      .end((err, result) => {
-        if (err) console.log(err)
-        return dispatch(loadScrapedSeriesSuccess(result.body))
+    fetch(`/scraper/${slug}`)
+      .then(response => response.json())
+      .then(data => {
+        return dispatch(loadScrapedSeriesSuccess(data))
       })
+      .catch(console.log)
   }
 }
 
 export function resetSeries (seriesId, slug, uid) {
   return (dispatch) => {
-    superagent.get(functionUrl + '/resetSeries')
-      .query({ seriesId, slug, uid })
-      .end((err, result) => {
-        if (err) console.log(err)
+    fetch(`${functionUrl}/resetSeries?seriesId=${seriesId}&slug=${slug}&uid=${uid}`)
+      .then(response => response.json())
+      .then(data => {
         return dispatch(loadResetSeriesSuccess())
       })
+      .catch(console.log)
   }
 }
