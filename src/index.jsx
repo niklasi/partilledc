@@ -15,9 +15,9 @@ import configureStore from './store'
 import { firebaseAuth } from './firebase'
 import { currentUser } from './actions'
 import '@fontsource/roboto'
+import './assets/index.css'
 
 injectTapEventPlugin()
-require('./assets/index.css')
 
 const store = configureStore()
 

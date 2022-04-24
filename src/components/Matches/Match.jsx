@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Card from '../Shared/Card'
 import TextField from '../Shared/TextField'
 import Dialog from 'material-ui/Dialog'
-import Button from '../Shared/Button.js'
+import Button from '../Shared/Button'
 import RegisterResult from './RegisterResult'
 import { matchPoints } from '../../lib/partilledc-score'
 
