@@ -1,3 +1,4 @@
+const plugin = require('tailwindcss/plugin')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
@@ -15,5 +16,28 @@ module.exports = {
       }
     }
   },
-  plugins: []
+  plugins: [
+    plugin(function({ addUtilities, addVariant }){
+      const newUtilities = {
+        '@supports(padding: max(0px))': {
+          '.safe-top' : {
+            paddingTop: 'env(safe-area-inset-top)',
+          },
+          '.safe-left' : {
+            paddingLeft: 'env(safe-area-inset-left)'
+          },
+          '.safe-right' : {
+            paddingRight: 'env(safe-area-inset-right)'
+          },
+          '.safe-bottom' : {
+            paddingBottom: 'env(safe-area-inset-bottom)'
+          }
+        }
+      }
+
+      addUtilities( newUtilities );
+      addVariant('portrait', '@media(orientation: portrait)');
+      addVariant('landscape', '@media(orientation: landscape)');
+    })
+  ],
 }

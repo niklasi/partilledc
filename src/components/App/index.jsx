@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
 import { withRouter, Link } from 'react-router'
-import AppBar from 'material-ui/AppBar'
+// import AppBar from 'material-ui/AppBar'
+import { Header } from './Header'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
 import { connect } from 'react-redux'
-import IconButton from 'material-ui/IconButton'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
+import Button from '../Shared/Button'
 import series from '../../series.json'
 import { signOut } from '../../actions'
 import '@fontsource/material-icons-outlined'
@@ -14,13 +13,19 @@ import '@fontsource/material-icons-outlined'
 class App extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { open: false }
+    this.state = { open: false, userMenuOpen: false }
     this.handleToggle = this.handleToggle.bind(this)
+    this.handleToggleUserMenu = this.handleToggleUserMenu.bind(this)
     this.handleSignOut = this.handleSignOut.bind(this)
+    this.menu = this.menu.bind(this)
   }
 
   handleToggle () {
     this.setState({ open: !this.state.open })
+  }
+
+  handleToggleUserMenu () {
+    this.setState({ userMenuOpen: !this.state.userMenuOpen })
   }
 
   title () {
@@ -44,14 +49,15 @@ class App extends React.Component {
     if (this.props.user.isAnonymous) {
       const menuItems = [{ to: '/register-user', text: 'Ny användare' }, { to: '/sign-in', text: 'Logga in' }]
       return menuItems.map(item =>
-        <MenuItem key={item.text}>
+        <div key={item.text} className='w-full'>
           <Link to={item.to}>
-            {item.text}
-          </Link>
-        </MenuItem>)
+            <Button label={item.text} className='normal-case w-full text-black' /> 
+        </Link></div>)
     }
 
-    return <MenuItem disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} primaryText='Logga ut' onTouchTap={this.handleSignOut} />
+    return (<div className='w-full my-2'>
+              <Button className='text-black' disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} label='Logga ut' onClick={this.handleSignOut} />
+            </div>)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -97,44 +103,32 @@ class App extends React.Component {
       return this.props.user.isAnonymous ? <span className='material-icons-outlined'>lock</span> : <span className='material-icons-outlined'>lock_open</span> 
     }
 
-    let display = 'flex'
-    let marginTop = '60px'
-    if (window.location !== window.parent.location) {
-      display = 'none'
-      marginTop = '0px'
-    }
 
-    let iphoneXFix
-    let iphoneXTitleFix
-
-    if (('standalone' in window.navigator) && window.navigator.standalone) {
-      iphoneXFix = { marginTop: '30px' }
-      iphoneXTitleFix = { marginTop: '22px' }
-      marginTop = '80px'
-    }
+    // if (('standalone' in window.navigator) && window.navigator.standalone) {
+    //   iphoneXFix = { marginTop: '30px' }
+    //   marginTop = '80px'
+    // }
 
     return (
       <div>
-        <AppBar
-          style={{ display, position: 'fixed', top: '0px', height: marginTop }}
-          titleStyle={iphoneXTitleFix}
-          iconStyleLeft={iphoneXFix}
-          iconStyleRight={iphoneXFix}
+        <Header
           key='AppBar'
           data-testid='menu'
           title={this.title()}
-          onLeftIconButtonTouchTap={this.handleToggle}
-          iconElementRight={
-            <IconMenu iconButtonElement={<IconButton> {rightIcon()} </IconButton>} targetOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
-              {this.menu()}
-            </IconMenu>
-}
+          toggleSidebar={this.handleToggle}
+          toggleUserMenu={this.handleToggleUserMenu}
+          user={this.props.user}
         />
-        <div style={{ marginTop }}>
+        <div className={`bg-transparent z-40 absolute top-0 left-0 w-screen h-screen ${this.state.userMenuOpen ? undefined : 'hidden'}`} onClick={() => this.handleToggleUserMenu()}>
+          <div className='bg-white flex flex-col z-50 shadow fixed top-1 right-3'>
+            {this.menu()}
+          </div>
+        </div>
+        <div>
           {this.props.children}
         </div>
-        <Drawer containerStyle={iphoneXFix} docked={false} onRequestChange={(open) => this.setState({ open })} open={this.state.open}>
-          <List>
+        <Drawer docked={false} onRequestChange={(open) => this.setState({ open })} open={this.state.open}>
+          <div className='flex flex-col space-x-2'>
             <p className='text-2xl pl-4 text-gray-500'>
               Lagserier
             </p>
@@ -150,7 +144,7 @@ class App extends React.Component {
               <Link to='/todays-matches' onClick={this.handleToggle}> Dagens matcher
               </Link>
             </ListItem>
-          </List>
+          </div>
         </Drawer>
       </div>
     )
