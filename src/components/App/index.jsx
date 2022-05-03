@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types'
 import { withRouter, Link } from 'react-router'
-// import AppBar from 'material-ui/AppBar'
 import { Header } from './Header'
-import Drawer from 'material-ui/Drawer'
-import { List, ListItem } from 'material-ui/List'
+import { Navigation } from './Navigation'
 import { connect } from 'react-redux'
 import Button from '../Shared/Button'
 import series from '../../series.json'
@@ -67,47 +65,6 @@ class App extends React.Component {
   }
 
   render () {
-    const listItemFactory = (serie) => {
-      const items = [
-        <ListItem key={`team-${serie.id}`}>
-          <Link data-testid={`menu-team-${serie.id}`} to={`/series/${serie.id}/teams`} onClick={this.handleToggle}> Lag </Link>
-        </ListItem>,
-        <ListItem key={`matches-${serie.id}`}>
-          <Link data-testid={`menu-matches-${serie.id}`} to={`/series/${serie.id}/matches`} onClick={this.handleToggle}> Matcher </Link>
-        </ListItem>,
-        <ListItem key={`table-${serie.id}`}>
-          <Link data-testid={`menu-table-${serie.id}`} to={`/series/${serie.id}/table`} onClick={this.handleToggle}> Tabell </Link>
-        </ListItem>
-      ]
-      if (this.props.user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' || this.props.user.uid === 't9Q8UPdd1oOvyA4PN4C4VeBMeaW2') {
-        items.push(
-          <ListItem key={'reset-' + serie.id}>
-            <Link to={{ pathname: '/series/' + serie.id + '/reset', state: { slug: serie.slug } }} onClick={this.handleToggle}> Nollställ </Link>
-          </ListItem>)
-      }
-      return <ListItem data-testid={serie.text.split(' ').join('-')} id={serie.id} key={serie.id} primaryText={serie.text} nestedItems={items} />
-    }
-
-    const myMatches = () => {
-      if (!this.props.user.isAnonymous) {
-        return (
-          <ListItem>
-            <Link to='/my-matches' onClick={this.handleToggle}> Mina matcher
-            </Link>
-          </ListItem>
-        )
-      }
-    }
-
-    const rightIcon = () => {
-      return this.props.user.isAnonymous ? <span className='material-icons-outlined'>lock</span> : <span className='material-icons-outlined'>lock_open</span> 
-    }
-
-
-    // if (('standalone' in window.navigator) && window.navigator.standalone) {
-    //   iphoneXFix = { marginTop: '30px' }
-    //   marginTop = '80px'
-    // }
 
     return (
       <div>
@@ -124,28 +81,10 @@ class App extends React.Component {
             {this.menu()}
           </div>
         </div>
-        <div>
+        <div className='safe-left safe-right'>
           {this.props.children}
         </div>
-        <Drawer docked={false} onRequestChange={(open) => this.setState({ open })} open={this.state.open}>
-          <div className='flex flex-col space-x-2'>
-            <p className='text-2xl pl-4 text-gray-500'>
-              Lagserier
-            </p>
-            {series.companySeries.filter(x => x.active === true).map(listItemFactory)}
-            <hr />
-            <p className='text-2xl pl-4 text-gray-500'>
-              Motionsserier
-            </p>
-            {series.exerciseSeries.filter(x => x.active === true).map(listItemFactory)}
-            <hr />
-            {myMatches()}
-            <ListItem>
-              <Link to='/todays-matches' onClick={this.handleToggle}> Dagens matcher
-              </Link>
-            </ListItem>
-          </div>
-        </Drawer>
+        <Navigation open={this.state.open} user={this.props.user} handleToggle={this.handleToggle} />
       </div>
     )
   }
