@@ -17,6 +17,7 @@ module.exports = {
     }
   },
   plugins: [
+    require('@tailwindcss/forms'),
     plugin(function({ addUtilities, addVariant }){
       const newUtilities = {
         '@supports(padding: max(0px))': {
