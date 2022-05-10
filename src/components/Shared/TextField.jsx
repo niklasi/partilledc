@@ -1,8 +1,6 @@
-import React from 'react'
-import TextField from 'material-ui/TextField'
 
 const Input = (props) => {
-  return <TextField style={props.style} type={props.type} floatingLabelText={props.label} onChange={props.onChange} />
+  return <input type={props.type ?? 'text'} onChange={props.onChange} placeholder={props.label} className={props.className} />
 }
 
 export default Input

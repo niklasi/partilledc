@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { registerUser } from '../../actions'
@@ -8,12 +7,12 @@ const RegisterUser = ({ registerUser }) => {
   let username = ''
   let password = ''
 
-  const handleUsername = (e, value) => {
-    username = value
+  const handleUsername = (e) => {
+    username = e.target.value
   }
 
-  const handlePassword = (e, value) => {
-    password = value
+  const handlePassword = (e) => {
+    password = e.target.value
   }
 
   const handleRegisterUser = (evt) => {
@@ -23,11 +22,11 @@ const RegisterUser = ({ registerUser }) => {
   return (
     <Form onSubmit={handleRegisterUser} name='register-user'>
       <div className='w-full flex flex-col items-center'>
-        <div className='w-11/12 md:w-8/12'>
-          <TextField label='Epost' style={{ width: '100%' }} onChange={handleUsername} />
+        <div className='w-11/12 md:w-8/12 my-4'>
+          <TextField label='Epost' type='email' onChange={handleUsername} className='w-full' />
         </div>
         <div className='w-11/12 md:w-8/12'>
-          <TextField label='Lösenord' style={{ width: '100%' }} type='password' onChange={handlePassword} />
+          <TextField label='Lösenord' type='password' className='w-full' onChange={handlePassword} />
         </div>
         <Button type='submit' label='Skapa konto' primary />
       </div>
