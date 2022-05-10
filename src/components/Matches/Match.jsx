@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 import Card from '../Shared/Card'
 import TextField from '../Shared/TextField'
-import Dialog from 'material-ui/Dialog'
+import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
 import RegisterResult from './RegisterResult'
 import { matchPoints } from '../../lib/partilledc-score'
@@ -102,15 +102,13 @@ class Match extends Component {
             )
           })}
         </div>
-        <Dialog
+      {this.state.open && <Dialog
           title={this.state.requirePin ? 'Ange pin' : 'Resultat'}
           actions={actions}
-          contentStyle={{ width: '100%', maxWidth: 'none' }}
-          modal
           open={this.state.open}
         >
           {view(this.state.requirePin)}
-        </Dialog>
+        </Dialog>}
       </Card>
     )
   }

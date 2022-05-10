@@ -1,4 +1,4 @@
-import Dialog from 'material-ui/Dialog'
+import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
 import { connect } from 'react-redux'
 import { loadScrapedSeries, resetSeries } from '../../actions'
@@ -142,9 +142,7 @@ class Reset extends React.Component {
         <Dialog
           title={'Nollställ ' + seriesName}
           actions={actions}
-          modal={false}
           open={this.state.open}
-          onRequestClose={this.handleToggleDialog}
         >
           Du är på väg att nollställa serien. Detta innebär att nuvarande
           resultat i serien kommer att tas bort och lag och spelschema kommer att ersättas med
