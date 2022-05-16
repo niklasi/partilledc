@@ -6,7 +6,6 @@ import AllSeriesTable from './components/Series/AllSeries'
 import Matches from './components/Matches/Matches'
 import Reset from './components/Reset'
 import { SignIn, ResetPassword, ConfirmPasswordReset, RegisterUser } from './components/Users'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 import { Router, Route, hashHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import configureStore from './store'
@@ -14,8 +13,6 @@ import { firebaseAuth } from './firebase'
 import { currentUser } from './actions'
 import '@fontsource/roboto'
 import './assets/index.css'
-
-injectTapEventPlugin()
 
 const store = configureStore()
 
