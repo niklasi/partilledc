@@ -1,14 +1,4 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-
-const styles = {
-  customWidth: {
-    width: 40,
-    marginRight: 15
-  }
-}
 
 class RegisterResult extends React.Component {
   constructor (props) {
@@ -19,7 +9,8 @@ class RegisterResult extends React.Component {
   render () {
     const resultFactory = (result, set) => {
       const teamFieldFactory = (team) => {
-        const changeScore = (e, value) => {
+        const changeScore = (e) => {
+          const value = e.target.value
           const match = this.state.match
 
           match.result[set][team] = value
@@ -30,19 +21,20 @@ class RegisterResult extends React.Component {
           this.setState({ match })
         }
 
+        const currentValue = result[team] || 0
+
         return (
-          <SelectField
+          <select
             key={team + '-' + set}
-            value={result[team] || 0}
-            style={styles.customWidth}
+            className='m-1'
             onChange={changeScore}
           >
-            <MenuItem value={0} primaryText='0' />
-            <MenuItem value={1} primaryText='1' />
-            <MenuItem value={2} primaryText='2' />
-            <MenuItem value={3} primaryText='3' />
-            <MenuItem value={4} primaryText='4' />
-          </SelectField>
+            <option value={0} selected={0 === currentValue}>0</option>
+            <option value={1} selected={1 === currentValue}>1</option>
+            <option value={2} selected={2 === currentValue}>2</option>
+            <option value={3} selected={3 === currentValue}>3</option>
+            <option value={4} selected={4 === currentValue}>4</option>
+          </select>
         )
       }
 
@@ -50,8 +42,8 @@ class RegisterResult extends React.Component {
     }
 
     return (
-      <div>
-        {this.state.match.result.map(resultFactory)}
+      <div className='flex flex-row flex-wrap'>
+          {this.state.match.result.map(resultFactory)}
       </div>
     )
   }
