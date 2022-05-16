@@ -1,6 +1,4 @@
-import React from 'react'
 import { render } from 'react-dom'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import App from './components/App'
 import Teams from './components/Teams/Teams'
 import SeriesTable from './components/Series/SeriesTable'
@@ -23,7 +21,6 @@ const store = configureStore()
 
 const start = () => {
   render(
-    <MuiThemeProvider>
       <Provider store={store}>
         <Router history={hashHistory}>
           <Route path='/' name='' component={App}>
@@ -41,8 +38,7 @@ const start = () => {
             <Route path='/confirm-password-reset' name='Bekräfta' component={ConfirmPasswordReset} />
           </Route>
         </Router>
-      </Provider>
-    </MuiThemeProvider>, document.getElementById('root'))
+      </Provider>, document.getElementById('root'))
 }
 
 const initAuth = (dispatch) => {
