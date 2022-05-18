@@ -1,5 +1,6 @@
 import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
+import { withRouter } from '../../withRouter'
 import { connect } from 'react-redux'
 import { loadScrapedSeries, resetSeries } from '../../actions'
 import allSeries from '../../series.json'
@@ -161,4 +162,4 @@ const mapStateToProps = (state, ownProps) => {
   return { scrapedData, user, series, slug }
 }
 
-export default connect(mapStateToProps, { loadScrapedSeries, resetSeries })(Reset)
+export default withRouter(connect(mapStateToProps, { loadScrapedSeries, resetSeries })(Reset))

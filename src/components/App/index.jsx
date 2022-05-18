@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
-import { withRouter, Link } from 'react-router'
+import { Outlet, Link } from 'react-router-dom'
+import { withRouter } from '../../withRouter'
 import { Header } from './Header'
 import { Navigation } from './Navigation'
 import { connect } from 'react-redux'
@@ -32,8 +33,8 @@ class App extends React.Component {
       .filter(x => x.id === this.props.params.series)
       .map(x => x.text)
 
-    const routes = this.props.routes
-    const routeName = routes[routes.length - 1].name
+    // const routes = this.props.routes
+    // const routeName = routes[routes.length - 1].name
 
     return seriesNames.length > 0 ? `${seriesNames} - ${routeName}` : routeName
   }
@@ -44,7 +45,7 @@ class App extends React.Component {
   }
 
   menu () {
-    if (this.props.user.isAnonymous) {
+    if (this.props.user?.isAnonymous) {
       const menuItems = [{ to: '/register-user', text: 'Ny användare' }, { to: '/sign-in', text: 'Logga in' }]
       return menuItems.map(item =>
         <div key={item.text} className='w-full'>
@@ -54,13 +55,13 @@ class App extends React.Component {
     }
 
     return (<div className='w-full my-2'>
-              <Button className='text-black' disabled={this.props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} label='Logga ut' onClick={this.handleSignOut} />
+              <Button className='text-black' disabled={this.props.user?.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'} label='Logga ut' onClick={this.handleSignOut} />
             </div>)
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.user.isAnonymous !== nextProps.user.isAnonymous) {
-      nextProps.user.isAnonymous ? this.props.router.push('/') : this.props.router.goBack()
+      nextProps.user.isAnonymous ? this.props.navigate('/') : window.history.back()
     }
   }
 
@@ -82,7 +83,7 @@ class App extends React.Component {
           </div>
         </div>
         <div className='safe-left safe-right'>
-          {this.props.children}
+          <Outlet />
         </div>
         <Navigation open={this.state.open} user={this.props.user} handleToggle={this.handleToggle} />
       </div>
@@ -102,5 +103,5 @@ const mapStateToProps = (state, ownProps) => {
   return { user, ownProps }
 }
 
-export default connect(mapStateToProps, { signOut })(withRouter(App))
+export default withRouter(connect(mapStateToProps, { signOut })(App))
 /* eslint-enable react/jsx-indent */

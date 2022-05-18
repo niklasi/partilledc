@@ -1,8 +1,8 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Team from './Team'
 import { loadTeams, unloadTeams } from '../../actions'
+import { withRouter } from '../../withRouter'
 
 class Teams extends React.Component {
   componentDidMount () {
@@ -44,4 +44,4 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 // Teams.title = 'Lag'
-export default connect(mapStateToProps, { loadTeams, unloadTeams })(Teams)
+export default connect(mapStateToProps, { loadTeams, unloadTeams })(withRouter(Teams))

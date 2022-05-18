@@ -1,5 +1,5 @@
-import { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Component } from 'react'
 import Card from '../Shared/Card'
 import TextField from '../Shared/TextField'
 import Dialog from '../Shared/Dialog'

@@ -1,5 +1,5 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import {withRouter} from '../../withRouter'
 import Match from './Match'
 import { connect } from 'react-redux'
 import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../../actions'
@@ -13,17 +13,17 @@ class Matches extends React.Component {
   }
 
   componentDidMount () {
-    this.getMatches(this.props.route.path, this.props.params.series)
+    this.getMatches(this.props.params.series)
   }
 
-  getMatches (path, series) {
+  getMatches (series) {
     clearInterval(this.interval)
 
-    switch (path) {
-      case '/series/:series/matches':
+    switch (this.props.name) {
+      case 'Matcher':
         this.props.loadMatches(series)
         break
-      case '/todays-matches': {
+      case 'Dagens matcher': {
         const today = () => new Date().toLocaleDateString('sv-SE')
         let currentDay = today()
         this.props.loadTodaysMatches(currentDay)
@@ -36,7 +36,7 @@ class Matches extends React.Component {
         }, 1000 * 60)
         break
       }
-      case '/my-matches':
+      case 'Mina matcher':
         this.props.loadMyMatches(this.props.user.uid)
         break
       default:
@@ -46,7 +46,7 @@ class Matches extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.params !== this.props.params) {
-      this.getMatches(nextProps.route.path, nextProps.params.series)
+      this.getMatches(nextProps.params.series)
     }
   }
 
@@ -86,4 +86,4 @@ const mapStateToProps = (state, ownProps) => {
   return { matches, user, ownProps }
 }
 
-export default connect(mapStateToProps, { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches })(Matches)
+export default withRouter(connect(mapStateToProps, { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches })(Matches))

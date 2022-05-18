@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-
 class RegisterResult extends React.Component {
   constructor (props) {
     super(props)
