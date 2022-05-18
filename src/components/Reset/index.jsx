@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
-import { withRouter } from '../../withRouter'
 import { connect } from 'react-redux'
 import { loadScrapedSeries, resetSeries } from '../../actions'
 import allSeries from '../../series.json'
 
 function Reset (props) {
   const [open, setOpen] = useState(false)
-  const slug = props.slug
+  const {series} = useParams()
+  const location = useLocation()
+  const slug = location?.state?.slug
 
   useEffect(() => {
     props.loadScrapedSeries(slug)
@@ -18,7 +20,6 @@ function Reset (props) {
     setOpen(!open)
   }
 
-  const series = props.series
   const uid = props.user.uid
   const seriesName = allSeries.companySeries
     .concat(allSeries.exerciseSeries)
@@ -143,10 +144,7 @@ function Reset (props) {
 
 const mapStateToProps = (state, ownProps) => {
   const { scrapedData, user } = state
-  const params = ownProps.params || {}
-  const series = params.series || ownProps.series
-  const slug = ownProps.location.state.slug
-  return { scrapedData, user, series, slug }
+  return { scrapedData, user }
 }
 
-export default withRouter(connect(mapStateToProps, { loadScrapedSeries, resetSeries })(Reset))
+export default connect(mapStateToProps, { loadScrapedSeries, resetSeries })(Reset)

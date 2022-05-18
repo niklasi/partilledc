@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Card = (props) => {
   return (
     <div className='px-3 py-3 shadow border border-solid border-gray-200'>

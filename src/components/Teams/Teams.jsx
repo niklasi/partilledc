@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import Team from './Team'
 import { loadTeams, unloadTeams } from '../../actions'
-import { withRouter } from '../../withRouter'
 
 function Teams (props) {
-  const series = props.params.series
+  const { series } = useParams()
   
   useEffect(() => {
     props.loadTeams(series)
@@ -24,7 +24,6 @@ function Teams (props) {
 }
 
 Teams.propTypes = {
-  params: PropTypes.object.isRequired,
   teams: PropTypes.array.isRequired,
   loadTeams: PropTypes.func.isRequired,
   unloadTeams: PropTypes.func.isRequired
@@ -36,4 +35,4 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 // Teams.title = 'Lag'
-export default connect(mapStateToProps, { loadTeams, unloadTeams })(withRouter(Teams))
+export default connect(mapStateToProps, { loadTeams, unloadTeams })(Teams)

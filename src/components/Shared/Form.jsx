@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Form = (props) => {
   const onSubmit = (evt) => {
     evt.preventDefault()

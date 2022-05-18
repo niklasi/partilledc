@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from '../../withRouter'
+import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { loadSeriesTable, unloadSeriesTable } from '../../actions'
 import allSeries from '../../series.json'
 
 function SeriesTable (props) {
-  const series = props.series
+  const { series } = useParams()
 
   useEffect(() => {
     props.loadSeriesTable(series)
@@ -75,4 +75,4 @@ const mapStateToProps = (state, ownProps) => {
   return { seriesTable, series }
 }
 
-export default withRouter(connect(mapStateToProps, { loadSeriesTable, unloadSeriesTable })(SeriesTable))
+export default connect(mapStateToProps, { loadSeriesTable, unloadSeriesTable })(SeriesTable)

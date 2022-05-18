@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {withRouter} from '../../withRouter'
+import { useParams } from 'react-router-dom'
 import Match from './Match'
 import { connect } from 'react-redux'
 import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../../actions'
@@ -8,7 +8,7 @@ import allSeries from '../../series.json'
 import Print from './Print'
 
 function Matches (props) {
-  const series = props.params.series
+  const {series} = useParams()
   let interval = null
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function Matches (props) {
     }
   }
 
-  const isCompanySeries = allSeries.companySeries.filter(s => s.id === props.params.series).length > 0
+  const isCompanySeries = allSeries.companySeries.filter(s => s.id === series).length > 0
   return (
     <div>
       <Print matches={props.matches} isCompanySeries={isCompanySeries} />
@@ -59,7 +59,6 @@ function Matches (props) {
 }
 
 Matches.propTypes = {
-  params: PropTypes.object.isRequired,
   user: PropTypes.object,
   matches: PropTypes.array.isRequired,
   loadMatches: PropTypes.func.isRequired,
@@ -74,4 +73,4 @@ const mapStateToProps = (state, ownProps) => {
   return { matches, user, ownProps }
 }
 
-export default withRouter(connect(mapStateToProps, { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches })(Matches))
+export default connect(mapStateToProps, { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches })(Matches)

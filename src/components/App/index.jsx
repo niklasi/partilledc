@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Outlet, Link, useNavigate } from 'react-router-dom'
-import { withRouter } from '../../withRouter'
+import { Outlet, Link, useNavigate, useParams } from 'react-router-dom'
 import { Header } from './Header'
 import { Navigation } from './Navigation'
 import { connect } from 'react-redux'
 import Button from '../Shared/Button'
-import series from '../../series.json'
+import seriesData from '../../series.json'
 import { signOut } from '../../actions'
 import '@fontsource/material-icons-outlined'
 
@@ -14,11 +13,12 @@ function App (props) {
   const [open, setOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const navigate = useNavigate()
+  const { series } = useParams()
   const isAnonymous = props.user.isAnonymous
 
   useEffect(() => {
       isAnonymous ? navigate('/') : window.history.back()
-  }, [])
+  }, [isAnonymous])
 
 
   function handleToggle () {
@@ -30,9 +30,9 @@ function App (props) {
   }
 
   function title () {
-    const seriesNames = series.companySeries
-      .concat(series.exerciseSeries)
-      .filter(x => x.id === props.params.series)
+    const seriesNames = seriesData.companySeries
+      .concat(seriesData.exerciseSeries)
+      .filter(x => x.id === series)
       .map(x => x.text)
 
     return 'Fix title'
@@ -99,5 +99,5 @@ const mapStateToProps = (state, ownProps) => {
   return { user, ownProps }
 }
 
-export default withRouter(connect(mapStateToProps, { signOut })(App))
+export default connect(mapStateToProps, { signOut })(App)
 /* eslint-enable react/jsx-indent */
