@@ -12,13 +12,14 @@ import '@fontsource/material-icons-outlined'
 function App (props) {
   const [open, setOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [routeName, setRouteName] = useState('')
   const navigate = useNavigate()
   const { series } = useParams()
   const isAnonymous = props.user.isAnonymous
 
-  useEffect(() => {
-      isAnonymous ? navigate('/') : window.history.back()
-  }, [isAnonymous])
+  // useEffect(() => {
+  //     isAnonymous ? navigate('/') : window.history.back()
+  // }, [isAnonymous])
 
 
   function handleToggle () {
@@ -35,11 +36,7 @@ function App (props) {
       .filter(x => x.id === series)
       .map(x => x.text)
 
-    return 'Fix title'
-    // const routes = this.props.routes
-    // const routeName = routes[routes.length - 1].name
-
-    // return seriesNames.length > 0 ? `${seriesNames} - ${routeName}` : routeName
+    return seriesNames.length > 0 ? `${seriesNames} - ${routeName}` : routeName
   }
 
   function handleSignOut (evt) {
@@ -80,7 +77,7 @@ function App (props) {
         </div>
       </div>
       <div className='safe-left safe-right'>
-        <Outlet />
+    <Outlet context={{setRouteName}} />
       </div>
       <Navigation open={open} user={props.user} handleToggle={handleToggle} />
     </div>
