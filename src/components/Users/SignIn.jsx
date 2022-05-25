@@ -1,33 +1,23 @@
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { signIn } from '../../actions'
-import { Form, TextField, Button } from '../Shared'
+import { Form, Link } from 'react-router-dom'
+import { firebaseAuth } from '../../firebase'
+import { TextField, Button } from '../Shared'
 
-const SignIn = ({ auth, signIn }) => {
-  let username = ''
-  let password = ''
+export async function action({request}) {
+  const formData = await request.formData();
+  const email = formData.get('email')
+  const password = formData.get('password')
+  await firebaseAuth.signInWithEmailAndPassword(email, password)
+}
 
-  const handleUsername = (e) => {
-    username = e.target.value
-  }
-
-  const handlePassword = (e) => {
-    password = e.target.value
-  }
-
-  const handleSignIn = () => {
-    signIn(username, password)
-  }
-
+const SignIn = () => {
   return (
-    <Form onSubmit={handleSignIn} name='sign-in'>
+    <Form method='POST'>
       <div className='w-full flex flex-col items-center'>
         <div className='w-11/12 md:w-8/12 my-4'>
-          <TextField label='Epost' type='email' onChange={handleUsername} className='w-full' />
+          <TextField name='email' label='Epost' type='text' className='w-full' />
         </div>
         <div className='w-11/12 md:w-8/12'>
-          <TextField label='Lösenord' type='password' className='w-full' onChange={handlePassword} />
+          <TextField name='password' label='Lösenord' type='password' className='w-full' />
         </div>
         <Button type='submit' label='Logga in' primary />
         <div className='my-3.5'>
@@ -40,12 +30,4 @@ const SignIn = ({ auth, signIn }) => {
   )
 }
 
-SignIn.propTypes = {
-  signIn: PropTypes.func.isRequired
-}
-
-const mapStateToProps = () => {
-  return {}
-}
-
-export default connect(mapStateToProps, { signIn })(SignIn)
+export default SignIn

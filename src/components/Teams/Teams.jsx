@@ -1,21 +1,24 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useOutletContext, useLoaderData } from 'react-router-dom'
 import Team from './Team'
-import { loadTeams, unloadTeams } from '../../actions'
+import { getTeamsBySeries } from '../../lib/api'
+
+export async function loader ({params}) {
+  return getTeamsBySeries(params.series)
+}
 
 function Teams (props) {
-  const { series } = useParams()
+  const teams = useLoaderData()
+  const {setRouteName} = useOutletContext() 
   
   useEffect(() => {
-    props.loadTeams(series)
-    return props.unloadTeams
-  }, [series])
+    setRouteName(props.name)
+  }, [props.name])
 
   return (
     <div className='flex flex-wrap'>
-      {props.teams.map((team, index) =>
+      {teams.map((team, index) =>
         <div key={'team-' + index} className='basis-full md:basis-1/2 lg:basis-1/3 px-2 py-2'>
           <Team team={team} />
         </div>)}
@@ -23,16 +26,4 @@ function Teams (props) {
   )
 }
 
-Teams.propTypes = {
-  teams: PropTypes.array.isRequired,
-  loadTeams: PropTypes.func.isRequired,
-  unloadTeams: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const { teams } = state
-  return { teams, ownProps }
-}
-
-// Teams.title = 'Lag'
-export default connect(mapStateToProps, { loadTeams, unloadTeams })(Teams)
+export default Teams

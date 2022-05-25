@@ -1,12 +1,16 @@
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { DataBrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './components/App'
-import Teams from './components/Teams/Teams'
-import SeriesTable from './components/Series/SeriesTable'
+import Teams, {loader as teamsLoader} from './components/Teams/Teams'
+import SeriesTable, {loader as tableLoader} from './components/Series/SeriesTable'
 import AllSeriesTable from './components/Series/AllSeries'
 import Matches from './components/Matches/Matches'
 import Reset from './components/Reset'
 import { SignIn, ResetPassword, ConfirmPasswordReset, RegisterUser } from './components/Users'
+import { action as signInAction } from './components/Users/SignIn'
+import { action as resetPasswordAction } from './components/Users/ResetPassword'
+import { action as confirmResetPasswordAction } from './components/Users/ConfirmPasswordReset'
+import { action as registerUserAction } from './components/Users/RegisterUser'
 import { Provider } from 'react-redux'
 import configureStore from './store'
 import { firebaseAuth } from './firebase'
@@ -21,24 +25,24 @@ const root = ReactDOM.createRoot(
 
 const start = () => {
 root.render(<Provider store={store}>
-    <BrowserRouter>
-      <Routes>
+    <DataBrowserRouter>
         <Route path='/' element={<App />}>
           <Route path='/series/company/table' element={<AllSeriesTable name='Lagtabeller' seriesType='companySeries' />} />
-          <Route path='/series/company/table' element={<AllSeriesTable name='Motionstabeller' seriesType='exerciseSeries' />} />
-          <Route path='/series/:series/teams' element={<Teams name='Lag' />} />
-          <Route path='/series/:series/matches' onEnter={(nextState) => { nextState.location.state = { tag: 'series' } }} element={<Matches name='Matcher' />} />
-          <Route path='series/:series/table' element={<SeriesTable name='Tabell' />} />
-          <Route path='series/:series/reset' element={<Reset name='Nollställ' />} />
-          <Route path='/todays-matches' onEnter={(nextState) => { nextState.location.state = { tag: 'today' } }} element={<Matches name='Dagens matcher' />} />
-          <Route path='/my-matches' onEnter={(nextState) => { nextState.location.state = { tag: 'my' } }} element={<Matches name='Mina matcher' />} />
-          <Route path='/sign-in' element={<SignIn name='Logga in ' />} />
-          <Route path='/register-user' element={<RegisterUser name='Ny användare' />} />
-          <Route path='/reset-password' element={<ResetPassword name='Återställ lösenord' />} />
-          <Route path='/confirm-password-reset' element={<ConfirmPasswordReset name='Bekräfta' />} />
+          <Route path='/series/exercise/table' element={<AllSeriesTable name='Motionstabeller' seriesType='exerciseSeries' />} />
+          <Route path='/series/:series'>
+            <Route path='teams' loader={teamsLoader} element={<Teams name='Lag' />} />
+            <Route path='matches' element={<Matches name='Matcher' />} />
+            <Route path='table' loader={tableLoader} element={<SeriesTable name='Tabell' />} />
+            <Route path='reset' element={<Reset name='Nollställ' />} />
+          </Route>
+          <Route path='/todays-matches' element={<Matches name='Dagens matcher' />} />
+          <Route path='/my-matches' element={<Matches name='Mina matcher' />} />
+          <Route path='/sign-in' action={signInAction} element={<SignIn name='Logga in ' />} />
+          <Route path='/register-user' action={registerUserAction} element={<RegisterUser name='Ny användare' />} />
+          <Route path='/reset-password' action={resetPasswordAction} element={<ResetPassword name='Återställ lösenord' />} />
+          <Route path='/confirm-password-reset' action={confirmResetPasswordAction} element={<ConfirmPasswordReset name='Bekräfta' />} />
         </Route>
-      </Routes>
-    </BrowserRouter>
+    </DataBrowserRouter>
   </Provider>)
 }
 

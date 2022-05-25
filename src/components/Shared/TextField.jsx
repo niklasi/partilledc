@@ -1,6 +1,6 @@
 
 const Input = (props) => {
-  return <input type={props.type ?? 'text'} onChange={props.onChange} placeholder={props.label} className={props.className} />
+  return <input name={props.name} value={props.value} type={props.type ?? 'text'} placeholder={props.label} className={props.className} />
 }
 
 export default Input

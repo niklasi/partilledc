@@ -1,38 +1,30 @@
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { confirmPasswordReset } from '../../actions'
-import { Form, TextField, Button } from '../Shared'
+import { Form, useSearchParams } from 'react-router-dom'
+import { TextField, Button } from '../Shared'
+import { firebaseAuth } from '../../firebase'
 
-const ConfirmPasswordReset = ({ auth, location, confirmPasswordReset }) => {
-  let password = ''
+export async function action({request}) {
+  const formData = await request.formData();
+  const code = formData.get('code')
+  const password = formData.get('password')
 
-  const handlePassword = (e, value) => {
-    password = value
-  }
+  await firebaseAuth.confirmPasswordReset(code, password)
+}
 
-  const handleConfirmReset = () => {
-    confirmPasswordReset(location.query.oobCode, password)
-  }
+const ConfirmPasswordReset = () => {
+  const [searchParams] = useSearchParams()
+  const code = searchParams.get('oobCode') || ''
 
   return (
-    <Form onSubmit={handleConfirmReset} name='confirm-password-reset'>
+    <Form method='POST'>
       <div className='w-full flex flex-col items-center'>
-        <div className='w-11/12 md:w-8/12'>
-          <TextField type='password' label='Nytt lösenord' style={{ width: '100%' }} onChange={handlePassword} />
+        <div className='w-11/12 md:w-8/12 my-4'>
+          <TextField name='password' type='password' label='Nytt lösenord' className={'w-full'} />
         </div>
+        <input name='code' readOnly type='hidden' value={code} />
         <Button type='submit' label='Uppdatera' primary />
       </div>
     </Form>
   )
 }
 
-ConfirmPasswordReset.propTypes = {
-  confirmPasswordReset: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const { auth } = state
-  return { auth, ownProps }
-}
-
-export default connect(mapStateToProps, { confirmPasswordReset })(ConfirmPasswordReset)
+export default ConfirmPasswordReset

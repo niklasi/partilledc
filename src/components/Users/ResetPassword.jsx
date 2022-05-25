@@ -1,24 +1,19 @@
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { resetPassword } from '../../actions'
-import { Form, TextField, Button } from '../Shared'
+import { Form } from 'react-router-dom'
+import { TextField, Button } from '../Shared'
+import { firebaseAuth } from '../../firebase'
 
-const ResetPassword = ({ auth, resetPassword }) => {
-  let email = ''
+export async function action({request}) {
+  const formData = await request.formData();
+  const email = formData.get('email')
+  await firebaseAuth.sendPasswordResetEmail(email)
+}
 
-  const handleEmail = (e, value) => {
-    email = value
-  }
-
-  const handleReset = () => {
-    resetPassword(email)
-  }
-
+const ResetPassword = () => {
   return (
-    <Form onSubmit={handleReset} name='handle-reset'>
+    <Form method='POST'>
       <div className='w-full flex flex-col items-center'>
-        <div className='w-11/12 md:w-8/12'>
-          <TextField label='Epost' style={{ width: '100%' }} onChange={handleEmail} />
+        <div className='w-11/12 md:w-8/12 my-4'>
+          <TextField name='email' label='Epost' type='text' className='w-full' />
         </div>
         <Button type='submit' label='Återställ lösenord' primary />
       </div>
@@ -26,13 +21,4 @@ const ResetPassword = ({ auth, resetPassword }) => {
   )
 }
 
-ResetPassword.propTypes = {
-  resetPassword: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const { auth } = state
-  return { auth, ownProps }
-}
-
-export default connect(mapStateToProps, { resetPassword })(ResetPassword)
+export default ResetPassword

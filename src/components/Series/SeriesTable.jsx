@@ -1,17 +1,21 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useParams } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { loadSeriesTable, unloadSeriesTable } from '../../actions'
+import { useOutletContext, useLoaderData, useParams } from 'react-router-dom'
 import allSeries from '../../series.json'
+import { getTableBySeries } from '../../lib/api'
+
+export async function loader ({params}) {
+  return getTableBySeries(params.series)
+}
 
 function SeriesTable (props) {
-  const { series } = useParams()
+  const seriesTableData = useLoaderData()
+  const {series} = useParams()
+  const {setRouteName} = useOutletContext() 
 
   useEffect(() => {
-    props.loadSeriesTable(series)
-    return props.unloadSeriesTable
-  }, [series])
+    setRouteName(props.name)
+  }, [props.name])
 
 
   const companySeries = allSeries.companySeries.filter(s => s.id === series).length > 0
@@ -19,7 +23,7 @@ function SeriesTable (props) {
   const displayMatchp = companySeries ? undefined : 'hidden'
   const displaySetAndGame = companySeries ? 'hidden' : undefined
 
-  const seriesTable = props.seriesTable[series] || []
+  const seriesTable = seriesTableData[series] || []
   return (
     <table className='md:table-fixed border border-collapse w-full'>
       <thead className='text-left text-gray-400 h-14'>
@@ -62,17 +66,4 @@ function SeriesTable (props) {
   )
 }
 
-SeriesTable.propTypes = {
-  seriesTable: PropTypes.object.isRequired,
-  loadSeriesTable: PropTypes.func.isRequired,
-  unloadSeriesTable: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const { seriesTable } = state
-  const params = ownProps.params || {}
-  const series = params.series || ownProps.series
-  return { seriesTable, series }
-}
-
-export default connect(mapStateToProps, { loadSeriesTable, unloadSeriesTable })(SeriesTable)
+export default SeriesTable

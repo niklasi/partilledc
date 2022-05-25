@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useParams } from 'react-router-dom'
+import { useParams, useOutletContext } from 'react-router-dom'
 import Match from './Match'
 import { connect } from 'react-redux'
 import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../../actions'
@@ -9,9 +9,11 @@ import Print from './Print'
 
 function Matches (props) {
   const {series} = useParams()
+  const {setRouteName} = useOutletContext() 
   let interval = null
 
   useEffect(() => {
+    setRouteName(props.name)
     getMatches(series)
     return props.unloadMatches
   }, [series])
