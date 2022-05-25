@@ -34,7 +34,7 @@ export function Navigation (props) {
   const open = props.open ? 'ease-linear duration-200 translate-x-4/6' : 'ease-linear duration-200 -translate-x-full'
     return <div className={`bg-black/10 z-40 absolute top-0 left-0 w-screen h-screen ${props.open ? undefined : 'invisible'}`} onClick={() => props.handleToggle()}>
       <div className={`w-4/6 bg-white shadow fixed top-0 ${open}`}>
-        <div className='flex flex-col space-x-2 safe-top'>
+        <div className='flex flex-col space-x-2 overflow-scroll h-screen safe-top'>
           <p className='text-2xl pl-4 text-gray-500'>
             Lagserier
           </p>
