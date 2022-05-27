@@ -32,17 +32,17 @@ root.render(<Provider store={store}>
           <Route path='/series/company/table' loader={async (props) => allTablesLoader({seriesType:'companySeries', ...props})} element={<AllSeriesTable name='Lagtabeller' />} />
           <Route path='/series/exercise/table' loader={async (props) => allTablesLoader({seriesType:'exerciseSeries', ...props})} element={<AllSeriesTable name='Motionstabeller' />} />
           <Route path='/series/:series'>
-            <Route path='teams' loader={teamsLoader} element={<Teams name='Lag' />} />
-            <Route path='matches' element={<Matches name='Matcher' />} />
-            <Route path='table' loader={tableLoader} element={<SeriesTable name='Tabell' />} />
-            <Route path='reset' element={<Reset name='Nollställ' />} />
+            <Route path='teams' handle={{title: 'Lag'}} loader={teamsLoader} element={<Teams />} />
+            <Route path='matches'handle={{title: 'Matcher'}} element={<Matches />} />
+            <Route path='table' handle={{title: 'Tabell'}} loader={tableLoader} element={<SeriesTable />} />
+            <Route path='reset' handle={{title: 'Nollställ'}} element={<Reset />} />
           </Route>
-          <Route path='/todays-matches' element={<TodaysMatches name='Dagens matcher' />} />
-          <Route path='/my-matches' element={<MyMatches name='Mina matcher' />} />
-          <Route path='/sign-in' action={signInAction} element={<SignIn name='Logga in ' />} />
-          <Route path='/register-user' action={registerUserAction} element={<RegisterUser name='Ny användare' />} />
-          <Route path='/reset-password' action={resetPasswordAction} element={<ResetPassword name='Återställ lösenord' />} />
-          <Route path='/confirm-password-reset' action={confirmResetPasswordAction} element={<ConfirmPasswordReset name='Bekräfta' />} />
+          <Route path='/todays-matches'handle={{title: 'Dagens matcher'}} element={<TodaysMatches />} />
+          <Route path='/my-matches' handle={{title: 'Mina matcher'}}element={<MyMatches />} />
+          <Route path='/sign-in' handle={{title: 'Logga in'}}action={signInAction} element={<SignIn />} />
+          <Route path='/register-user' handle={{title: 'Ny användare'}}action={registerUserAction} element={<RegisterUser />} />
+          <Route path='/reset-password' handle={{title: 'Återställ lösenord'}}action={resetPasswordAction} element={<ResetPassword />} />
+          <Route path='/confirm-password-reset' handle={{title: 'Bekräfta'}} action={confirmResetPasswordAction} element={<ConfirmPasswordReset />} />
         </Route>
     </DataBrowserRouter>
   </Provider>)

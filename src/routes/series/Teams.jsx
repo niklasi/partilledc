@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useOutletContext, useLoaderData } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import Team from '../../components/Team'
 import { getTeamsBySeries } from '../../lib/api'
 
@@ -9,12 +9,7 @@ export async function loader ({params}) {
 
 function Teams (props) {
   const teams = useLoaderData()
-  const {setRouteName} = useOutletContext() 
   
-  useEffect(() => {
-    setRouteName(props.name)
-  }, [props.name])
-
   return (
     <div className='flex flex-wrap'>
       {teams.map((team, index) =>

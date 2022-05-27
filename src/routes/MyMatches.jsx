@@ -1,16 +1,14 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useParams, useOutletContext } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Match from '../components/Match'
 import { connect } from 'react-redux'
 import { saveMatch, loadMyMatches, unloadMatches } from '../actions'
 import allSeries from '../series.json'
 
 function MyMatches (props) {
-  const {setRouteName} = useOutletContext() 
 
   useEffect(() => {
-    setRouteName(props.name)
     props.loadMyMatches(props.user.uid)
     return props.unloadMatches
   }, [props.user.uid])

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Outlet, Link, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, Link, useNavigate, useParams, useMatches } from 'react-router-dom'
 import { Header } from '../Header'
 import { NavBar } from '../NavBar'
 import { connect } from 'react-redux'
@@ -12,9 +12,9 @@ import '@fontsource/material-icons-outlined'
 function App (props) {
   const [open, setOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const [routeName, setRouteName] = useState('')
   const navigate = useNavigate()
   const { series } = useParams()
+  const routeMatches = useMatches()
   const isAnonymous = props.user.isAnonymous
 
   // useEffect(() => {
@@ -36,7 +36,9 @@ function App (props) {
       .filter(x => x.id === series)
       .map(x => x.text)
 
-    return seriesNames.length > 0 ? `${seriesNames} - ${routeName}` : routeName
+    const [route] = routeMatches.slice(-1)
+    const title = route.handle?.title ?? ''
+    return seriesNames.length > 0 ? `${seriesNames} - ${title}` : title
   }
 
   function handleSignOut (evt) {
@@ -77,7 +79,7 @@ function App (props) {
         </div>
       </div>
       <div className='safe-left safe-right'>
-    <Outlet context={{setRouteName}} />
+    <Outlet />
       </div>
       <NavBar open={open} user={props.user} handleToggle={handleToggle} />
     </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { useParams, useOutletContext } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Match from '../components/Match'
 import { connect } from 'react-redux'
 import { saveMatch, loadTodaysMatches, unloadMatches } from '../actions'
@@ -11,12 +11,10 @@ function getToday() {
 
 function TodaysMatches (props) {
   const [today, setToday] = useState() 
-  const {setRouteName} = useOutletContext() 
   let interval = null
 
   useEffect(() => {
     clearInterval(interval)
-    setRouteName(props.name)
     props.loadTodaysMatches(today)
 
     interval = setInterval(() => {
