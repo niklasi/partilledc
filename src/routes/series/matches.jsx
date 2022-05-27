@@ -1,50 +1,21 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useParams, useOutletContext } from 'react-router-dom'
-import Match from './Match'
+import Match from '../../components/Match'
 import { connect } from 'react-redux'
-import { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches } from '../../actions'
+import { saveMatch, loadMatches, unloadMatches } from '../../actions'
 import allSeries from '../../series.json'
-import Print from './Print'
+import Print from '../../components/Match/Print'
 
 function Matches (props) {
   const {series} = useParams()
   const {setRouteName} = useOutletContext() 
-  let interval = null
 
   useEffect(() => {
     setRouteName(props.name)
-    getMatches(series)
+    props.loadMatches(series)
     return props.unloadMatches
   }, [series])
-
-  function getMatches (series) {
-    clearInterval(interval)
-
-    switch (props.name) {
-      case 'Matcher':
-        props.loadMatches(series)
-        break
-      case 'Dagens matcher': {
-        const today = () => new Date().toLocaleDateString('sv-SE')
-        let currentDay = today()
-        props.loadTodaysMatches(currentDay)
-
-        interval = setInterval(() => {
-          if (currentDay !== today()) {
-            currentDay = today()
-            props.loadTodaysMatches(currentDay)
-          }
-        }, 1000 * 60)
-        break
-      }
-      case 'Mina matcher':
-        props.loadMyMatches(props.user.uid)
-        break
-      default:
-        console.log('No matching path')
-    }
-  }
 
   const isCompanySeries = allSeries.companySeries.filter(s => s.id === series).length > 0
   return (
@@ -64,8 +35,6 @@ Matches.propTypes = {
   user: PropTypes.object,
   matches: PropTypes.array.isRequired,
   loadMatches: PropTypes.func.isRequired,
-  loadTodaysMatches: PropTypes.func.isRequired,
-  loadMyMatches: PropTypes.func.isRequired,
   unloadMatches: PropTypes.func.isRequired,
   saveMatch: PropTypes.func.isRequired
 }
@@ -75,4 +44,4 @@ const mapStateToProps = (state, ownProps) => {
   return { matches, user, ownProps }
 }
 
-export default connect(mapStateToProps, { saveMatch, loadTodaysMatches, loadMyMatches, loadMatches, unloadMatches })(Matches)
+export default connect(mapStateToProps, { saveMatch, loadMatches, unloadMatches })(Matches)

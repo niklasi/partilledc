@@ -1,5 +1,5 @@
 import { Form } from 'react-router-dom'
-import { TextField, Button } from '../Shared'
+import { TextField, Button } from '../../components/Shared'
 import { firebaseAuth } from '../../firebase'
 
 export async function action({request}) {

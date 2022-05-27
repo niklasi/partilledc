@@ -1,34 +1,14 @@
-import { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { useOutletContext, useLoaderData, useParams } from 'react-router-dom'
-import allSeries from '../../series.json'
-import { getTableBySeries } from '../../lib/api'
-
-export async function loader ({params}) {
-  return getTableBySeries(params.series)
-}
-
 function SeriesTable (props) {
-  const seriesTableData = useLoaderData()
-  const {series} = useParams()
-  const {setRouteName} = useOutletContext() 
 
-  useEffect(() => {
-    setRouteName(props.name)
-  }, [props.name])
+  const displayMatchp = props.isCompanySeries ? undefined : 'hidden'
+  const displaySetAndGame = props.isCompanySeries ? 'hidden' : undefined
 
-
-  const companySeries = allSeries.companySeries.filter(s => s.id === series).length > 0
-
-  const displayMatchp = companySeries ? undefined : 'hidden'
-  const displaySetAndGame = companySeries ? 'hidden' : undefined
-
-  const seriesTable = seriesTableData[series] || []
+  const seriesTable = props.tableData
   return (
     <table className='md:table-fixed border border-collapse w-full'>
       <thead className='text-left text-gray-400 h-14'>
         <tr className='divide-y divide-solid border'>
-          <th className='font-normal text-xs px-3'>{companySeries ? 'Lag' : 'Spelare'}</th>
+          <th className='font-normal text-xs px-3'>{props.isCompanySeries ? 'Lag' : 'Spelare'}</th>
           <th className='font-normal text-xs'>Matcher</th>
           <th className={`font-normal text-xs ${displayMatchp}`}>Matchp</th>
           <th className={`font-normal text-xs ${displaySetAndGame}`}>Set</th>

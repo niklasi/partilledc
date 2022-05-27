@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { useOutletContext, useLoaderData } from 'react-router-dom'
-import Team from './Team'
+import Team from '../../components/Team'
 import { getTeamsBySeries } from '../../lib/api'
 
 export async function loader ({params}) {

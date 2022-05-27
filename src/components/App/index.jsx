@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Outlet, Link, useNavigate, useParams } from 'react-router-dom'
-import { Header } from './Header'
-import { Navigation } from './Navigation'
+import { Header } from '../Header'
+import { NavBar } from '../NavBar'
 import { connect } from 'react-redux'
 import Button from '../Shared/Button'
 import seriesData from '../../series.json'
@@ -79,7 +79,7 @@ function App (props) {
       <div className='safe-left safe-right'>
     <Outlet context={{setRouteName}} />
       </div>
-      <Navigation open={open} user={props.user} handleToggle={handleToggle} />
+      <NavBar open={open} user={props.user} handleToggle={handleToggle} />
     </div>
   )
 }

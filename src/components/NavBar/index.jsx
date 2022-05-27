@@ -2,7 +2,7 @@ import Button from '../Shared/Button'
 import { useNavigate } from 'react-router-dom'
 import series from '../../series.json'
 
-export function Navigation (props) {
+export function NavBar (props) {
   const navigate = useNavigate()
   const listItemFactory = (serie) => {
     const items = [
