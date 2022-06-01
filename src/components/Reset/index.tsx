@@ -2,9 +2,8 @@ import {useState, useEffect} from 'react'
 import {useLoaderData, useParams} from 'react-router-dom'
 import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
-import {resetSeries} from '../../actions'
 import {useAuth} from '../../hooks/useAuth'
-import {getScrapedSeries} from '../../lib/api'
+import {getScrapedSeries, resetSeries} from '../../lib/api'
 import * as allSeries from '../../series.json'
 
 export async function loader({params}) {
@@ -28,8 +27,8 @@ function Reset(props) {
 
     const companySeries = allSeries.companySeries.filter((s) => s.id === series).length > 0
     const displayContact = companySeries ? undefined : 'hidden'
-    const teams = props.scrapedData.teams || []
-    const matches = props.scrapedData.matches || []
+    const teams = scrapedData.teams || []
+    const matches = scrapedData.matches || []
     const actions = [
         <Button key="cancel" label="Avbryt" secondary onClick={handleToggleDialog} />,
         <Button
@@ -37,7 +36,7 @@ function Reset(props) {
             label="Nollställ"
             primary
             onClick={() => {
-                props.resetSeries(series, slug, uid)
+                resetSeries(series, slug, uid)
                 handleToggleDialog()
             }}
         />,

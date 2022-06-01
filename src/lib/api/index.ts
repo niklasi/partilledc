@@ -59,6 +59,10 @@ export async function getScrapedSeries(slug) {
     return response.json()
 }
 
+export async function resetSeries(seriesId, slug, userId) {
+    await fetch(`${functionUrl}/resetSeries?seriesId=${seriesId}&slug=${slug}&uid=${userId}`)
+}
+
 export async function getTableBySeries(series) {
     const ref = firebaseDb.ref('matches').orderByChild('series').equalTo(series)
 
