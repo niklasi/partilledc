@@ -14,15 +14,16 @@ import {action as resetPasswordAction} from './routes/User/ResetPassword'
 import {action as confirmResetPasswordAction} from './routes/User/ConfirmPasswordReset'
 import {action as registerUserAction} from './routes/User/RegisterUser'
 import {firebaseAuth} from './firebase'
+import {AuthProvider} from './components/AuthProvider'
 import '@fontsource/roboto'
 import './assets/index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
-const start = (user) => {
-    root.render(
+root.render(
+    <AuthProvider>
         <DataBrowserRouter>
-            <Route path="/" element={<App user={user} />}>
+            <Route path="/" element={<App />}>
                 <Route
                     path="/series/company/table"
                     loader={async (props) => allTablesLoader({seriesType: 'companySeries', ...props})}
@@ -77,20 +78,5 @@ const start = (user) => {
                 />
             </Route>
         </DataBrowserRouter>
-    )
-}
-
-const initAuth = () => {
-    return new Promise((resolve, reject) => {
-        firebaseAuth.onAuthStateChanged(
-            (user) => {
-                resolve(user)
-            },
-            (error) => reject(error)
-        )
-    })
-}
-
-initAuth()
-    .then((user) => start(user))
-    .catch((error) => console.error(error))
+    </AuthProvider>
+)

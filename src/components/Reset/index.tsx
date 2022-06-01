@@ -3,6 +3,7 @@ import {useLoaderData, useParams} from 'react-router-dom'
 import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
 import {resetSeries} from '../../actions'
+import {useAuth} from '../../hooks/useAuth'
 import {getScrapedSeries} from '../../lib/api'
 import * as allSeries from '../../series.json'
 
@@ -15,13 +16,14 @@ function Reset(props) {
     const [open, setOpen] = useState(false)
     const {series} = useParams()
     const scrapedData = useLoaderData()
+    const {user} = useAuth()
     const slug = 'FAKE'
 
     function handleToggleDialog() {
         setOpen(!open)
     }
 
-    const uid = props.user.uid
+    const uid = user.uid
     const seriesName = [...allSeries.companySeries, ...allSeries.exerciseSeries].find((x) => x.id === series).text
 
     const companySeries = allSeries.companySeries.filter((s) => s.id === series).length > 0

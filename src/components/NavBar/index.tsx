@@ -1,9 +1,11 @@
 import Button from '../Shared/Button'
 import {useNavigate} from 'react-router-dom'
+import {useAuth} from '../../hooks/useAuth'
 import * as series from '../../series.json'
 
 export function NavBar(props) {
     const navigate = useNavigate()
+    const {user} = useAuth()
     const listItemFactory = (serie) => {
         const items = [
             <Button
@@ -30,9 +32,9 @@ export function NavBar(props) {
         ]
 
         if (
-            props.user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' ||
-            props.user.uid === 't9Q8UPdd1oOvyA4PN4C4VeBMeaW2' ||
-            props.user.email === 'niklas@ingholt.com'
+            user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' ||
+            user.uid === 't9Q8UPdd1oOvyA4PN4C4VeBMeaW2' ||
+            user.email === 'niklas@ingholt.com'
         ) {
             items.push(
                 <Button
@@ -52,7 +54,7 @@ export function NavBar(props) {
     }
 
     const myMatches = () => {
-        if (!props.user.isAnonymous) {
+        if (!user.isAnonymous) {
             return (
                 <Button
                     onClick={() => navigate('/my-matches')}

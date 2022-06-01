@@ -4,7 +4,8 @@ import {Header} from '../Header'
 import {NavBar} from '../NavBar'
 import Button from '../Shared/Button'
 import * as seriesData from '../../series.json'
-import {signOut} from '../../actions'
+import {useAuth} from '../../hooks/useAuth'
+import {firebaseAuth} from '../../firebase'
 import '@fontsource/material-icons-outlined'
 
 function App(props) {
@@ -12,7 +13,8 @@ function App(props) {
     const [userMenuOpen, setUserMenuOpen] = useState(false)
     const {series} = useParams()
     const routeMatches = useMatches()
-    const isAnonymous = props.user.isAnonymous
+    const {user} = useAuth()
+    const isAnonymous = user.isAnonymous
 
     function handleToggle() {
         setOpen(!open)
@@ -34,7 +36,7 @@ function App(props) {
 
     function handleSignOut(evt) {
         evt.preventDefault()
-        props.signOut()
+        firebaseAuth.signOut()
     }
 
     function menu() {
@@ -56,7 +58,7 @@ function App(props) {
             <div className="w-full my-2">
                 <Button
                     className="text-black"
-                    disabled={props.user?.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'}
+                    disabled={user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'}
                     label="Logga ut"
                     onClick={handleSignOut}
                 />
@@ -72,7 +74,7 @@ function App(props) {
                 title={title()}
                 toggleSidebar={handleToggle}
                 toggleUserMenu={handleToggleUserMenu}
-                user={props.user}
+                user={user}
             />
             <div
                 className={`bg-transparent z-40 absolute top-0 left-0 w-screen h-screen ${
@@ -85,7 +87,7 @@ function App(props) {
             <div className="safe-left safe-right">
                 <Outlet />
             </div>
-            <NavBar open={open} user={props.user} handleToggle={handleToggle} />
+            <NavBar open={open} user={user} handleToggle={handleToggle} />
         </div>
     )
 }

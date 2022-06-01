@@ -4,6 +4,7 @@ import TextField from '../Shared/TextField'
 import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
 import RegisterResult from './RegisterResult'
+import {useAuth} from '../../hooks/useAuth'
 import {matchPoints} from '../../lib/partilledc-score'
 import {saveMatch} from '../../lib/api'
 
@@ -18,13 +19,14 @@ const colMapper = ({text, result = []}) => (
 
 function Match(props) {
     let timerId = null
+    const {user} = useAuth()
     const [open, setOpen] = useState(false)
     const [requirePin, setRequirePin] = useState(isPinEnabled())
     const [wrongPin, setWrongPin] = useState(true)
     const [editMatch, setEditMatch] = useState({text: '', result: [{home: 0, away: 0}]})
 
     function isPinEnabled() {
-        return props.user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'
+        return user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'
     }
 
     function handleOpen(match) {
@@ -64,7 +66,7 @@ function Match(props) {
 
     const header = (item) => {
         const tryOpen = () => {
-            if (!props.user.isAnonymous) {
+            if (!user.isAnonymous) {
                 handleOpen(item)
             }
         }
