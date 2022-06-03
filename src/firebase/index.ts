@@ -1,1 +1,13 @@
-export {firebaseApp, firebaseAuth, firebaseDb} from './firebase'
+export {
+    firebaseApp,
+    firebaseAuth,
+    signInWithEmailAndPassword,
+    firebaseDb,
+    functionUrl,
+    ref,
+    orderByChild,
+    equalTo,
+    query,
+    get,
+    set,
+} from './firebase'

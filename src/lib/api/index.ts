@@ -1,24 +1,18 @@
-import firebase from 'firebase/app'
-import {firebaseDb} from '../../firebase'
+import {firebaseDb, set, get, ref, query, orderByChild, equalTo, functionUrl} from '../../firebase'
 import * as allSeries from '../../series.json'
 import {matchPoints, teamPoints} from '../partilledc-score'
 
-const functionUrl = firebase.functions().emulatorOrigin
-    ? firebase.functions().emulatorOrigin + '/project-8539870983476533695/' + firebase.functions().region
-    : 'https://us-central1-project-8539870983476533695.cloudfunctions.net'
+export async function getTeamsBySeries(series: string) {
+    const teamsRef = ref(firebaseDb, 'teams')
 
-export async function getTeamsBySeries(series) {
-    const ref = firebaseDb.ref('teams').orderByChild('series').equalTo(series)
-
-    const snapshot = await promisify(ref)
+    const snapshot = await get(query(teamsRef, orderByChild('series'), equalTo(series)))
 
     return unwrap(snapshot).sort((a, b) => a.order - b.order)
 }
 
-export async function getMatchesBySeries(series) {
-    const ref = firebaseDb.ref('matches').orderByChild('series').equalTo(series)
-
-    const snapshot = await promisify(ref)
+export async function getMatchesBySeries(series: string) {
+    const matchesRef = ref(firebaseDb, 'matches')
+    const snapshot = await get(query(matchesRef, orderByChild('series'), equalTo(series)))
 
     return unwrap(snapshot).sort((a, b) => {
         if (a.date === b.date) return +a.time - +b.time
@@ -32,9 +26,8 @@ export async function getMatchesByUser(userId: string) {
 }
 
 export async function getMatchesByDate(date: string) {
-    const ref = firebaseDb.ref('matches').orderByChild('date').equalTo(date)
-
-    const snapshot = await promisify(ref)
+    const matchesRef = ref(firebaseDb, 'matches')
+    const snapshot = await get(query(matchesRef, orderByChild('date'), equalTo(date)))
     const matches = unwrap(snapshot) || []
 
     return matches.sort((a, b) => {
@@ -44,14 +37,8 @@ export async function getMatchesByDate(date: string) {
 }
 
 export async function saveMatch(match) {
-    const ref = firebaseDb.ref(`matches/${match.id}`)
-    return new Promise((resolve, reject) => {
-        ref.set(match)
-            .then((data) => {
-                return resolve(data)
-            })
-            .catch(reject)
-    })
+    const matchRef = ref(firebaseDb, `matches/${match.id}`)
+    await set(matchRef, match)
 }
 
 export async function getScrapedSeries(slug) {
@@ -64,11 +51,9 @@ export async function resetSeries(seriesId, slug, userId) {
 }
 
 export async function getTableBySeries(series) {
-    const ref = firebaseDb.ref('matches').orderByChild('series').equalTo(series)
+    const matches = await getMatchesBySeries(series)
 
-    const snapshot = await promisify(ref)
-
-    return sortSeriesTable(unwrap(snapshot))
+    return sortSeriesTable(matches)
 }
 
 function sortSeriesTable(matches) {
@@ -135,6 +120,7 @@ function sortSeriesTable(matches) {
 function mapTeamToTableSeries({id, teamName, teamRanking}) {
     return {id, teamName, teamRanking}
 }
+
 function companySeriesRanking(t1, t2) {
     const teamp = t2.teamp - t1.teamp
     if (teamp !== 0) return teamp
@@ -162,15 +148,6 @@ function exerciseSeriesRanking(t1, t2) {
     if (matches !== 0) return matches
 
     return t2.teamRanking - t1.teamRanking
-}
-function promisify(ref) {
-    return new Promise((resolve, reject) => {
-        ref.get()
-            .then((snapshot) => {
-                return resolve(snapshot)
-            })
-            .catch(reject)
-    })
 }
 
 function unwrap(snapshot) {
