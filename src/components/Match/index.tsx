@@ -7,7 +7,13 @@ import RegisterResult from './RegisterResult'
 import {useAuth} from '../../hooks/useAuth'
 import {matchPoints} from '../../lib/partilledc-score'
 import {saveMatch} from '../../lib/api'
+import type * as model from '../../lib/model'
 
+type MatchProps = {
+    saveMatch: (match: model.Match) => Promise<void>
+    match: model.Match
+    user: any
+}
 const colMapper = ({text, result = []}) => (
     <p key={text} className="text-sm whitespace-normal">
         {result
@@ -17,20 +23,20 @@ const colMapper = ({text, result = []}) => (
     </p>
 )
 
-function Match(props) {
+function Match(props: MatchProps) {
     let timerId = null
     const {user} = useAuth()
     const [open, setOpen] = useState(false)
     const [requirePin, setRequirePin] = useState(isPinEnabled())
     const [wrongPin, setWrongPin] = useState(true)
-    const [editMatch, setEditMatch] = useState({text: '', result: [{home: 0, away: 0}]})
+    const [editMatch, setEditMatch] = useState<model.MatchResult>({text: '', result: [{home: 0, away: 0}]})
 
     function isPinEnabled() {
         return user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'
     }
 
-    function handleOpen(match) {
-        setEditMatch(match)
+    function handleOpen(matchResult: model.MatchResult) {
+        setEditMatch(matchResult)
         setOpen(true)
     }
 
@@ -64,7 +70,7 @@ function Match(props) {
         <Button key="close_button" label="Stäng" primary onClick={handleClose} disabled={requirePin && wrongPin} />,
     ]
 
-    const header = (item) => {
+    const header = (item: model.MatchResult) => {
         const tryOpen = () => {
             if (!user.isAnonymous) {
                 handleOpen(item)
@@ -73,14 +79,14 @@ function Match(props) {
         return <Button label={item.text} primary className="normal-case" onClick={tryOpen} />
     }
 
-    const view = (requirePin) => {
+    const view = (requirePin: boolean) => {
         if (requirePin) {
             return (
                 <TextField
                     hintText="Ange pin"
                     pattern="[0-9]*"
                     inputMode="numeric"
-                    onChange={(e, newValue) => setWrongPin(newValue !== '1958')}
+                    onChange={(_: any, newValue: string) => setWrongPin(newValue !== '1958')}
                 />
             )
         }
@@ -88,19 +94,19 @@ function Match(props) {
         return <RegisterResult onChangeResult={handleChangeResult} match={editMatch} />
     }
 
-    const formatMatchPoints = (score) => `${score.home.points}-${score.away.points}`
+    const formatMatchPoints = (score: ReturnType<typeof matchPoints>) => `${score.home.points}-${score.away.points}`
     return (
         <Card
-            avatar={formatMatchPoints(matchPoints(match.matches.map((m) => m.result)))}
+            avatar={formatMatchPoints(matchPoints(match.matches))}
             title={`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`}
             subtitle={'Bana ' + match.lane + ' ' + match.date + ' kl ' + match.time}
         >
             <div className="flex flex-row justify-between">
-                {match.matches.map((match, index) => {
+                {match.matches.map((matchResult, index) => {
                     return (
                         <div key={`match-${index}`} className="flex flex-col flex-wrap items-center">
-                            {header(match)}
-                            {colMapper(match)}
+                            {header(matchResult)}
+                            {colMapper(matchResult)}
                         </div>
                     )
                 })}

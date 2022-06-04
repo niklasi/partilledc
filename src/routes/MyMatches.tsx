@@ -2,13 +2,14 @@ import {useLoaderData} from 'react-router-dom'
 import Match from '../components/Match'
 import {getMatchesByUser, saveMatch} from '../lib/api'
 import {useAuth} from '../hooks/useAuth'
+import * as model from '../lib/model'
 
 export async function loader({params}) {
     return getMatchesByUser(params.user?.uid || '')
 }
 
 function MyMatches() {
-    const matches = useLoaderData()
+    const matches = useLoaderData() as model.Match[]
     const {user} = useAuth()
     return (
         <div>

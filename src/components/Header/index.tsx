@@ -1,5 +1,3 @@
-import Button from '../Shared/Button'
-
 export function Header(props) {
     const rightIcon = () => {
         return props.user.isAnonymous ? (
@@ -9,7 +7,7 @@ export function Header(props) {
         )
     }
     const hiddenInFrame = () => (window.location !== window.parent.location ? 'hidden' : '')
-    const standaloneHeight = () => (!!window.navigator.standalone ? 'portrait:h-24' : '')
+    const standaloneHeight = () => ('standalone' in window.navigator ? 'portrait:h-24' : '')
 
     return (
         <div className={`${hiddenInFrame()}`}>

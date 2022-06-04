@@ -1,8 +1,9 @@
 import Card from '../Shared/Card'
+import type * as model from '../../lib/model'
 
-function Team(props) {
-    const team = props.team
+type TeamProps = {team: model.Team}
 
+function Team({team}: TeamProps) {
     return (
         <Card
             avatar={team.teamRanking}

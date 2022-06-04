@@ -12,7 +12,7 @@ export async function loader({seriesType}) {
                     id: x.id,
                     name: x.text,
                     isCompanySeries: seriesType === 'companySeries',
-                    tableData: (await getTableBySeries(x.id))[x.id],
+                    tableData: await getTableBySeries(x.id),
                 }
             })
     )

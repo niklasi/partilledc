@@ -1,34 +1,35 @@
 import {firebaseDb, set, get, ref, query, orderByChild, equalTo, functionUrl} from '../../firebase'
 import * as allSeries from '../../series.json'
 import {matchPoints, teamPoints} from '../partilledc-score'
+import type * as model from '../model'
 
-export async function getTeamsBySeries(series: string) {
+export async function getTeamsBySeries(series: string): Promise<model.Team[]> {
     const teamsRef = ref(firebaseDb, 'teams')
 
     const snapshot = await get(query(teamsRef, orderByChild('series'), equalTo(series)))
 
-    return unwrap(snapshot).sort((a, b) => a.order - b.order)
+    return unwrap<model.Team>(snapshot).sort((a, b) => a.teamRanking - b.teamRanking)
 }
 
-export async function getMatchesBySeries(series: string) {
+export async function getMatchesBySeries(series: string): Promise<model.Match[]> {
     const matchesRef = ref(firebaseDb, 'matches')
     const snapshot = await get(query(matchesRef, orderByChild('series'), equalTo(series)))
 
-    return unwrap(snapshot).sort((a, b) => {
+    return unwrap<model.Match>(snapshot).sort((a, b) => {
         if (a.date === b.date) return +a.time - +b.time
         return a.date > b.date ? 1 : -1
     })
 }
 
-export async function getMatchesByUser(userId: string) {
+export async function getMatchesByUser(userId: string): Promise<model.Match[]> {
     const response = await fetch(`${functionUrl}/mymatches?uid=${userId}`)
     return response.json()
 }
 
-export async function getMatchesByDate(date: string) {
+export async function getMatchesByDate(date: string): Promise<model.Match[]> {
     const matchesRef = ref(firebaseDb, 'matches')
     const snapshot = await get(query(matchesRef, orderByChild('date'), equalTo(date)))
-    const matches = unwrap(snapshot) || []
+    const matches = unwrap<model.Match>(snapshot) || []
 
     return matches.sort((a, b) => {
         if (a.date === b.date) return +a.time - +b.time
@@ -36,64 +37,57 @@ export async function getMatchesByDate(date: string) {
     })
 }
 
-export async function saveMatch(match) {
+export async function saveMatch(match: model.Match): Promise<void> {
     const matchRef = ref(firebaseDb, `matches/${match.id}`)
     await set(matchRef, match)
 }
 
-export async function getScrapedSeries(slug) {
+export async function getScrapedSeries(slug: string) {
     const response = await fetch(`/scraper/${slug}`)
     return response.json()
 }
 
-export async function resetSeries(seriesId, slug, userId) {
+export async function resetSeries(seriesId: string, slug: string, userId: string) {
     await fetch(`${functionUrl}/resetSeries?seriesId=${seriesId}&slug=${slug}&uid=${userId}`)
 }
 
-export async function getTableBySeries(series) {
+export async function getTableBySeries(series: string): Promise<model.SeriesTableItem[]> {
     const matches = await getMatchesBySeries(series)
 
-    return sortSeriesTable(matches)
+    return makeSeriesTable(matches)
 }
 
-function sortSeriesTable(matches) {
-    const flatten = (list, item) => [].concat.apply(list, item)
-    const map = Object.create({
+function makeSeriesTable(matches: model.Match[]): model.SeriesTableItem[] {
+    const map: {valuesToArray: () => model.SeriesTableItem[]} = Object.create({
         valuesToArray: function () {
             const tmp = []
             Object.keys(this).forEach((k) => tmp.push(this[k]))
             return tmp
         },
     })
+    const ranking = allSeries.companySeries.some((s) => s.id === matches[0].series)
+        ? companySeriesRanking
+        : exerciseSeriesRanking
 
-    let series = ''
-    const state = {}
-    const ranking =
-        allSeries.companySeries.filter((s) => {
-            series = matches.length > 0 ? matches[0].series : ''
-            return s.id === series
-        }).length > 0
-            ? companySeriesRanking
-            : exerciseSeriesRanking
-
-    state[series] = matches
-        .map((m) => {
-            const matchp = matchPoints(m.matches.map((i) => i.result))
+    return matches
+        .map((match) => {
+            const matchp = matchPoints(match.matches)
             const teamp = teamPoints(matchp)
-            const homeTeam = mapTeamToTableSeries(m.homeTeam)
-            homeTeam.series = m.series
-            homeTeam.matches = 0
-            homeTeam.matchp = {won: Object.assign({}, matchp.home), lost: Object.assign({}, matchp.away)}
-            homeTeam.teamp = teamp.home
-            const awayTeam = mapTeamToTableSeries(m.awayTeam)
-            awayTeam.series = m.series
-            awayTeam.matches = 0
-            awayTeam.matchp = {won: Object.assign({}, matchp.away), lost: Object.assign({}, matchp.home)}
-            awayTeam.teamp = teamp.away
+            const homeTeam: model.SeriesTableItem = {
+                ...mapTeamToTableSeries(match.homeTeam),
+                matchp: {won: {...matchp.home}, lost: {...matchp.away}},
+                teamp: teamp.home,
+            }
+
+            const awayTeam: model.SeriesTableItem = {
+                ...mapTeamToTableSeries(match.awayTeam),
+                matchp: {won: {...matchp.away}, lost: {...matchp.home}},
+                teamp: teamp.away,
+            }
 
             return [homeTeam, awayTeam]
         })
-        .reduce(flatten, [])
+        .flatMap((x) => x)
         .reduce((map, team) => {
             const existingTeam = map[team.id]
             if (existingTeam) {
@@ -113,15 +107,13 @@ function sortSeriesTable(matches) {
         }, map)
         .valuesToArray()
         .sort(ranking)
-
-    return Object.assign({}, state)
 }
 
 function mapTeamToTableSeries({id, teamName, teamRanking}) {
-    return {id, teamName, teamRanking}
+    return {id, teamName, teamRanking, matches: 0, teamp: 0}
 }
 
-function companySeriesRanking(t1, t2) {
+function companySeriesRanking(t1: model.SeriesTableItem, t2: model.SeriesTableItem) {
     const teamp = t2.teamp - t1.teamp
     if (teamp !== 0) return teamp
 
@@ -134,7 +126,7 @@ function companySeriesRanking(t1, t2) {
     return t2.teamRanking - t1.teamRanking
 }
 
-function exerciseSeriesRanking(t1, t2) {
+function exerciseSeriesRanking(t1: model.SeriesTableItem, t2: model.SeriesTableItem) {
     const teamp = t2.teamp - t1.teamp
     if (teamp !== 0) return teamp
 
@@ -150,9 +142,9 @@ function exerciseSeriesRanking(t1, t2) {
     return t2.teamRanking - t1.teamRanking
 }
 
-function unwrap(snapshot) {
+function unwrap<T>(snapshot: any): Array<T> {
     if (!snapshot.exists()) return
-    const items = snapshot.val()
+    const items = snapshot.val() as T
 
-    return Object.entries(items).map(([key, value]) => Object.assign({id: key}, value))
+    return Object.entries(items).map(([key, value]) => ({id: key, ...value}))
 }

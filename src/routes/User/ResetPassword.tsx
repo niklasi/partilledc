@@ -1,11 +1,11 @@
 import {Form} from 'react-router-dom'
 import {TextField, Button} from '../../components/Shared'
-import {firebaseAuth} from '../../firebase'
+import {firebaseAuth, sendPasswordResetEmail} from '../../firebase'
 
 export async function action({request}) {
     const formData = await request.formData()
     const email = formData.get('email')
-    await firebaseAuth.sendPasswordResetEmail(email)
+    await sendPasswordResetEmail(firebaseAuth, email)
 }
 
 const ResetPassword = () => {

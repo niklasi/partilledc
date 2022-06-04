@@ -1,4 +1,3 @@
-import {useEffect} from 'react'
 import {useLoaderData, useParams} from 'react-router-dom'
 import Match from '../../components/Match'
 import {getMatchesBySeries, saveMatch} from '../../lib/api'
@@ -10,7 +9,7 @@ export async function loader({params}) {
     return getMatchesBySeries(params.series)
 }
 
-function Matches(props) {
+function Matches() {
     const {series} = useParams()
     const matches = useLoaderData()
     const {user} = useAuth()

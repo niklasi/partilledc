@@ -1,5 +1,12 @@
 import {initializeApp} from 'firebase/app'
-import {getAuth, signInWithEmailAndPassword as fbSignInWithEmailAndPassword, connectAuthEmulator} from 'firebase/auth'
+import {
+    getAuth,
+    signInWithEmailAndPassword as fbSignInWithEmailAndPassword,
+    confirmPasswordReset as fbConfirmPasswordReset,
+    createUserWithEmailAndPassword as fbCreateUserWithEmailAndPassword,
+    sendPasswordResetEmail as fbSendPasswordResetEmail,
+    connectAuthEmulator,
+} from 'firebase/auth'
 import {
     getDatabase,
     connectDatabaseEmulator,
@@ -24,6 +31,9 @@ export const query = dbQuery
 export const get = dbGet
 export const set = dbSet
 export const signInWithEmailAndPassword = fbSignInWithEmailAndPassword
+export const confirmPasswordReset = fbConfirmPasswordReset
+export const createUserWithEmailAndPassword = fbCreateUserWithEmailAndPassword
+export const sendPasswordResetEmail = fbSendPasswordResetEmail
 
 const useEmulator = window.location.hostname === 'localhost'
 

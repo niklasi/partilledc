@@ -1,4 +1,4 @@
-import {useState, createContext} from 'react'
+import {useState, createContext, ReactNode} from 'react'
 import {firebaseAuth} from '../../firebase'
 
 interface AuthContextType {
@@ -8,7 +8,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>(null!)
 const defaultUser = {isAnonymous: true}
 
-export function AuthProvider({children}: {children: React.ReactNode}) {
+export function AuthProvider({children}: {children: ReactNode}) {
     let [user, setUser] = useState<any>(defaultUser)
 
     firebaseAuth.onAuthStateChanged((fbUser) => {

@@ -13,7 +13,6 @@ import {action as signInAction} from './routes/User/SignIn'
 import {action as resetPasswordAction} from './routes/User/ResetPassword'
 import {action as confirmResetPasswordAction} from './routes/User/ConfirmPasswordReset'
 import {action as registerUserAction} from './routes/User/RegisterUser'
-import {firebaseAuth} from './firebase'
 import {AuthProvider} from './components/AuthProvider'
 import '@fontsource/roboto'
 import './assets/index.css'
@@ -22,7 +21,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
     <AuthProvider>
-        <DataBrowserRouter>
+        <DataBrowserRouter fallbackElement={<div>det blev fel</div>}>
             <Route path="/" element={<App />}>
                 <Route
                     path="/series/company/table"
