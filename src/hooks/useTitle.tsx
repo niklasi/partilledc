@@ -1,15 +1,12 @@
-import {useParams, useMatches} from 'react-router-dom'
-import * as seriesData from '../series.json'
+import {useMatches} from 'react-router-dom'
+import {useCurrentSerie} from './useCurrentSerie'
 
 export function useTitle() {
-    const {series} = useParams()
+    const serie = useCurrentSerie()
     const routeMatches = useMatches()
 
-    const seriesNames = [...seriesData.companySeries, ...seriesData.exerciseSeries]
-        .filter((x) => x.id === series)
-        .map((x) => x.text)
-
+    const name = serie.text
     const [route] = routeMatches.slice(-1)
     const title = route.handle?.title ?? ''
-    return seriesNames.length > 0 ? `${seriesNames} - ${title}` : title
+    return name.length > 0 ? `${name} - ${title}` : title
 }

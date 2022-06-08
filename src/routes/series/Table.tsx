@@ -1,7 +1,7 @@
 import SeriesTable from '../../components/SeriesTable'
-import {useLoaderData, useParams} from 'react-router-dom'
+import {useLoaderData} from 'react-router-dom'
 import {getTableBySeries} from '../../lib/api'
-import * as allSeries from '../../series.json'
+import {useCurrentSerie} from '../../hooks/useCurrentSerie'
 
 export async function loader({params}) {
     return getTableBySeries(params.series)
@@ -9,9 +9,9 @@ export async function loader({params}) {
 
 function Table() {
     const seriesTableData = useLoaderData()
-    const {series} = useParams()
+    const series = useCurrentSerie()
 
-    const companySeries = allSeries.companySeries.filter((s) => s.id === series).length > 0
+    const companySeries = series.type === 'CompanySeries'
 
     return <SeriesTable isCompanySeries={companySeries} tableData={seriesTableData} />
 }

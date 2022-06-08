@@ -14,68 +14,71 @@ import {action as resetPasswordAction} from './routes/User/ResetPassword'
 import {action as confirmResetPasswordAction} from './routes/User/ConfirmPasswordReset'
 import {action as registerUserAction} from './routes/User/RegisterUser'
 import {AuthProvider} from './components/AuthProvider'
+import {SeriesProvider} from './components/SeriesProvider'
 import '@fontsource/roboto'
 import './assets/index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
-    <AuthProvider>
-        <DataBrowserRouter fallbackElement={<div />}>
-            <Route path="/" element={<App />}>
-                <Route
-                    path="/series/company/table"
-                    loader={async (props) => allTablesLoader({seriesType: 'companySeries', ...props})}
-                    element={<AllSeriesTable />}
-                />
-                <Route
-                    path="/series/exercise/table"
-                    loader={async (props) => allTablesLoader({seriesType: 'exerciseSeries', ...props})}
-                    element={<AllSeriesTable />}
-                />
-                <Route path="/series/:series">
-                    <Route path="teams" handle={{title: 'Lag'}} loader={teamsLoader} element={<Teams />} />
+    <SeriesProvider>
+        <AuthProvider>
+            <DataBrowserRouter fallbackElement={<div />}>
+                <Route path="/" element={<App />}>
                     <Route
-                        path="matches"
-                        handle={{title: 'Matcher'}}
-                        loader={seriesMatchesLoader}
-                        element={<Matches />}
+                        path="/series/company/table"
+                        loader={async (props) => allTablesLoader({seriesType: 'CompanySeries', ...props})}
+                        element={<AllSeriesTable />}
                     />
-                    <Route path="table" handle={{title: 'Tabell'}} loader={tableLoader} element={<SeriesTable />} />
-                    <Route path="reset" handle={{title: 'Nollställ'}} loader={resetLoader} element={<Reset />} />
+                    <Route
+                        path="/series/exercise/table"
+                        loader={async (props) => allTablesLoader({seriesType: 'ExerciseSeries', ...props})}
+                        element={<AllSeriesTable />}
+                    />
+                    <Route path="/series/:series">
+                        <Route path="teams" handle={{title: 'Lag'}} loader={teamsLoader} element={<Teams />} />
+                        <Route
+                            path="matches"
+                            handle={{title: 'Matcher'}}
+                            loader={seriesMatchesLoader}
+                            element={<Matches />}
+                        />
+                        <Route path="table" handle={{title: 'Tabell'}} loader={tableLoader} element={<SeriesTable />} />
+                        <Route path="reset" handle={{title: 'Nollställ'}} loader={resetLoader} element={<Reset />} />
+                    </Route>
+                    <Route
+                        path="/todays-matches"
+                        handle={{title: 'Dagens matcher'}}
+                        loader={todaysMatchesLoader}
+                        element={<TodaysMatches />}
+                    />
+                    <Route
+                        path="/my-matches"
+                        handle={{title: 'Mina matcher'}}
+                        loader={myMatchesLoader}
+                        element={<MyMatches />}
+                    />
+                    <Route path="/sign-in" handle={{title: 'Logga in'}} action={signInAction} element={<SignIn />} />
+                    <Route
+                        path="/register-user"
+                        handle={{title: 'Ny användare'}}
+                        action={registerUserAction}
+                        element={<RegisterUser />}
+                    />
+                    <Route
+                        path="/reset-password"
+                        handle={{title: 'Återställ lösenord'}}
+                        action={resetPasswordAction}
+                        element={<ResetPassword />}
+                    />
+                    <Route
+                        path="/confirm-password-reset"
+                        handle={{title: 'Bekräfta'}}
+                        action={confirmResetPasswordAction}
+                        element={<ConfirmPasswordReset />}
+                    />
                 </Route>
-                <Route
-                    path="/todays-matches"
-                    handle={{title: 'Dagens matcher'}}
-                    loader={todaysMatchesLoader}
-                    element={<TodaysMatches />}
-                />
-                <Route
-                    path="/my-matches"
-                    handle={{title: 'Mina matcher'}}
-                    loader={myMatchesLoader}
-                    element={<MyMatches />}
-                />
-                <Route path="/sign-in" handle={{title: 'Logga in'}} action={signInAction} element={<SignIn />} />
-                <Route
-                    path="/register-user"
-                    handle={{title: 'Ny användare'}}
-                    action={registerUserAction}
-                    element={<RegisterUser />}
-                />
-                <Route
-                    path="/reset-password"
-                    handle={{title: 'Återställ lösenord'}}
-                    action={resetPasswordAction}
-                    element={<ResetPassword />}
-                />
-                <Route
-                    path="/confirm-password-reset"
-                    handle={{title: 'Bekräfta'}}
-                    action={confirmResetPasswordAction}
-                    element={<ConfirmPasswordReset />}
-                />
-            </Route>
-        </DataBrowserRouter>
-    </AuthProvider>
+            </DataBrowserRouter>
+        </AuthProvider>
+    </SeriesProvider>
 )

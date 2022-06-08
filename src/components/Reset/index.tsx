@@ -1,34 +1,32 @@
-import {useState, useEffect} from 'react'
-import {useLoaderData, useParams} from 'react-router-dom'
+import {useState} from 'react'
+import {useLoaderData} from 'react-router-dom'
 import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
 import {useAuth} from '../../hooks/useAuth'
-import {getScrapedSeries, resetSeries} from '../../lib/api'
-import * as allSeries from '../../series.json'
+import {getScrapedSeries, resetSeries, getAllSeries} from '../../lib/api'
 
 export async function loader({params}) {
-    const slug = [...allSeries.companySeries, ...allSeries.exerciseSeries].find((x) => x.id === params.series).slug
-    return getScrapedSeries(slug)
+    const series = await getAllSeries()
+    const serie = series.find((x) => x.id === params.series)
+    return {serie, scrapedSeries: await getScrapedSeries(serie.slug)}
 }
 
-function Reset(props) {
+function Reset() {
     const [open, setOpen] = useState(false)
-    const {series} = useParams()
-    const scrapedData = useLoaderData()
+    const resetData = useLoaderData() as Awaited<ReturnType<typeof loader>>
     const {user} = useAuth()
-    const slug = 'FAKE'
+    const slug = resetData.serie.slug
 
     function handleToggleDialog() {
         setOpen(!open)
     }
 
-    const uid = user.uid
-    const seriesName = [...allSeries.companySeries, ...allSeries.exerciseSeries].find((x) => x.id === series).text
+    const seriesName = resetData.serie.text
 
-    const companySeries = allSeries.companySeries.filter((s) => s.id === series).length > 0
+    const companySeries = resetData.serie.type === 'CompanySeries'
     const displayContact = companySeries ? undefined : 'hidden'
-    const teams = scrapedData.teams || []
-    const matches = scrapedData.matches || []
+    const teams = resetData.scrapedSeries.teams || []
+    const matches = resetData.scrapedSeries.matches || []
     const actions = [
         <Button key="cancel" label="Avbryt" secondary onClick={handleToggleDialog} />,
         <Button
@@ -36,7 +34,7 @@ function Reset(props) {
             label="Nollställ"
             primary
             onClick={() => {
-                resetSeries(series, slug, uid)
+                resetSeries(resetData.serie.id, slug, user.id)
                 handleToggleDialog()
             }}
         />,

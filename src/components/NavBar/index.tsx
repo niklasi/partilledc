@@ -1,12 +1,15 @@
 import Button from '../Shared/Button'
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from '../../hooks/useAuth'
-import * as series from '../../series.json'
+import {useSeries} from '../../hooks/useSeries'
+import type {Series} from '../../lib/model'
 
 export function NavBar(props) {
     const navigate = useNavigate()
     const {user} = useAuth()
-    const listItemFactory = (serie) => {
+    const {series} = useSeries()
+
+    const listItemFactory = (serie: Series) => {
         const items = [
             <Button
                 key={`team-${serie.id}`}
@@ -72,10 +75,16 @@ export function NavBar(props) {
             <div className={`w-4/6 bg-white shadow fixed top-0 ${open}`}>
                 <div className="flex flex-col space-x-2 overflow-scroll h-screen safe-top">
                     <p className="text-2xl pl-4 text-gray-500">Lagserier</p>
-                    {series.companySeries.filter((x) => x.active === true).map(listItemFactory)}
+                    {series
+                        .filter((s) => s.type === 'CompanySeries')
+                        .filter((x) => x.active === true)
+                        .map(listItemFactory)}
                     <hr />
                     <p className="text-2xl pl-4 text-gray-500">Motionsserier</p>
-                    {series.exerciseSeries.filter((x) => x.active === true).map(listItemFactory)}
+                    {series
+                        .filter((s) => s.type === 'ExerciseSeries')
+                        .filter((x) => x.active === true)
+                        .map(listItemFactory)}
                     <hr />
                     {myMatches()}
                     <Button

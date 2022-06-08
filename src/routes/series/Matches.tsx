@@ -1,8 +1,8 @@
-import {useLoaderData, useParams} from 'react-router-dom'
+import {useLoaderData} from 'react-router-dom'
 import Match from '../../components/Match'
 import {getMatchesBySeries, saveMatch} from '../../lib/api'
 import {useAuth} from '../../hooks/useAuth'
-import * as allSeries from '../../series.json'
+import {useCurrentSerie} from '../../hooks/useCurrentSerie'
 import Print from '../../components/Match/Print'
 
 export async function loader({params}) {
@@ -10,11 +10,11 @@ export async function loader({params}) {
 }
 
 function Matches() {
-    const {series} = useParams()
+    const serie = useCurrentSerie()
     const matches = useLoaderData()
     const {user} = useAuth()
 
-    const isCompanySeries = allSeries.companySeries.filter((s) => s.id === series).length > 0
+    const isCompanySeries = serie.type === 'CompanySeries'
     return (
         <div>
             <Print matches={matches} isCompanySeries={isCompanySeries} />

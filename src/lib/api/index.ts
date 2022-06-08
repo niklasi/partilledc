@@ -3,6 +3,13 @@ import * as allSeries from '../../series.json'
 import {matchPoints, teamPoints} from '../partilledc-score'
 import type * as model from '../model'
 
+export async function getAllSeries(): Promise<model.Series[]> {
+    const companySeries = allSeries.companySeries.map((s) => ({...s, type: 'CompanySeries'}))
+    const exerciseSeries = allSeries.exerciseSeries.map((s) => ({...s, type: 'ExerciseSeries'}))
+
+    return [...companySeries, ...exerciseSeries] as model.Series[]
+}
+
 export async function getTeamsBySeries(series: string): Promise<model.Team[]> {
     const teamsRef = ref(firebaseDb, 'teams')
 
@@ -57,7 +64,7 @@ export async function getTableBySeries(series: string): Promise<model.SeriesTabl
     return makeSeriesTable(matches)
 }
 
-function makeSeriesTable(matches: model.Match[]): model.SeriesTableItem[] {
+async function makeSeriesTable(matches: model.Match[]): Promise<model.SeriesTableItem[]> {
     const map: {valuesToArray: () => model.SeriesTableItem[]} = Object.create({
         valuesToArray: function () {
             const tmp = []
@@ -65,9 +72,12 @@ function makeSeriesTable(matches: model.Match[]): model.SeriesTableItem[] {
             return tmp
         },
     })
-    const ranking = allSeries.companySeries.some((s) => s.id === matches[0].series)
-        ? companySeriesRanking
-        : exerciseSeriesRanking
+
+    const allSeries = await getAllSeries()
+    const ranking =
+        allSeries.find((s) => s.id === matches[0].series)?.type === 'CompanySeries'
+            ? companySeriesRanking
+            : exerciseSeriesRanking
 
     return matches
         .map((match) => {
