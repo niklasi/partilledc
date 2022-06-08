@@ -3,4 +3,5 @@ export type User = {
     isAnonymous: boolean
     requiresPin: boolean
     admin: boolean
+    disableLogout: boolean
 }

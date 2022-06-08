@@ -56,18 +56,13 @@ function App(props) {
 
         return (
             <div className="w-full my-2">
-                <Button
-                    className="text-black"
-                    disabled={user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'}
-                    label="Logga ut"
-                    onClick={handleSignOut}
-                />
+                <Button className="text-black" disabled={user.disableLogout} label="Logga ut" onClick={handleSignOut} />
             </div>
         )
     }
 
     return (
-        <div>
+        <>
             <Header
                 key="AppBar"
                 data-testid="menu"
@@ -88,7 +83,7 @@ function App(props) {
                 <Outlet />
             </div>
             <NavBar open={open} user={user} handleToggle={handleToggle} />
-        </div>
+        </>
     )
 }
 
