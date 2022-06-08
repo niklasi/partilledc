@@ -13,6 +13,7 @@ export function AuthProvider({children}: {children: ReactNode}) {
     let [user, setUser] = useState<User>(defaultUser)
 
     firebaseAuth.onAuthStateChanged((fbUser) => {
+        if (user?.id === fbUser?.uid) return
         setUser(
             fbUser
                 ? {
