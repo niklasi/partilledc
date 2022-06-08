@@ -1,6 +1,7 @@
 const Input = (props) => {
     return (
         <input
+            {...props}
             name={props.name}
             value={props.value}
             type={props.type ?? 'text'}

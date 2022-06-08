@@ -1,8 +1,8 @@
 import {useState} from 'react'
 import Card from '../Shared/Card'
-import TextField from '../Shared/TextField'
 import Dialog from '../Shared/Dialog'
 import Button from '../Shared/Button'
+import {Pin} from '../Pin'
 import RegisterResult from './RegisterResult'
 import {useAuth} from '../../hooks/useAuth'
 import {matchPoints} from '../../lib/partilledc-score'
@@ -24,16 +24,9 @@ const colMapper = ({text, result = []}) => (
 )
 
 function Match(props: MatchProps) {
-    let timerId = null
     const {user} = useAuth()
     const [open, setOpen] = useState(false)
-    const [requirePin, setRequirePin] = useState(isPinEnabled())
-    const [wrongPin, setWrongPin] = useState(true)
     const [editMatch, setEditMatch] = useState<model.MatchResult>({text: '', result: [{home: 0, away: 0}]})
-
-    function isPinEnabled() {
-        return user.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62'
-    }
 
     function handleOpen(matchResult: model.MatchResult) {
         setEditMatch(matchResult)
@@ -42,17 +35,6 @@ function Match(props: MatchProps) {
 
     function handleClose() {
         setOpen(false)
-        setRequirePin(false)
-        enablePin()
-    }
-
-    function enablePin() {
-        if (!requirePin) return
-        clearTimeout(timerId)
-        timerId = setTimeout(() => {
-            setRequirePin(true)
-            setWrongPin(true)
-        }, 1000 * 60 * 2)
     }
 
     function handleChangeResult(matchResult) {
@@ -66,9 +48,7 @@ function Match(props: MatchProps) {
 
     const match = props.match
 
-    const actions = [
-        <Button key="close_button" label="Stäng" primary onClick={handleClose} disabled={requirePin && wrongPin} />,
-    ]
+    const actions = [<Button key="close_button" label="Stäng" primary onClick={handleClose} />]
 
     const header = (item: model.MatchResult) => {
         const tryOpen = () => {
@@ -77,21 +57,6 @@ function Match(props: MatchProps) {
             }
         }
         return <Button label={item.text} primary className="normal-case" onClick={tryOpen} />
-    }
-
-    const view = (requirePin: boolean) => {
-        if (requirePin) {
-            return (
-                <TextField
-                    hintText="Ange pin"
-                    pattern="[0-9]*"
-                    inputMode="numeric"
-                    onChange={(_: any, newValue: string) => setWrongPin(newValue !== '1958')}
-                />
-            )
-        }
-
-        return <RegisterResult onChangeResult={handleChangeResult} match={editMatch} />
     }
 
     const formatMatchPoints = (score: ReturnType<typeof matchPoints>) => `${score.home.points}-${score.away.points}`
@@ -112,8 +77,10 @@ function Match(props: MatchProps) {
                 })}
             </div>
             {open && (
-                <Dialog title={requirePin ? 'Ange pin' : 'Resultat'} actions={actions} open={open}>
-                    {view(requirePin)}
+                <Dialog title="Resultat" actions={actions} open={open}>
+                    <Pin required={true || user.requiresPin}>
+                        <RegisterResult onChangeResult={handleChangeResult} match={editMatch} />
+                    </Pin>
                 </Dialog>
             )}
         </Card>
