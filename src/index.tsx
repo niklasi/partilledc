@@ -21,7 +21,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
     <AuthProvider>
-        <DataBrowserRouter fallbackElement={<div>det blev fel</div>}>
+        <DataBrowserRouter fallbackElement={<div />}>
             <Route path="/" element={<App />}>
                 <Route
                     path="/series/company/table"
