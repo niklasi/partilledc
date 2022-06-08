@@ -7,7 +7,7 @@ interface AuthContextType {
 }
 
 export const AuthContext = createContext<AuthContextType>(null!)
-const defaultUser: User = {isAnonymous: true, requiresPin: false}
+const defaultUser: User = {isAnonymous: true, requiresPin: false, admin: false}
 
 export function AuthProvider({children}: {children: ReactNode}) {
     let [user, setUser] = useState<User>(defaultUser)
@@ -19,6 +19,10 @@ export function AuthProvider({children}: {children: ReactNode}) {
                       id: fbUser.uid,
                       isAnonymous: fbUser.isAnonymous,
                       requiresPin: fbUser.uid === 'c7RECUVjoIM1iHB7jvldxScB0C62',
+                      admin:
+                          fbUser.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' ||
+                          fbUser.uid === 't9Q8UPdd1oOvyA4PN4C4VeBMeaW2' ||
+                          fbUser.email === 'niklas@ingholt.com',
                   }
                 : defaultUser
         )

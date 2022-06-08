@@ -31,11 +31,7 @@ export function NavBar(props) {
             />,
         ]
 
-        if (
-            user.uid === 'EcTzkTApzDXWR07vMbwmuXfkIHm2' ||
-            user.uid === 't9Q8UPdd1oOvyA4PN4C4VeBMeaW2' ||
-            user.email === 'niklas@ingholt.com'
-        ) {
+        if (user.admin) {
             items.push(
                 <Button
                     key={`reset-${serie.id}`}
