@@ -1,9 +1,17 @@
-export function Header(props) {
+import type {User} from '../../lib/model'
+
+type HeaderProps = {
+    user: User
+    title: string
+    toggleSidebar: () => void
+    toggleUserMenu: () => void
+}
+export function Header(props: HeaderProps) {
     const rightIcon = () => {
         return props.user.isAnonymous ? (
-            <span className="material-icons-outlined">lock</span>
+            <span className="mx-2 material-icons-outlined">lock</span>
         ) : (
-            <span className="material-icons-outlined">lock_open</span>
+            <span className="mx-2 material-icons-outlined">lock_open</span>
         )
     }
     const hiddenInFrame = () => (window.location !== window.parent.location ? 'hidden' : '')
@@ -13,13 +21,13 @@ export function Header(props) {
         <div className={`${hiddenInFrame()}`}>
             <header
                 data-testid="menu"
-                className={`${standaloneHeight()} h-16 bg-primary px-2 landscape:safe-left landscape:safe-right safe-top text-white flex flex-row items-center space-x-4 fixed top-0 w-full shadow`}
+                className={`${standaloneHeight()} h-16 bg-primary landscape:safe-left landscape:safe-right safe-top text-white flex flex-row items-center space-x-2 fixed top-0 w-full shadow`}
             >
-                <button onClick={() => props.toggleSidebar()} className="flex-none material-icons-outlined">
+                <button onClick={() => props.toggleSidebar()} className="flex-none mx-2 material-icons-outlined">
                     menu
                 </button>
                 <p className="grow text-2xl">{props.title}</p>
-                <button onClick={() => props.toggleUserMenu()} className="flex-none">
+                <button onClick={() => props.toggleUserMenu()} className="flex-none mr-8">
                     {rightIcon()}
                 </button>
             </header>
