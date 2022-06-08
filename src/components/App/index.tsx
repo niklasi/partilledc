@@ -1,20 +1,17 @@
-import {useState, useEffect} from 'react'
-import {Outlet, Link, useParams, useMatches} from 'react-router-dom'
+import {useState} from 'react'
+import {Outlet} from 'react-router-dom'
 import {Header} from '../Header'
 import {NavBar} from '../NavBar'
-import Button from '../Shared/Button'
-import * as seriesData from '../../series.json'
+import {Menu} from './Menu'
 import {useAuth} from '../../hooks/useAuth'
-import {firebaseAuth} from '../../firebase'
+import {useTitle} from '../../hooks/useTitle'
 import '@fontsource/material-icons-outlined'
 
-function App(props) {
+function App() {
     const [open, setOpen] = useState(false)
     const [userMenuOpen, setUserMenuOpen] = useState(false)
-    const {series} = useParams()
-    const routeMatches = useMatches()
     const {user} = useAuth()
-    const isAnonymous = user.isAnonymous
+    const title = useTitle()
 
     function handleToggle() {
         setOpen(!open)
@@ -24,49 +21,12 @@ function App(props) {
         setUserMenuOpen(!userMenuOpen)
     }
 
-    function title() {
-        const seriesNames = [...seriesData.companySeries, ...seriesData.exerciseSeries]
-            .filter((x) => x.id === series)
-            .map((x) => x.text)
-
-        const [route] = routeMatches.slice(-1)
-        const title = route.handle?.title ?? ''
-        return seriesNames.length > 0 ? `${seriesNames} - ${title}` : title
-    }
-
-    function handleSignOut(evt) {
-        evt.preventDefault()
-        firebaseAuth.signOut()
-    }
-
-    function menu() {
-        if (isAnonymous) {
-            const menuItems = [
-                {to: '/register-user', text: 'Ny användare'},
-                {to: '/sign-in', text: 'Logga in'},
-            ]
-            return menuItems.map((item) => (
-                <div key={item.text} className="w-full">
-                    <Link to={item.to}>
-                        <Button label={item.text} className="normal-case w-full text-black" />
-                    </Link>
-                </div>
-            ))
-        }
-
-        return (
-            <div className="w-full my-2">
-                <Button className="text-black" disabled={user.disableLogout} label="Logga ut" onClick={handleSignOut} />
-            </div>
-        )
-    }
-
     return (
         <>
             <Header
                 key="AppBar"
                 data-testid="menu"
-                title={title()}
+                title={title}
                 toggleSidebar={handleToggle}
                 toggleUserMenu={handleToggleUserMenu}
                 user={user}
@@ -77,7 +37,9 @@ function App(props) {
                 }`}
                 onClick={() => handleToggleUserMenu()}
             >
-                <div className="bg-white flex flex-col z-50 shadow fixed top-1 right-3">{menu()}</div>
+                <div className="bg-white flex flex-col z-50 shadow fixed top-1 right-3">
+                    <Menu />
+                </div>
             </div>
             <div className="safe-left safe-right">
                 <Outlet />
