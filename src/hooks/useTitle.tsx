@@ -5,8 +5,8 @@ export function useTitle() {
     const serie = useCurrentSerie()
     const routeMatches = useMatches()
 
-    const name = serie.text
+    const name = serie?.text
     const [route] = routeMatches.slice(-1)
     const title = route.handle?.title ?? ''
-    return name.length > 0 ? `${name} - ${title}` : title
+    return name ? `${name} - ${title}` : title
 }
