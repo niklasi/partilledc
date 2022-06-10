@@ -1,4 +1,3 @@
-// import {useEffect, useState} from 'react'
 import {useLoaderData} from 'react-router-dom'
 import Match from '../components/Match'
 import {getMatchesByDate, saveMatch} from '../lib/api'
@@ -12,21 +11,9 @@ export async function loader() {
     return getMatchesByDate(getToday())
 }
 
-function TodaysMatches(props) {
-    const matches = useLoaderData()
+function TodaysMatches() {
+    const matches = useLoaderData() as Awaited<ReturnType<typeof loader>>
     const {user} = useAuth()
-    // const [today, setToday] = useState('')
-    // let interval = null
-
-    // useEffect(() => {
-    //     clearInterval(interval)
-    //     props.loadTodaysMatches(today)
-    //
-    //     interval = setInterval(() => {
-    //         setToday(getToday())
-    //     }, 1000 * 10)
-    //     return props.unloadMatches
-    // }, [today])
 
     return (
         <div>

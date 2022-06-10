@@ -11,6 +11,7 @@ export async function loader({params}) {
 function MyMatches() {
     const matches = useLoaderData() as model.Match[]
     const {user} = useAuth()
+
     return (
         <div>
             <div className="flex flex-wrap">
