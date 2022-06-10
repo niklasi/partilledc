@@ -1,24 +1,20 @@
-import ReactDOM from 'react-dom/client'
+import {createRoot} from 'react-dom/client'
 import {DataBrowserRouter, Route} from 'react-router-dom'
 import App from './components/App'
-import Teams, {loader as teamsLoader} from './routes/series/Teams'
-import SeriesTable, {loader as tableLoader} from './routes/series/Table'
-import AllSeriesTable, {loader as allTablesLoader} from './routes/AllSeriesTables'
-import Matches, {loader as seriesMatchesLoader} from './routes/series/Matches'
-import TodaysMatches, {loader as todaysMatchesLoader} from './routes/TodaysMatches'
-import MyMatches, {loader as myMatchesLoader} from './routes/MyMatches'
-import Reset, {loader as resetLoader} from './components/Reset'
-import {SignIn, ResetPassword, ConfirmPasswordReset, RegisterUser} from './routes/user'
-import {action as signInAction} from './routes/User/SignIn'
-import {action as resetPasswordAction} from './routes/User/ResetPassword'
-import {action as confirmResetPasswordAction} from './routes/User/ConfirmPasswordReset'
-import {action as registerUserAction} from './routes/User/RegisterUser'
+import * as Teams from './routes/series/Teams'
+import * as SeriesTable from './routes/series/Table'
+import * as AllSeriesTable from './routes/AllSeriesTables'
+import * as Matches from './routes/series/Matches'
+import * as TodaysMatches from './routes/TodaysMatches'
+import * as MyMatches from './routes/MyMatches'
+import * as Reset from './components/Reset'
+import * as User from './routes/User'
 import {AuthProvider} from './components/AuthProvider'
 import {SeriesProvider} from './components/SeriesProvider'
 import '@fontsource/roboto'
 import './assets/index.css'
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById('root'))
 
 root.render(
     <SeriesProvider>
@@ -27,55 +23,70 @@ root.render(
                 <Route path="/" element={<App />}>
                     <Route
                         path="/series/company/table"
-                        loader={async (props) => allTablesLoader({seriesType: 'CompanySeries', ...props})}
-                        element={<AllSeriesTable />}
+                        loader={async (props) => AllSeriesTable.loader({seriesType: 'CompanySeries', ...props})}
+                        element={<AllSeriesTable.default />}
                     />
                     <Route
                         path="/series/exercise/table"
-                        loader={async (props) => allTablesLoader({seriesType: 'ExerciseSeries', ...props})}
-                        element={<AllSeriesTable />}
+                        loader={async (props) => AllSeriesTable.loader({seriesType: 'ExerciseSeries', ...props})}
+                        element={<AllSeriesTable.default />}
                     />
                     <Route path="/series/:series">
-                        <Route path="teams" handle={{title: 'Lag'}} loader={teamsLoader} element={<Teams />} />
+                        <Route path="teams" handle={{title: 'Lag'}} loader={Teams.loader} element={<Teams.default />} />
                         <Route
                             path="matches"
                             handle={{title: 'Matcher'}}
-                            loader={seriesMatchesLoader}
-                            element={<Matches />}
+                            loader={Matches.loader}
+                            element={<Matches.default />}
                         />
-                        <Route path="table" handle={{title: 'Tabell'}} loader={tableLoader} element={<SeriesTable />} />
-                        <Route path="reset" handle={{title: 'Nollställ'}} loader={resetLoader} element={<Reset />} />
+                        <Route
+                            path="table"
+                            handle={{title: 'Tabell'}}
+                            loader={SeriesTable.loader}
+                            element={<SeriesTable.default />}
+                        />
+                        <Route
+                            path="reset"
+                            handle={{title: 'Nollställ'}}
+                            loader={Reset.loader}
+                            element={<Reset.default />}
+                        />
                     </Route>
                     <Route
                         path="/todays-matches"
                         handle={{title: 'Dagens matcher'}}
-                        loader={todaysMatchesLoader}
-                        element={<TodaysMatches />}
+                        loader={TodaysMatches.loader}
+                        element={<TodaysMatches.default />}
                     />
                     <Route
                         path="/my-matches"
                         handle={{title: 'Mina matcher'}}
-                        loader={myMatchesLoader}
-                        element={<MyMatches />}
+                        loader={MyMatches.loader}
+                        element={<MyMatches.default />}
                     />
-                    <Route path="/sign-in" handle={{title: 'Logga in'}} action={signInAction} element={<SignIn />} />
+                    <Route
+                        path="/sign-in"
+                        handle={{title: 'Logga in'}}
+                        action={User.SignIn.action}
+                        element={<User.SignIn.default />}
+                    />
                     <Route
                         path="/register-user"
                         handle={{title: 'Ny användare'}}
-                        action={registerUserAction}
-                        element={<RegisterUser />}
+                        action={User.RegisterUser.action}
+                        element={<User.RegisterUser.default />}
                     />
                     <Route
                         path="/reset-password"
                         handle={{title: 'Återställ lösenord'}}
-                        action={resetPasswordAction}
-                        element={<ResetPassword />}
+                        action={User.ResetPassword.action}
+                        element={<User.ResetPassword.default />}
                     />
                     <Route
                         path="/confirm-password-reset"
                         handle={{title: 'Bekräfta'}}
-                        action={confirmResetPasswordAction}
-                        element={<ConfirmPasswordReset />}
+                        action={User.ConfirmPasswordReset.action}
+                        element={<User.ConfirmPasswordReset.default />}
                     />
                 </Route>
             </DataBrowserRouter>
