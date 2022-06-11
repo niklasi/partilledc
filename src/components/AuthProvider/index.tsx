@@ -6,11 +6,11 @@ interface AuthContextType {
     user: User
 }
 
-export const AuthContext = createContext<AuthContextType>(null!)
 const defaultUser: User = {isAnonymous: true, requiresPin: false, admin: false, disableLogout: false}
+export const AuthContext = createContext<AuthContextType>({user: defaultUser})
 
 export function AuthProvider({children}: {children: ReactNode}) {
-    let [user, setUser] = useState<User>(defaultUser)
+    const [user, setUser] = useState<User>(defaultUser)
 
     firebaseAuth.onAuthStateChanged((fbUser) => {
         if (user?.id === fbUser?.uid) return
@@ -30,7 +30,7 @@ export function AuthProvider({children}: {children: ReactNode}) {
         )
     })
 
-    let value = {user}
+    const value = {user}
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
