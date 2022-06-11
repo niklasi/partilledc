@@ -1,5 +1,5 @@
 import {Form, Link, redirect} from 'react-router-dom'
-import {firebaseAuth, signInWithEmailAndPassword} from '../../firebase'
+import {signIn} from '../../lib/auth'
 import {TextField, Button} from '../../components/Shared'
 
 export async function action({request}) {
@@ -7,7 +7,7 @@ export async function action({request}) {
     const email = formData.get('email')
     const password = formData.get('password')
 
-    await signInWithEmailAndPassword(firebaseAuth, email, password)
+    await signIn(email, password)
     return redirect('/')
 }
 

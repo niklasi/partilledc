@@ -1,4 +1,5 @@
-import {firebaseDb, set, get, ref, query, orderByChild, equalTo, functionUrl} from '../../firebase'
+import {firebaseDb, functionUrl} from '../../firebase'
+import {ref, orderByChild, equalTo, query, get, set} from 'firebase/database'
 import * as allSeries from '../../series.json'
 import {matchPoints, teamPoints} from '../partilledc-score'
 import type * as model from '../model'

@@ -1,12 +1,12 @@
 import {Form} from 'react-router-dom'
-import {firebaseAuth, createUserWithEmailAndPassword} from '../../firebase'
+import {createUser} from '../../lib/auth'
 import {TextField, Button} from '../../components/Shared'
 
 export async function action({request}) {
     const formData = await request.formData()
     const email = formData.get('email')
     const password = formData.get('password')
-    await createUserWithEmailAndPassword(firebaseAuth, email, password)
+    await createUser(email, password)
 }
 
 const RegisterUser = () => {

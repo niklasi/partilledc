@@ -1,13 +1,13 @@
 import {Form, useSearchParams} from 'react-router-dom'
+import {confirmPasswordReset} from '../../lib/auth'
 import {TextField, Button} from '../../components/Shared'
-import {firebaseAuth, confirmPasswordReset} from '../../firebase'
 
 export async function action({request}) {
     const formData = await request.formData()
     const code = formData.get('code')
     const password = formData.get('password')
 
-    await confirmPasswordReset(firebaseAuth, code, password)
+    await confirmPasswordReset(code, password)
 }
 
 const ConfirmPasswordReset = () => {
