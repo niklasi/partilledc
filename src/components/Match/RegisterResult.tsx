@@ -1,13 +1,17 @@
 import {useState} from 'react'
+import {MatchResult} from 'src/lib/model'
 
-function RegisterResult(props) {
+type RegisterResultProps = {
+    match: MatchResult
+    onChangeResult: (match: MatchResult) => void
+}
+
+function RegisterResult(props: RegisterResultProps) {
     const [match, setMatch] = useState(props.match)
 
-    const resultFactory = (result, set) => {
-        const teamFieldFactory = (team) => {
-            const changeScore = (e) => {
-                const value = e.target.value
-
+    const resultFactory = (result: Pick<MatchResult, 'result'>, set: number) => {
+        const teamFieldFactory = (team: 'home' | 'away') => {
+            const changeScore = (value: number) => {
                 match.result[set][team] = value
                 if (value === 4 && match.result.length - 1 === set) {
                     match.result.push({home: 0, away: 0})
@@ -19,7 +23,12 @@ function RegisterResult(props) {
             const currentValue = result[team] || 0
 
             return (
-                <select key={team + '-' + set} defaultValue={currentValue} className="m-1" onChange={changeScore}>
+                <select
+                    key={team + '-' + set}
+                    defaultValue={currentValue}
+                    className="m-1"
+                    onChange={(e) => changeScore(+e.target.value)}
+                >
                     <option value={0}>0</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>

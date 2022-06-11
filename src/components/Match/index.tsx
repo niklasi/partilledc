@@ -12,7 +12,7 @@ import type * as model from '../../lib/model'
 type MatchProps = {
     saveMatch: (match: model.Match) => Promise<void>
     match: model.Match
-    user: any
+    user: model.User
 }
 const colMapper = ({text, result = []}) => (
     <p key={text} className="text-sm whitespace-normal">
@@ -37,7 +37,7 @@ function Match(props: MatchProps) {
         setOpen(false)
     }
 
-    function handleChangeResult(matchResult) {
+    function handleChangeResult(matchResult: model.MatchResult) {
         const match = props.match
         match.matches = match.matches.map((m) => {
             if (m.text === editMatch.text) return matchResult
@@ -78,7 +78,7 @@ function Match(props: MatchProps) {
             </div>
             {open && (
                 <Dialog title="Resultat" actions={actions} open={open}>
-                    <Pin required={true || user.requiresPin}>
+                    <Pin required={user.requiresPin}>
                         <RegisterResult onChangeResult={handleChangeResult} match={editMatch} />
                     </Pin>
                 </Dialog>
