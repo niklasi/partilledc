@@ -1,7 +1,7 @@
-import Button from '../Shared/Button'
-import {useNavigate} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {useAuth} from '../../hooks/useAuth'
 import {useSeries} from '../../hooks/useSeries'
+import {Disclosure} from '@headlessui/react'
 import type {Series} from '../../lib/model'
 
 type NavBarProps = {
@@ -9,63 +9,67 @@ type NavBarProps = {
     handleToggle: () => void
 }
 export function NavBar(props: NavBarProps) {
-    const navigate = useNavigate()
     const {user} = useAuth()
     const {series} = useSeries()
 
+    const linkClassNames = ({isActive}: {isActive: boolean}) =>
+        `${
+            isActive ? 'bg-gray-100' : undefined
+        } w-full rounded-lg hover:bg-gray-100 normal-case mx-4 py-2 px-4 text-sm text-left text-black`
+
     const listItemFactory = (serie: Series) => {
         const items = [
-            <Button
+            <NavLink
                 key={`team-${serie.id}`}
-                onClick={() => navigate(`/series/${serie.id}/teams`)}
+                to={`/series/${serie.id}/teams`}
                 data-testid={`menu-team-${serie.id}`}
-                label="Lag"
-                className="w-full normal-case mx-4 px-4 text-base text-left text-black"
-            />,
-            <Button
+                className={linkClassNames}
+            >
+                Lag
+            </NavLink>,
+            <NavLink
                 key={`matches-${serie.id}`}
                 data-testid={`menu-matches-${serie.id}`}
-                onClick={() => navigate(`/series/${serie.id}/matches`)}
-                label="Matcher"
-                className="w-full normal-case mx-4 px-4 text-base text-left text-black"
-            />,
-            <Button
+                to={`/series/${serie.id}/matches`}
+                className={linkClassNames}
+            >
+                Matcher
+            </NavLink>,
+            <NavLink
                 key={`table-${serie.id}`}
                 data-testid={`menu-table-${serie.id}`}
-                onClick={() => navigate(`/series/${serie.id}/table`)}
-                label="Tabell"
-                className="w-full normal-case mx-4 px-4 text-base text-left text-black"
-            />,
+                to={`/series/${serie.id}/table`}
+                className={linkClassNames}
+            >
+                Tabell
+            </NavLink>,
         ]
 
         if (user.admin) {
             items.push(
-                <Button
-                    key={`reset-${serie.id}`}
-                    onClick={() => navigate(`/series/${serie.id}/reset`, {state: {slug: serie.slug}})}
-                    label="Nollställ"
-                    className="w-full normal-case mx-4 px-4 text-base text-left text-black"
-                />
+                <NavLink key={`reset-${serie.id}`} to={`/series/${serie.id}/reset`} className={linkClassNames}>
+                    Nollställ
+                </NavLink>
             )
         }
         return (
-            <div key={serie.id} className="my-2 px-2 w-full" data-testid={serie.text.split(' ').join('-')}>
-                <Button className="text-lg normal-case text-black text-left w-full" label={serie.text} />
-                {items}
-            </div>
+            <Disclosure key={serie.id}>
+                {({open}) => (
+                    <>
+                        <Disclosure.Button
+                            onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
+                            className="flex w-full justify-between rounded-lg px-4 py-2 text-left text-base hover:bg-gray-100 focus:outline-none"
+                        >
+                            <span>{serie.text}</span>
+                            <span className={'material-icons-outlined h-5 w-5'}>
+                                {open ? 'expand_more' : 'expand_less'}
+                            </span>
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="flex flex-col">{items}</Disclosure.Panel>
+                    </>
+                )}
+            </Disclosure>
         )
-    }
-
-    const myMatches = () => {
-        if (!user.isAnonymous) {
-            return (
-                <Button
-                    onClick={() => navigate('/my-matches')}
-                    label="Mina matcher"
-                    className="w-full normal-case px-4 text-base text-left text-black"
-                />
-            )
-        }
     }
 
     const open = props.open ? 'ease-linear duration-200 translate-x-4/6' : 'ease-linear duration-200 -translate-x-full'
@@ -90,12 +94,14 @@ export function NavBar(props: NavBarProps) {
                         .filter((x) => x.active === true)
                         .map(listItemFactory)}
                     <hr />
-                    {myMatches()}
-                    <Button
-                        onClick={() => navigate('/todays-matches')}
-                        label="Dagens matcher"
-                        className="w-full normal-case px-4 text-base text-left text-black"
-                    />
+                    {!user.isAnonymous && (
+                        <NavLink to={'/my-matches'} className={linkClassNames}>
+                            Mina matcher
+                        </NavLink>
+                    )}
+                    <NavLink to={'/todays-matches'} className={linkClassNames}>
+                        Dagens matcher
+                    </NavLink>
                 </div>
             </div>
         </div>
