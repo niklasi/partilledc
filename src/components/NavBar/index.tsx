@@ -4,7 +4,11 @@ import {useAuth} from '../../hooks/useAuth'
 import {useSeries} from '../../hooks/useSeries'
 import type {Series} from '../../lib/model'
 
-export function NavBar(props) {
+type NavBarProps = {
+    open: boolean
+    handleToggle: () => void
+}
+export function NavBar(props: NavBarProps) {
     const navigate = useNavigate()
     const {user} = useAuth()
     const {series} = useSeries()

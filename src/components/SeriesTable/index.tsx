@@ -1,4 +1,11 @@
-function SeriesTable(props) {
+import {SeriesTableItem} from 'src/lib/model'
+
+type SeriesTableProps = {
+    isCompanySeries: boolean
+    tableData: SeriesTableItem[]
+}
+
+function SeriesTable(props: SeriesTableProps) {
     const displayMatchp = props.isCompanySeries ? undefined : 'hidden'
     const displaySetAndGame = props.isCompanySeries ? 'hidden' : undefined
 

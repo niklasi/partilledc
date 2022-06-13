@@ -8,7 +8,7 @@ export async function loader({params}) {
 }
 
 function Table() {
-    const seriesTableData = useLoaderData()
+    const seriesTableData = useLoaderData() as Awaited<ReturnType<typeof loader>>
     const series = useCurrentSerie()
 
     const companySeries = series.type === 'CompanySeries'

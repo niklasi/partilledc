@@ -1,5 +1,5 @@
 import {firebaseDb, functionUrl} from '../../firebase'
-import {ref, orderByChild, equalTo, query, get, set} from 'firebase/database'
+import {ref, orderByChild, equalTo, query, get, set, DataSnapshot} from 'firebase/database'
 import * as allSeries from '../../series.json'
 import {matchPoints, teamPoints} from '../partilledc-score'
 import type * as model from '../model'
@@ -153,7 +153,7 @@ function exerciseSeriesRanking(t1: model.SeriesTableItem, t2: model.SeriesTableI
     return t2.teamRanking - t1.teamRanking
 }
 
-function unwrap<T>(snapshot: any): Array<T> {
+function unwrap<T>(snapshot: DataSnapshot): Array<T> {
     if (!snapshot.exists()) return
     const items = snapshot.val() as T
 

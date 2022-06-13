@@ -17,7 +17,7 @@ export function Pin(props: PinProps) {
                     label="Ange pin"
                     pattern="[0-9]*"
                     inputMode="numeric"
-                    onChange={(e: any) => checkPin(e.target.value)}
+                    onChange={(e) => checkPin(e.target.value)}
                 />
             ) : (
                 props.children

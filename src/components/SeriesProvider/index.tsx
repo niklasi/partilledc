@@ -9,7 +9,7 @@ interface SeriesContextType {
 export const SeriesContext = createContext<SeriesContextType>(null!)
 
 export function SeriesProvider({children}: {children: ReactNode}) {
-    let [series, setSeries] = useState<Series[]>([])
+    const [series, setSeries] = useState<Series[]>([])
 
     useEffect(() => {
         getAllSeries().then((data) => setSeries(data))

@@ -44,7 +44,7 @@ function App() {
             <div className="safe-left safe-right">
                 <Outlet />
             </div>
-            <NavBar open={open} user={user} handleToggle={handleToggle} />
+            <NavBar open={open} handleToggle={handleToggle} />
         </>
     )
 }

@@ -11,7 +11,7 @@ export async function loader({params}) {
 
 function Matches() {
     const serie = useCurrentSerie()
-    const matches = useLoaderData()
+    const matches = useLoaderData() as Awaited<ReturnType<typeof loader>>
     const {user} = useAuth()
 
     const isCompanySeries = serie.type === 'CompanySeries'

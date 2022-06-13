@@ -1,4 +1,10 @@
-const Input = (props) => {
+type InputProps = {
+    label: string
+    primary?: boolean
+    secondary?: boolean
+} & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+
+const Input = (props: InputProps) => {
     return (
         <input
             {...props}

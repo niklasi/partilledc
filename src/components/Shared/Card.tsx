@@ -1,4 +1,10 @@
-const Card = (props) => {
+type CardProps = {
+    title: string | number | React.ReactElement
+    avatar?: string | number | React.ReactElement
+    subtitle?: string | number | React.ReactElement
+    children?: React.ReactNode
+}
+const Card = (props: CardProps) => {
     return (
         <div className="px-3 py-3 shadow border border-solid border-gray-200">
             <div className="flex flex-row space-x-3">

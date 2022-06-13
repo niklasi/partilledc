@@ -6,7 +6,7 @@ import {firebaseAuth} from '../../firebase'
 export function Menu() {
     const {user} = useAuth()
 
-    function handleSignOut(evt: any) {
+    function handleSignOut(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         evt.preventDefault()
         firebaseAuth.signOut()
     }

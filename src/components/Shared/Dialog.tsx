@@ -1,4 +1,10 @@
-const Dialog = (props) => {
+type DialogProps = {
+    open: boolean
+    title?: string
+    children: React.ReactNode
+    actions: JSX.Element[]
+}
+const Dialog = (props: DialogProps) => {
     return (
         <div
             className={`bg-black/40 flex flex-col justify-center z-40 absolute top-0 left-0 w-screen h-screen ${

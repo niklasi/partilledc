@@ -1,10 +1,11 @@
-type Score = {
+export type Score = {
     points: number
     sets: number
     games: number
 }
 export type SeriesTableItem = {
     id: string
+    teamName: string
     matches: number
     matchp: {
         won: Score

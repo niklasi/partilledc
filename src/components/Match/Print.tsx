@@ -1,7 +1,15 @@
 import {matchPoints} from '../../lib/partilledc-score'
+import {Match} from '../../lib/model'
 
-function PrintMatches(props) {
-    const formatMatchPoints = (score) => `${score.home.points}-${score.away.points}`
+type PrintMatchesProps = {
+    matches: Match[]
+    isCompanySeries: boolean
+}
+
+type MatchPoints = ReturnType<typeof matchPoints>
+
+function PrintMatches(props: PrintMatchesProps) {
+    const formatMatchPoints = (score: MatchPoints) => `${score.home.points}-${score.away.points}`
     const colMapper = ({text, result = []}) => (
         <td key={text}>
             {result
@@ -28,7 +36,7 @@ function PrintMatches(props) {
                         <td>{`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`}</td>
                         <td>{match.date + ' kl ' + match.time}</td>
                         {match.matches.map(colMapper)}
-                        <td>{formatMatchPoints(matchPoints(match.matches.map((m) => m.result)))}</td>
+                        <td>{formatMatchPoints(matchPoints(match.matches))}</td>
                     </tr>
                 ))}
             </tbody>
