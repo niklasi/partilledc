@@ -25,22 +25,22 @@ const colMapper = ({text, result = []}) => (
 
 function Match(props: MatchProps) {
     const {user} = useAuth()
-    const [open, setOpen] = useState(false)
-    const [editMatch, setEditMatch] = useState<model.MatchResult>({text: '', result: [{home: 0, away: 0}]})
+    const [openEditMatchResult, setOpenEditMatchResult] = useState(false)
+    const [editMatchResult, setEditMatchResult] = useState<model.MatchResult>({text: '', result: [{home: 0, away: 0}]})
 
     function handleOpen(matchResult: model.MatchResult) {
-        setEditMatch(matchResult)
-        setOpen(true)
+        setEditMatchResult(matchResult)
+        setOpenEditMatchResult(true)
     }
 
     function handleClose() {
-        setOpen(false)
+        setOpenEditMatchResult(false)
     }
 
     function handleChangeResult(matchResult: model.MatchResult) {
         const match = props.match
         match.matches = match.matches.map((m) => {
-            if (m.text === editMatch.text) return matchResult
+            if (m.text === editMatchResult.text) return matchResult
             return m
         })
         saveMatch(match)
@@ -76,10 +76,10 @@ function Match(props: MatchProps) {
                     )
                 })}
             </div>
-            {open && (
-                <Dialog title="Resultat" actions={actions} open={open}>
+            {openEditMatchResult && (
+                <Dialog title="Resultat" actions={actions} open={openEditMatchResult}>
                     <Pin required={user.requiresPin}>
-                        <RegisterResult onChangeResult={handleChangeResult} match={editMatch} />
+                        <RegisterResult onChangeResult={handleChangeResult} matchResult={editMatchResult} />
                     </Pin>
                 </Dialog>
             )}

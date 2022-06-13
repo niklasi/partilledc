@@ -2,22 +2,24 @@ import {useState} from 'react'
 import {MatchResult} from 'src/lib/model'
 
 type RegisterResultProps = {
-    match: MatchResult
+    matchResult: MatchResult
     onChangeResult: (match: MatchResult) => void
 }
 
-function RegisterResult(props: RegisterResultProps) {
-    const [match, setMatch] = useState(props.match)
+type Result = MatchResult['result'][0]
 
-    const resultFactory = (result: Pick<MatchResult, 'result'>, set: number) => {
+function RegisterResult(props: RegisterResultProps) {
+    const [matchResult, setMatchResult] = useState(props.matchResult)
+
+    const resultFactory = (result: Result, set: number) => {
         const teamFieldFactory = (team: 'home' | 'away') => {
             const changeScore = (value: number) => {
-                match.result[set][team] = value
-                if (value === 4 && match.result.length - 1 === set) {
-                    match.result.push({home: 0, away: 0})
+                matchResult.result[set][team] = value
+                if (value === 4 && matchResult.result.length - 1 === set) {
+                    matchResult.result.push({home: 0, away: 0})
                 }
-                props.onChangeResult(match)
-                setMatch(match)
+                props.onChangeResult(matchResult)
+                setMatchResult(matchResult)
             }
 
             const currentValue = result[team] || 0
@@ -41,7 +43,7 @@ function RegisterResult(props: RegisterResultProps) {
         return ['home', 'away'].map(teamFieldFactory)
     }
 
-    return <div className="flex flex-row flex-wrap">{match.result.map(resultFactory)}</div>
+    return <div className="flex flex-row flex-wrap">{matchResult.result.map(resultFactory)}</div>
 }
 
 export default RegisterResult
