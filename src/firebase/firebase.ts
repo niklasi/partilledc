@@ -9,11 +9,12 @@ export const firebaseAuth = getAuth(firebaseApp)
 export const firebaseDb = getDatabase(firebaseApp)
 export let functionUrl = 'https://us-central1-project-8539870983476533695.cloudfunctions.net'
 
-const useEmulator = window.location.hostname === 'localhost'
+const useEmulator = window.location.hostname === 'localhost' || window.location.port === '3000'
 
 if (useEmulator) {
-    connectDatabaseEmulator(firebaseDb, 'localhost', 9000)
-    connectAuthEmulator(firebaseAuth, 'http://localhost:9099')
-    connectFunctionsEmulator(getFunctions(firebaseApp), 'localhost', 5001)
-    functionUrl = 'http://localhost:5001/project-8539870983476533695/us-central1'
+    const hostname = window.location.hostname
+    connectDatabaseEmulator(firebaseDb, hostname, 9000)
+    connectAuthEmulator(firebaseAuth, `http://${hostname}:9099`)
+    connectFunctionsEmulator(getFunctions(firebaseApp), hostname, 5001)
+    functionUrl = `http://${hostname}:5001/project-8539870983476533695/us-central1`
 }
