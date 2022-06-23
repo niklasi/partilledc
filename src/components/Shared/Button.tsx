@@ -15,9 +15,7 @@ const Button = (props: ButtonProps) => {
             className={tailwindOverride(
                 `${
                     secondary ? 'text-secondary' : primary ? 'text-primary' : undefined
-                } disabled:opacity-50 text-sm uppercase p-2 hover:bg-gray-100 disabled:hover:bg-inherit ${
-                    className ?? ''
-                }`
+                } disabled:opacity-50 text-sm uppercase p-2 hover:bg-hover disabled:hover:bg-inherit ${className ?? ''}`
             )}
             {...rest}
         >

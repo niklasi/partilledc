@@ -14,8 +14,8 @@ export function NavBar(props: NavBarProps) {
 
     const linkClassNames = ({isActive}: {isActive: boolean}) =>
         `${
-            isActive ? 'bg-gray-100' : undefined
-        } w-full rounded-lg hover:bg-gray-100 normal-case mx-4 py-2 px-4 text-sm text-left text-black`
+            isActive ? 'bg-active' : undefined
+        } w-full rounded-lg hover:bg-hover normal-case mx-4 py-2 px-4 text-sm text-left text-black`
 
     const listItemFactory = (serie: Series) => {
         const items = [
@@ -58,7 +58,7 @@ export function NavBar(props: NavBarProps) {
                     <>
                         <Disclosure.Button
                             onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
-                            className="flex w-full justify-between rounded-lg px-4 py-2 text-left text-base hover:bg-gray-100 focus:outline-none"
+                            className="flex w-full justify-between rounded-lg px-4 py-2 text-left text-base hover:bg-hover focus:outline-none"
                         >
                             <span>{serie.text}</span>
                             <span className={'material-icons-outlined h-5 w-5'}>

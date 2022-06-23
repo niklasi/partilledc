@@ -38,7 +38,7 @@ export function UserMenu() {
                                     {({active}) => (
                                         <Link
                                             className={`${
-                                                active && 'bg-gray-100'
+                                                active && 'bg-active'
                                             } group flex text-black w-full items-center rounded-md px-2 py-2 text-sm`}
                                             to="/register-user"
                                         >
@@ -50,7 +50,7 @@ export function UserMenu() {
                                     {({active}) => (
                                         <Link
                                             className={`${
-                                                active && 'bg-gray-100'
+                                                active && 'bg-active'
                                             } group flex text-black w-full items-center rounded-md px-2 py-2 text-sm`}
                                             to="/sign-in"
                                         >
@@ -67,7 +67,7 @@ export function UserMenu() {
                                         onClick={handleSignOut}
                                         disabled={disabled}
                                         className={`${
-                                            active && 'bg-gray-100'
+                                            active && 'bg-active'
                                         } group flex disabled:text-opacity-30 text-black w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
                                         Logga ut

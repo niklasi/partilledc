@@ -14,6 +14,8 @@ module.exports = {
             colors: {
                 primary: 'rgb(0,188,212)',
                 secondary: 'rgb(255,64,129)',
+                hover: 'rgba(0,188,212,0.10)',
+                active: 'rgba(0,188,212,0.10)',
             },
         },
     },
