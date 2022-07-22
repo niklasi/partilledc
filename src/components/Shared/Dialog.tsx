@@ -11,7 +11,7 @@ const Dialog = (props: DialogProps) => {
                 props.open ? undefined : 'hidden'
             }`}
         >
-            <div className="bg-white z-50 flex flex-col justify-between shadow-xl h-1/3 w-full px-4 py-4">
+            <div className="bg-white z-50 flex flex-col shadow-xl w-full px-4 py-4">
                 <h3 className="text-2xl">{props.title}</h3>
                 {props.children}
                 <div className="flex flex-row justify-end">{props.actions}</div>
