@@ -9,6 +9,9 @@ import * as TodaysMatches from './routes/TodaysMatches'
 import * as MyMatches from './routes/MyMatches'
 import * as Reset from './components/Reset'
 import * as User from './routes/User'
+import * as Admin from './routes/Admin'
+import * as AdminTeams from './routes/Admin/Teams/index'
+import * as AdminMatches from './routes/Admin/Matches'
 import {AuthProvider} from './components/AuthProvider'
 import {SeriesProvider} from './components/SeriesProvider'
 import '@fontsource/roboto'
@@ -88,6 +91,25 @@ root.render(
                         action={User.ConfirmPasswordReset.action}
                         element={<User.ConfirmPasswordReset.default />}
                     />
+                    <Route path="/admin">
+                        <Route index handle={{title: 'Admin'}} loader={Admin.loader} element={<Admin.default />} />
+                        <Route path=":series/teams">
+                            <Route 
+                                index 
+                                handle={{title:'Admin - Lag'}} 
+                                loader={AdminTeams.List.loader} 
+                                element={<AdminTeams.List.default />} 
+                            />
+                            <Route 
+                                path=":teamId" 
+                                handle={{title:'Admin - Lag'}} 
+                                loader={AdminTeams.Edit.loader} 
+                                action={AdminTeams.Edit.action} 
+                                element={<AdminTeams.Edit.default />} 
+                            />
+                        </Route>
+                        <Route path=":series/matches" handle={{title: 'Admin - Matcher'}} loader={AdminMatches.loader} element={<AdminMatches.Matches />} />
+                    </Route>
                 </Route>
             </DataBrowserRouter>
         </AuthProvider>

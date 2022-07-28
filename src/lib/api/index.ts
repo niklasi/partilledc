@@ -1,5 +1,5 @@
 import {firebaseDb, functionUrl} from '../../firebase'
-import {ref, orderByChild, equalTo, query, get, set, DataSnapshot} from 'firebase/database'
+import {ref, orderByChild, equalTo, query, get, set, push, DataSnapshot} from 'firebase/database'
 import * as allSeries from '../../series.json'
 import {matchPoints, teamPoints} from '../partilledc-score'
 import type * as model from '../model'
@@ -48,6 +48,18 @@ export async function getMatchesByDate(date: string): Promise<model.Match[]> {
 export async function saveMatch(match: model.Match): Promise<void> {
     const matchRef = ref(firebaseDb, `matches/${match.id}`)
     await set(matchRef, match)
+}
+
+export async function saveTeam(team: model.Team): Promise<void> {
+    const teamRef = ref(firebaseDb, `teams/${team.id}`)
+    
+    await set(teamRef, team)
+}
+
+export async function createTeam(team: model.Team): Promise<void> {
+    const teamsRef = ref(firebaseDb, 'teams')
+    
+    await push(teamsRef, team)
 }
 
 export async function getScrapedSeries(slug: string) {

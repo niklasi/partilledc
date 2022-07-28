@@ -11,7 +11,7 @@ const Input = (props: InputProps) => {
         <input
             {...props}
             name={props.name}
-            value={props.value}
+            defaultValue={props.defaultValue}
             type={props.type ?? 'text'}
             placeholder={props.label}
             className={tailwindOverride(`mt-1
