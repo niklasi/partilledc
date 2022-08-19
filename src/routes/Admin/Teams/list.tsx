@@ -28,6 +28,7 @@ export default function List() {
         navigate(`/admin/${series}/teams`)
     }
 
+
     return (
         <>
         <Button className="m-2" primary label='Lägg till nytt lag' onClick={() => navigate('new')} />
