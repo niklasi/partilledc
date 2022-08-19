@@ -5,21 +5,27 @@
       "order": 1,
       "text": "Division 1",
       "active": true,
-      "slug": "lagserien/1"
+      "slug": "lagserien/1",
+      "groupId": "a236e37b-10f0-41e0-88ba-dac7dde5c726",
+      "division": 1
     },
     {
       "id": "-KM8T3jwHOKSXcXM-O9V",
       "order": 2,
       "text": "Division 2",
       "active": true,
-      "slug": "lagserien/2"
+      "slug": "lagserien/2",
+      "groupId": "a236e37b-10f0-41e0-88ba-dac7dde5c726",
+      "division": 2
     },
     {
       "id": "-KM8SwTAZsNsCX0ipYww",
       "order": 3,
       "text": "Division 3",
       "active": true,
-      "slug": "lagserien/3"
+      "slug": "lagserien/3",
+      "groupId": "a236e37b-10f0-41e0-88ba-dac7dde5c726",
+      "division": 3
     }
   ],
   "exerciseSeries": [
@@ -33,37 +39,49 @@
       "id": "-KROWiq01nCacrI_fLup",
       "text": "Damdubbel Div 1",
       "active": true,
-      "slug": "motionserier/DamdubbelDiv1"
+      "slug": "motionserier/DamdubbelDiv1",
+      "groupId": "b33b99a3-f434-4278-88a7-ee5b8e7e7277",
+      "division": 1
     },
     {
       "id": "-L3FycYksY0sjT9d4dlv",
       "text": "Damdubbel Div 2",
       "active": true,
-      "slug": "motionserier/DamdubbelDiv2"
+      "slug": "motionserier/DamdubbelDiv2",
+      "groupId": "b33b99a3-f434-4278-88a7-ee5b8e7e7277",
+      "division": 2
     },
     {
       "id": "-KROX7cl4pO_jCBQFzyM",
       "text": "Herrsingel Div 1",
       "active": true,
-      "slug": "motionserier/HerrsingelDiv1"
+      "slug": "motionserier/HerrsingelDiv1",
+      "groupId": "91be4f66-8136-489e-938b-55ade5cc6d64",
+      "division": 1
     },
     {
       "id": "-KROX8RrkS1L3TFYjWlL",
       "text": "Herrsingel Div 2",
       "active": true,
-      "slug": "motionserier/HerrsingelDiv2"
+      "slug": "motionserier/HerrsingelDiv2",
+      "groupId": "91be4f66-8136-489e-938b-55ade5cc6d64",
+      "division": 2
     },
     {
       "id": "-KROX8xD3kGu2kg0bUk2",
       "text": "Herrsingel Div 3",
       "active": true,
-      "slug": "motionserier/HerrsingelDiv3"
+      "slug": "motionserier/HerrsingelDiv3",
+      "groupId": "91be4f66-8136-489e-938b-55ade5cc6d64",
+      "division": 3
     },
     {
       "id": "-L3FPJyRVyMggWaKViYO",
       "text": "Herrsingel Div 4",
       "active": true,
-      "slug": "motionserier/HerrsingelDiv4"
+      "slug": "motionserier/HerrsingelDiv4",
+      "groupId": "91be4f66-8136-489e-938b-55ade5cc6d64",
+      "division": 4
     },
     {
       "id": "-KROXCZyca_qfT83l6Gq",

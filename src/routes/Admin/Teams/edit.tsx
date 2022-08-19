@@ -3,7 +3,19 @@ import { createTeam, getAllSeries, getTeamsBySeries, saveTeam } from '../../../l
 import {TextField, Button} from '../../../components/Shared'
 import { Listbox } from '../../../components/Shared/Listbox'
 
+async function movingDirection(fromSeries: string, toSeries: string): Promise<'up' | 'down'> {
+    const series = await getAllSeries()
+    const moveFromSeries = series.find(x => x.id === fromSeries)
+    if (!moveFromSeries.groupId) return 'up'
+    const moveToSeries = series.find(x => x.id === toSeries)
+    
+    if (moveFromSeries.groupId !== moveToSeries.groupId) return 'up'
+
+    return moveFromSeries.division > moveToSeries.division ? 'up' : 'down' 
+}
+
 export async function action({request}) {
+
     const formData = await request.formData()
 
     const id: string = formData.get('id')
@@ -17,8 +29,16 @@ export async function action({request}) {
 
     const team = {id, teamRanking, teamName, contact, phone, email, series}
     if (id) {
+        const isChangingSeries = team.series !== currentSeries
+        if (isChangingSeries) {
+            const direction = await movingDirection(currentSeries, team.series) 
+            // temp values that will get updated when all teams gets updated
+            team.teamRanking = direction === 'down' ? 0 : 100    
+        }
+
         await saveTeam(team)
-        if (team.series !== currentSeries) {
+
+        if (isChangingSeries) {
             const currentSeriesTeams = await getTeamsBySeries(currentSeries)
             const newSeriesTeams = await getTeamsBySeries(team.series)
             
@@ -28,6 +48,8 @@ export async function action({request}) {
             }))
 
             await Promise.all(newSeriesTeams.map((t, index) => {
+                if (t.id === team.id) {
+                }
                 t.teamRanking = index + 1 
                 return saveTeam(t)
             }))
