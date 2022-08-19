@@ -35,7 +35,7 @@ export default function List() {
             <thead className="text-left text-gray-400 h-14">
                 <tr className="divide-y divide-solid border">
                     <th className="font-normal text-xs px-3">{isCompanySeries ? 'Lag' : 'Spelare'}</th>
-                    <th className="font-normal text-xs">Kontakt</th>
+                    <th className={`font-normal text-xs ${isCompanySeries ? '' : 'hidden'}`}>Kontakt</th>
                     <th className="font-normal text-xs">Telefon</th>
                     <th className="font-normal text-xs">Email</th>
                     <th className="font-normal text-xs"></th>
@@ -47,7 +47,7 @@ export default function List() {
                     return (
                         <tr key={team.id} className="divide-y divide-solid border h-12">
                             <td className="px-3">{team.teamName}</td>
-                            <td>{team.contact}</td>
+                            <td className={isCompanySeries ? '' : 'hidden'}>{team.contact}</td>
                             <td>{team.phone}</td>
                             <td>{team.email}</td>
                             <td className="text-right">
