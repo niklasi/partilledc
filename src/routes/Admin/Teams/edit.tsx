@@ -18,7 +18,23 @@ export async function action({request}) {
     const team = {id, teamRanking, teamName, contact, phone, email, series}
     if (id) {
         await saveTeam(team)
+        if (team.series !== currentSeries) {
+            const currentSeriesTeams = await getTeamsBySeries(currentSeries)
+            const newSeriesTeams = await getTeamsBySeries(team.series)
+            
+            await Promise.all(currentSeriesTeams.map((t, index) => {
+                t.teamRanking = index + 1 
+                return saveTeam(t)
+            }))
+
+            await Promise.all(newSeriesTeams.map((t, index) => {
+                t.teamRanking = index + 1 
+                return saveTeam(t)
+            }))
+        }
     } else {
+        const teams = await getTeamsBySeries(team.series) 
+        team.teamRanking = teams.length
         await createTeam(team)
     }
 
