@@ -1,6 +1,7 @@
 import {Link, useLoaderData, useParams, useNavigate} from 'react-router-dom'
 import {useCurrentSerie} from '../../../hooks/useCurrentSerie'
 import {getTeamsBySeries, saveTeam} from '../../../lib/api'
+import Button from '../../../components/shared/Button'
 
 export async function loader({params}) {
     return getTeamsBySeries(params.series)
@@ -28,6 +29,8 @@ export default function List() {
     }
 
     return (
+        <>
+        <Button className="m-2" primary label='Lägg till nytt lag' onClick={() => navigate('new')} />
         <table className="md:table-fixed border border-collapse w-full">
             <thead className="text-left text-gray-400 h-14">
                 <tr className="divide-y divide-solid border">
@@ -69,5 +72,6 @@ export default function List() {
                 })}
             </tbody>
         </table>
+        </>
     )
 }

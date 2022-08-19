@@ -63,7 +63,9 @@ export async function saveTeam(team: model.Team): Promise<void> {
 export async function createTeam(team: model.Team): Promise<void> {
     const teamsRef = ref(firebaseDb, 'teams')
     
-    await push(teamsRef, team)
+    const newRef = await push(teamsRef, team)
+    team.id = newRef.key
+    await saveTeam(team)
 }
 
 export async function getScrapedSeries(slug: string) {

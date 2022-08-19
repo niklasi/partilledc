@@ -1,4 +1,4 @@
-import {Form, redirect, useLoaderData} from 'react-router-dom'
+import {Form, redirect, useLoaderData, useParams} from 'react-router-dom'
 import { createTeam, getAllSeries, getTeamsBySeries, saveTeam } from '../../../lib/api'
 import {TextField, Button} from '../../../components/Shared'
 import { Listbox } from '../../../components/Shared/Listbox'
@@ -71,19 +71,20 @@ export async function loader({params}) {
 
 export default function Edit() {
     const {team, series} = useLoaderData() as Awaited<ReturnType<typeof loader>>
+    const {series: currentSeries} = useParams()
 
     return (
         <Form method="post">
             <div className="w-full flex flex-col items-center">
                 <div className="w-11/12 md:w-8/12 my-4">
-                    <input type="hidden" name="id" value={team.id} />
-                    <input type="hidden" name="ranking" value={team.teamRanking} />
-                    <input type="hidden" name="current_series" value={team.series} />
-                    <TextField name="team" label="Lag/Spelare" defaultValue={team.teamName} type="text" className="w-full" />
-                    <TextField name="contact" label="Kontakt" defaultValue={team.contact} type="text" className="w-full" />
-                    <TextField name="phone" label="Telefon" defaultValue={team.phone} type="text" className="w-full" />
-                    <TextField name="email" label="Epost" defaultValue={team.email} type="text" className="w-full" />
-                    <Listbox name="series" selectedItem={team.series} data={series.map(x => ({id: x.id, display: x.text}))}  />
+                    <input type="hidden" name="id" value={team?.id} />
+                    <input type="hidden" name="ranking" value={team?.teamRanking} />
+                    <input type="hidden" name="current_series" value={currentSeries} />
+                    <TextField name="team" label="Lag/Spelare" defaultValue={team?.teamName} type="text" className="w-full" />
+                    <TextField name="contact" label="Kontakt" defaultValue={team?.contact} type="text" className="w-full" />
+                    <TextField name="phone" label="Telefon" defaultValue={team?.phone} type="text" className="w-full" />
+                    <TextField name="email" label="Epost" defaultValue={team?.email} type="text" className="w-full" />
+                    <Listbox name="series" selectedItem={currentSeries} data={series.map(x => ({id: x.id, display: x.text}))}  />
                 </div>
                 <Button type="submit" label="Spara" primary />
             </div>
