@@ -16,7 +16,11 @@ export async function getTeamsBySeries(series: string): Promise<model.Team[]> {
 
     const snapshot = await get(query(teamsRef, orderByChild('series'), equalTo(series)))
 
-    return unwrap<model.Team>(snapshot).sort((a, b) => a.teamRanking - b.teamRanking)
+    const teams = unwrap<model.Team>(snapshot)
+
+    if (!teams) return []
+
+    return teams.sort((a, b) => a.teamRanking - b.teamRanking)
 }
 
 export async function getMatchesBySeries(series: string): Promise<model.Match[]> {
