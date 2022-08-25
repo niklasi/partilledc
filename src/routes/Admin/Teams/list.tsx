@@ -1,7 +1,7 @@
 import {Link, useLoaderData, useParams, useNavigate} from 'react-router-dom'
 import {useCurrentSerie} from '../../../hooks/useCurrentSerie'
 import {getTeamsBySeries, saveTeam} from '../../../lib/api'
-import Button from '../../../components/shared/Button'
+import Button from '../../../components/Shared/Button'
 
 export async function loader({params}) {
     return getTeamsBySeries(params.series)
