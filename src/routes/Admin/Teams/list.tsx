@@ -28,51 +28,54 @@ export default function List() {
         navigate(`/admin/${series}/teams`)
     }
 
-
     return (
         <>
-        <Button className="m-2" primary label='Lägg till nytt lag' onClick={() => navigate('new')} />
-        <table className="md:table-fixed border border-collapse w-full">
-            <thead className="text-left text-gray-400 h-14">
-                <tr className="divide-y divide-solid border">
-                    <th className="font-normal text-xs px-3">{isCompanySeries ? 'Lag' : 'Spelare'}</th>
-                    <th className={`font-normal text-xs ${isCompanySeries ? '' : 'hidden'}`}>Kontakt</th>
-                    <th className="font-normal text-xs">Telefon</th>
-                    <th className="font-normal text-xs">Email</th>
-                    <th className="font-normal text-xs"></th>
-                    <th className="font-normal text-xs w-16"></th>
-                </tr>
-            </thead>
-            <tbody className="text-sm text-left">
-                {teams.map((team, index) => {
-                    return (
-                        <tr key={team.id} className="divide-y divide-solid border h-12">
-                            <td className="px-3">{team.teamName}</td>
-                            <td className={isCompanySeries ? '' : 'hidden'}>{team.contact}</td>
-                            <td>{team.phone}</td>
-                            <td>{team.email}</td>
-                            <td className="text-right">
-                                <Link className="underline" to={team.id}>
-                                    Editera
-                                </Link>
-                            </td>
-                            <td>
-                                <button onClick={() => moveTeam('down', index)} disabled={index === teams.length - 1} className='disabled:text-gray-300'>
-                                    <span className={'material-icons-outlined h-5 w-5'}>
-                                        expand_more
-                                    </span>
-                                </button>
-                                <button onClick={() => moveTeam('up', index)} disabled={index === 0} className='disabled:text-gray-300'>
-                                    <span className={'material-icons-outlined h-5 w-5'}>
-                                        expand_less
-                                    </span>
-                                </button>
-                            </td>
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+            <Button className="m-2" primary label="Lägg till nytt lag" onClick={() => navigate('new')} />
+            <table className="md:table-fixed border border-collapse w-full">
+                <thead className="text-left text-gray-400 h-14">
+                    <tr className="divide-y divide-solid border">
+                        <th className="font-normal text-xs px-3">{isCompanySeries ? 'Lag' : 'Spelare'}</th>
+                        <th className={`font-normal text-xs ${isCompanySeries ? '' : 'hidden'}`}>Kontakt</th>
+                        <th className="font-normal text-xs">Telefon</th>
+                        <th className="font-normal text-xs">Email</th>
+                        <th className="font-normal text-xs"></th>
+                        <th className="font-normal text-xs w-16"></th>
+                    </tr>
+                </thead>
+                <tbody className="text-sm text-left">
+                    {teams.map((team, index) => {
+                        return (
+                            <tr key={team.id} className="divide-y divide-solid border h-12">
+                                <td className="px-3">{team.teamName}</td>
+                                <td className={isCompanySeries ? '' : 'hidden'}>{team.contact}</td>
+                                <td>{team.phone}</td>
+                                <td>{team.email}</td>
+                                <td className="text-right">
+                                    <Link className="underline" to={team.id}>
+                                        Editera
+                                    </Link>
+                                </td>
+                                <td>
+                                    <button
+                                        onClick={() => moveTeam('down', index)}
+                                        disabled={index === teams.length - 1}
+                                        className="disabled:text-gray-300"
+                                    >
+                                        <span className={'material-icons-outlined h-5 w-5'}>expand_more</span>
+                                    </button>
+                                    <button
+                                        onClick={() => moveTeam('up', index)}
+                                        disabled={index === 0}
+                                        className="disabled:text-gray-300"
+                                    >
+                                        <span className={'material-icons-outlined h-5 w-5'}>expand_less</span>
+                                    </button>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
         </>
     )
 }
