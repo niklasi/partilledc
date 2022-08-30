@@ -62,11 +62,12 @@ function Match(props: MatchProps) {
     const formatMatchPoints = (score: ReturnType<typeof matchPoints>) => `${score.home.points}-${score.away.points}`
     return (
         <Card
+            className="h-32"
             avatar={formatMatchPoints(matchPoints(match.matches))}
             title={`${match.homeTeam.teamName} - ${match.awayTeam.teamName}`}
             subtitle={'Bana ' + match.lane + ' ' + match.date + ' kl ' + match.time}
         >
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between my-1">
                 {match.matches.map((matchResult, index) => {
                     return (
                         <div key={`match-${index}`} className="flex flex-col flex-wrap items-center">
