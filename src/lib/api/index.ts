@@ -1,5 +1,5 @@
 import {firebaseDb, functionUrl} from '../../firebase'
-import {ref, orderByChild, equalTo, query, get, set, DataSnapshot} from 'firebase/database'
+import {ref, orderByChild, equalTo, query, get, set, push, remove, DataSnapshot} from 'firebase/database'
 import * as allSeries from '../../series.json'
 import {matchPoints, teamPoints} from '../partilledc-score'
 import type * as model from '../model'
@@ -16,7 +16,11 @@ export async function getTeamsBySeries(series: string): Promise<model.Team[]> {
 
     const snapshot = await get(query(teamsRef, orderByChild('series'), equalTo(series)))
 
-    return unwrap<model.Team>(snapshot).sort((a, b) => a.teamRanking - b.teamRanking)
+    const teams = unwrap<model.Team>(snapshot)
+
+    if (!teams) return []
+
+    return teams.sort((a, b) => a.teamRanking - b.teamRanking)
 }
 
 export async function getMatchesBySeries(series: string): Promise<model.Match[]> {
@@ -48,6 +52,26 @@ export async function getMatchesByDate(date: string): Promise<model.Match[]> {
 export async function saveMatch(match: model.Match): Promise<void> {
     const matchRef = ref(firebaseDb, `matches/${match.id}`)
     await set(matchRef, match)
+}
+
+export async function saveTeam(team: model.Team): Promise<void> {
+    const teamRef = ref(firebaseDb, `teams/${team.id}`)
+    
+    await set(teamRef, team)
+}
+
+export async function createTeam(team: model.Team): Promise<void> {
+    const teamsRef = ref(firebaseDb, 'teams')
+    
+    const newRef = await push(teamsRef, team)
+    team.id = newRef.key
+    await saveTeam(team)
+}
+
+export async function deleteTeam(teamId: string): Promise<void> {
+    const teamsRef = ref(firebaseDb, `teams/${teamId}`)
+    
+    await remove(teamsRef)
 }
 
 export async function getScrapedSeries(slug: string) {

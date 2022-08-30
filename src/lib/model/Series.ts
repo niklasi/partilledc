@@ -5,4 +5,6 @@ export type Series = {
     active: boolean
     slug: string
     type: 'CompanySeries' | 'ExerciseSeries'
+    groupId?: string
+    division?: string
 }

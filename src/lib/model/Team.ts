@@ -5,4 +5,5 @@ export type Team = {
     contact: string
     phone: string
     email: string
+    series: string
 }
