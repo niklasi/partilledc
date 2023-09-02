@@ -32,7 +32,7 @@
         {
             "id": "-KROWbh3_h1nNRkRSbC9",
             "text": "Damsingel",
-            "active": true,
+            "active": false,
             "slug": "motionserier/Damsingel"
         },
         {
@@ -82,6 +82,14 @@
             "slug": "motionserier/HerrsingelDiv4",
             "groupId": "91be4f66-8136-489e-938b-55ade5cc6d64",
             "division": 4
+        },
+        {
+            "id": "-NdIOLhCZUPAPRl-3rJ",
+            "text": "Herrsingel Div 5",
+            "active": true,
+            "slug": "motionserier/HerrsingelDiv5",
+            "groupId": "91be4f66-8136-489e-938b-55ade5cc6d64",
+            "division": 5
         },
         {
             "id": "-KROXCZyca_qfT83l6Gq",
