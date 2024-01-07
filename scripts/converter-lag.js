@@ -1,9 +1,5 @@
 /* eslint-disable no-undef */
 const series = '3'
-// const input = require('./Lagserie-div' + series + '.json')
-// const input = require('./Div1.csv')
-// const input = require('./Lagserie-div2.json')
-// const input = require('./Lagserie-div3.json')
 const fs = require('node:fs')
 
 const input = fs.readFileSync('./Div3.csv', 'utf8')

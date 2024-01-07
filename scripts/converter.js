@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 
-const series = 'HerrsingelDiv5'
 const fs = require('node:fs')
 
-const input = fs.readFileSync('./Herrsingel-Div5.csv', 'utf8')
+const series = 'HerrsingelDiv4'
+const input = fs.readFileSync('./Herrsingel-Div4.csv', 'utf8')
 const rows = input.split('\n')
 
 const teams = getTeams(rows)
@@ -15,7 +15,7 @@ function getTeams(data) {
     const teams = []
 
     for (const row of data) {
-        if (row.includes('Namn')) continue
+        if (row.includes('Lag') || row.includes('Namn')) continue
 
         const columns = row.split(';')
         if (columns.length === 1) break
