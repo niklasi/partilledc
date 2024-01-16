@@ -32,12 +32,12 @@
         {
             "id": "-KROWbh3_h1nNRkRSbC9",
             "text": "Damsingel",
-            "active": false,
+            "active": true,
             "slug": "motionserier/Damsingel"
         },
         {
             "id": "-KROWiq01nCacrI_fLup",
-            "text": "Damdubbel Div 1",
+            "text": "Damdubbel",
             "active": true,
             "slug": "motionserier/DamdubbelDiv1",
             "groupId": "b33b99a3-f434-4278-88a7-ee5b8e7e7277",
