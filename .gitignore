@@ -12,3 +12,5 @@ dist
 *.log
 .firebaserc
 credentials/
+test/data/*
+scripts/*.csv
