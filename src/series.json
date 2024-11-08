@@ -31,7 +31,7 @@
             "id": "-OBCbu7E91tqzl7BgUfZ",
             "order": 4,
             "text": "Padel",
-            "active": false,
+            "active": true,
             "slug": "lagserien/padel",
             "groupId": "e183c19a-1c9d-4972-993e-10eee07cc9d8",
             "division": 1
