@@ -16,9 +16,7 @@ export async function getTeamsBySeries(series: string): Promise<model.Team[]> {
 
     const snapshot = await get(query(teamsRef, orderByChild('series'), equalTo(series)))
 
-    const teams = unwrap<model.Team>(snapshot)
-
-    if (!teams) return []
+    const teams = unwrap<model.Team>(snapshot) || []
 
     return teams.sort((a, b) => a.teamRanking - b.teamRanking)
 }
@@ -27,7 +25,9 @@ export async function getMatchesBySeries(series: string): Promise<model.Match[]>
     const matchesRef = ref(firebaseDb, 'matches')
     const snapshot = await get(query(matchesRef, orderByChild('series'), equalTo(series)))
 
-    return unwrap<model.Match>(snapshot).sort((a, b) => {
+    const matches = unwrap<model.Match>(snapshot) || []
+
+    return matches.sort((a, b) => {
         if (a.date === b.date) return +a.time - +b.time
         return a.date > b.date ? 1 : -1
     })
@@ -56,13 +56,13 @@ export async function saveMatch(match: model.Match): Promise<void> {
 
 export async function saveTeam(team: model.Team): Promise<void> {
     const teamRef = ref(firebaseDb, `teams/${team.id}`)
-    
+
     await set(teamRef, team)
 }
 
 export async function createTeam(team: model.Team): Promise<void> {
     const teamsRef = ref(firebaseDb, 'teams')
-    
+
     const newRef = await push(teamsRef, team)
     team.id = newRef.key
     await saveTeam(team)
@@ -70,7 +70,7 @@ export async function createTeam(team: model.Team): Promise<void> {
 
 export async function deleteTeam(teamId: string): Promise<void> {
     const teamsRef = ref(firebaseDb, `teams/${teamId}`)
-    
+
     await remove(teamsRef)
 }
 
