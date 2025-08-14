@@ -28,9 +28,19 @@
   "database": {
     "rules": "firebase.rules.json"
   },
-  "functions": {
-    "source": "functions"
-  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ],
   "emulators": {
     "auth": {
       "port": 9099
@@ -46,6 +56,7 @@
     },
     "ui": {
       "enabled": true
-    }
+    },
+    "singleProjectMode": true
   }
 }

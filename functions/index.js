@@ -1,11 +1,14 @@
-const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-const cors = require('cors')({origin: true})
-const r2 = require('r2')
+import { onRequest } from 'firebase-functions/v2/https'
+import { auth } from 'firebase-functions/v1'
+import { initializeApp} from 'firebase-admin/app'
+import { getDatabase } from 'firebase-admin/database'
+import corsInit from 'cors'
+const cors = corsInit({origin: true})
+import { get } from 'r2'
 
-admin.initializeApp()
+initializeApp()
 
-exports.resetSeries = functions.https.onRequest((request, response) => {
+export const resetSeries = onRequest((request, response) => {
     cors(request, response, () => {
         const seriesId = request.query.seriesId
         const slug = request.query.slug
@@ -25,10 +28,10 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
 
         const teamsRef = '/teams'
         const matchesRef = '/matches'
-        const db = admin.database()
+        const db = getDatabase()
 
         function cleanSeries() {
-            const teamsPromise = new Promise(function (resolve, reject) {
+            const teamsPromise = new Promise(function (resolve, _reject) {
                 db.ref(teamsRef)
                     .orderByChild('series')
                     .equalTo(seriesId)
@@ -169,7 +172,7 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
             if (!admin) {
                 response.status(401).send('Only admin can reset series')
             }
-            const data = await r2.get('https://partilletennis-scraper-js7ld72o6a-uc.a.run.app/scraper/' + slug).json
+            const data = await get('https://partilletennis-scraper-js7ld72o6a-uc.a.run.app/scraper/' + slug).json
             await cleanSeries()
             await migrateTeams(data.teams)
             await migrateMatches(data.matches)
@@ -180,9 +183,9 @@ exports.resetSeries = functions.https.onRequest((request, response) => {
     })
 })
 
-exports.mymatches = functions.https.onRequest((request, response) => {
+export const mymatches = onRequest((request, response) => {
     cors(request, response, () => {
-        const db = admin.database()
+        const db = getDatabase()
         db.ref('/users/' + request.query.uid).once('value', (snapshot) => {
             const teams = snapshot.val().teams || {}
             const promises = []
@@ -204,8 +207,8 @@ exports.mymatches = functions.https.onRequest((request, response) => {
     })
 })
 
-exports.addUser = functions.auth.user().onCreate((evt) => {
-    const db = admin.database()
+export const addUser = auth.user().onCreate((evt) => {
+    const db = getDatabase()
     const email = evt.email
 
     return db.ref('/teams').once('value', (teamSnapshots) => {
@@ -223,9 +226,8 @@ exports.addUser = functions.auth.user().onCreate((evt) => {
     })
 })
 
-exports.removeUser = functions.auth.user().onDelete((evt) => {
-    return admin
-        .database()
+export const removeUser = auth.user().onDelete((evt) => {
+    return getDatabase()
         .ref('/users/' + evt.uid)
         .remove()
 })
