@@ -26,18 +26,18 @@
             "slug": "lagserien/3",
             "groupId": "a236e37b-10f0-41e0-88ba-dac7dde5c726",
             "division": 3
-        },
+        }
+    ],
+    "exerciseSeries": [
         {
             "id": "-OBCbu7E91tqzl7BgUfZ",
-            "order": 4,
+            "order": 1,
             "text": "Padel",
             "active": true,
             "slug": "lagserien/padel",
             "groupId": "e183c19a-1c9d-4972-993e-10eee07cc9d8",
             "division": 1
         }
-    ],
-    "exerciseSeries": [
         {
             "id": "-KROWbh3_h1nNRkRSbC9",
             "text": "Damsingel",
