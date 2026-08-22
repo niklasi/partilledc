@@ -1,3 +1,38 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+@theme {
+  --font-sans: roboto, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-primary: rgb(0,188,212);
+  --color-secondary: rgb(255,64,129);
+  --color-hover: rgba(0,188,212,0.10);
+  --color-active: rgba(0,188,212,0.10);
+}
+
+@utility safe-top {
+    padding-top: env(safe-area-inset-top);
+}
+
+@utility safe-left {
+    padding-left: env(safe-area-inset-left);
+}
+
+@utility safe-right {
+    padding-right: env(safe-area-inset-right);
+}
+
+@utility safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+@custom-variant portrait {
+  @media (orientation: portrait) {
+    @slot;
+  }
+}
+
+@custom-variant landscape {
+  @media (orientation: landscape) {
+    @slot;
+  }
+}

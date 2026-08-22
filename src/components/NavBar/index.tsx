@@ -72,7 +72,9 @@ export function NavBar(props: NavBarProps) {
         )
     }
 
-    const open = props.open ? 'ease-linear duration-200 translate-x-4/6' : 'ease-linear duration-200 -translate-x-full'
+    const open = props.open
+        ? 'ease-linear duration-200 translate-x-[w-4/6]'
+        : 'ease-linear duration-200 -translate-x-full'
     return (
         <div
             className={`bg-black/10 z-40 absolute top-0 left-0 w-screen h-screen ${
